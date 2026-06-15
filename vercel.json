@@ -1,11 +1,11 @@
 {
   "version": 2,
   "builds": [
-    { "src": "hub.js", "use": "@vercel/node" },
-    { "src": "index (12).html", "use": "@vercel/static" }
+    { "src": "api/hub.js", "use": "@vercel/node" },
+    { "src": "index.html", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/api/hub", "dest": "/hub.js" },
-    { "src": "/(.*)", "dest": "/index (12).html" }
+    { "src": "/api/hub", "dest": "/api/hub.js" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
