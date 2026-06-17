@@ -2,9 +2,10 @@ if (!global._hubs) global._hubs = {};
 
 function getHub(code) {
   if (!global._hubs[code]) {
-    global._hubs[code] = { events: [], goals: [], diary: [], wishes: [], story: [], presence: {} };
+    global._hubs[code] = { events: [], goals: [], diary: [], wishes: [], story: [], bucket: [], presence: {} };
   }
   if (!global._hubs[code].story) global._hubs[code].story = [];
+  if (!global._hubs[code].bucket) global._hubs[code].bucket = [];
   if (!global._hubs[code].presence) global._hubs[code].presence = {};
   return global._hubs[code];
 }
@@ -18,7 +19,7 @@ export default function handler(req, res) {
   const { code, collection } = req.query;
   if (!code) return res.status(400).json({ error: 'Hub code required' });
 
-  const allowed = ['events', 'goals', 'diary', 'wishes', 'story'];
+  const allowed = ['events', 'goals', 'diary', 'wishes', 'story', 'bucket'];
 
   // PRESENCE — heartbeat ping system
   if (collection === 'presence') {
