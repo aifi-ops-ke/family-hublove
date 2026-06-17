@@ -436,6 +436,28 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
 .compliment-timer{font-size:36px;font-weight:900;color:var(--blue2);text-align:center;margin:10px 0}
 .fill-blank{background:var(--bluel);border:2px dashed var(--blue3);border-radius:10px;padding:3px 10px;
   font-weight:800;color:var(--blue2);display:inline-block;min-width:60px;text-align:center}
+
+/* ── ANNIVERSARY COUNTDOWN ── */
+.anniv-card{background:linear-gradient(135deg,#8a2d5a,#c44a8e,#e88ac4);border-radius:18px;padding:16px 18px;
+  color:#fff;margin-bottom:13px;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 8px 28px rgba(138,45,90,.3);
+  transition:transform .2s}
+.anniv-card:active{transform:scale(.98)}
+.anniv-card::before{content:'💍';position:absolute;top:-8px;right:-4px;font-size:50px;opacity:.18;transform:rotate(12deg)}
+.anniv-label{font-size:11px;font-weight:800;opacity:.85;text-transform:uppercase;letter-spacing:.5px}
+.anniv-sub{font-size:11px;opacity:.75;margin-top:4px}
+.anniv-countdown{display:flex;gap:10px;margin-top:8px}
+.anniv-unit{text-align:center}
+.anniv-num{font-size:24px;font-weight:900;display:block;line-height:1}
+.anniv-unit-lbl{font-size:9px;opacity:.75;text-transform:uppercase;letter-spacing:.3px}
+.anniv-title{font-family:'Lora',serif;font-size:15px;font-weight:600;margin-top:6px}
+
+/* ── MEMORY WALL ── */
+.memory-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:8px}
+.memory-tile{background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--sh);
+  border:1px solid rgba(74,111,165,.08)}
+.memory-tile img{width:100%;height:110px;object-fit:cover;display:block}
+.memory-cap{padding:8px 10px;font-size:10px;color:var(--ink);font-weight:600;line-height:1.3}
+.memory-meta{padding:0 10px 8px;font-size:9px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -488,6 +510,12 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
   </div>
   <div class="screens">
     <div id="s-home" class="scr on">
+      <div class="anniv-card" id="anniv-card" onclick="openAnnivModal()">
+        <div class="anniv-content" id="anniv-content">
+          <div class="anniv-label">💍 Set Your Special Date</div>
+          <div class="anniv-sub">Tap to add your anniversary and start the countdown</div>
+        </div>
+      </div>
       <div class="streak-banner" id="streak-banner">
         <div class="streak-flame">🔥</div>
         <div class="streak-info"><div class="streak-num" id="streak-num">0</div><div class="streak-lbl">day love streak</div></div>
@@ -565,6 +593,18 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
       </div>
       <div class="slbl">📜 Our Timeline</div>
       <div id="story-list"><div class="ld"><div class="sp"></div>Loading...</div></div>
+
+      <div class="slbl" style="margin-top:20px">📸 Our Memory Wall</div>
+      <div class="story-form">
+        <div class="story-form-title">📷 Pin a photo memory</div>
+        <input type="file" accept="image/*" id="memory-file" style="margin-bottom:8px;font-size:12px" onchange="previewMemory()"/>
+        <div id="memory-preview-wrap" style="display:none;margin-bottom:8px">
+          <img id="memory-preview" style="width:100%;border-radius:12px;max-height:200px;object-fit:cover"/>
+        </div>
+        <input type="text" class="qi" id="memory-caption" placeholder="Caption this moment..." style="width:100%;margin-bottom:8px"/>
+        <button class="sb" onclick="saveMemory()">📌 Pin to Memory Wall</button>
+      </div>
+      <div class="memory-grid" id="memory-grid"></div>
     </div>
     <div id="s-games" class="scr">
       <!-- Game picker grid -->
@@ -785,6 +825,15 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
   </div>
 </div>
 
+<div class="ov" id="anniv-modal">
+  <div class="mo">
+    <h3>💍 Our Special Date <button class="mx" onclick="closeAnnivModal()">✕</button></h3>
+    <div class="fr"><label>When did your story begin?</label><input id="anniv-date" type="date"/></div>
+    <div class="fr"><label>What do we call this date?</label><input id="anniv-label" placeholder="e.g. Our Anniversary, The Day We Met"/></div>
+    <button class="sb" onclick="saveAnniv()">💕 Start The Countdown</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -804,7 +853,7 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
 const API='/api/hub';
 let myName='',hubCode='',myRole='him';
 let curTab='home',curMo=new Date().getMonth(),curYr=new Date().getFullYear(),selDay=null;
-let hub={events:[],goals:[],diary:[],wishes:[],story:[]};
+let hub={events:[],goals:[],diary:[],wishes:[],story:[],bucket:[],notes:[],moods:[],memories:[],settings:{}};
 let pollTimer=null,presenceTimer=null,presencePollTimer=null,presenceTimer2=null,lastHash='',appReady=false;
 let presenceState={};
 
@@ -854,12 +903,13 @@ async function loadAll(initial=false){
     const j=await r.json();
     const newHash=JSON.stringify(j);
     if(!initial&&lastHash&&newHash!==lastHash){notify('💕 Partner just updated the hub!');}
-    hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];hub.story=j.story||[];hub.bucket=j.bucket||[];hub.notes=j.notes||[];hub.moods=j.moods||[];
+    hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];hub.story=j.story||[];hub.bucket=j.bucket||[];hub.notes=j.notes||[];hub.moods=j.moods||[];hub.memories=j.memories||[];hub.settings=j.settings||{};
     if(initial){await seedAll();}
     lastHash=newHash;setDot('live');appReady=true;renderCur();
-    if(curTab==='home'){renderMoods();renderNotes();}
+    if(curTab==='home'){renderMoods();renderNotes();renderAnniv();}
   }catch(e){setDot('off');if(!appReady)toast('⚠️ Connection issue — retrying...');}
 }
+
 
 async function push(col){
   try{
@@ -969,6 +1019,7 @@ function renderCur(){
 function renderHome(){
   renderMoods();
   renderNotes();
+  renderAnniv();
   const td=ds(new Date());
   const te=hub.events.filter(e=>e.date===td);
   document.getElementById('today-evts').innerHTML=te.length?te.map(evH).join(''):`<div class="empty"><i>🌤️</i><p>Nothing today — enjoy the free time!</p></div>`;
@@ -1037,6 +1088,7 @@ function saveDiary(){
 }
 
 function renderStory(){
+  renderMemoryWall();
   const sorted=[...hub.story].sort((a,b)=>a.date.localeCompare(b.date));
   document.getElementById('story-moments').textContent=hub.story.length;
   if(sorted.length){
@@ -1595,6 +1647,94 @@ function openNote(id){
     push('notes');
   }
   renderNotes();
+}
+
+// ═══════════════════════════════════════════════
+//  ANNIVERSARY COUNTDOWN
+// ═══════════════════════════════════════════════
+function openAnnivModal(){
+  const s=hub.settings||{};
+  if(s.annivDate) document.getElementById('anniv-date').value=s.annivDate;
+  if(s.annivLabel) document.getElementById('anniv-label').value=s.annivLabel;
+  document.getElementById('anniv-modal').classList.add('on');
+}
+function closeAnnivModal(){document.getElementById('anniv-modal').classList.remove('on');}
+async function saveAnniv(){
+  const date=document.getElementById('anniv-date').value;
+  const label=document.getElementById('anniv-label').value.trim()||'Our Anniversary';
+  if(!date){toast('⚠️ Pick a date first');return;}
+  hub.settings={...hub.settings,annivDate:date,annivLabel:label};
+  await fetch(`${API}?code=${encodeURIComponent(hubCode)}&collection=settings`,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({annivDate:date,annivLabel:label})
+  });
+  closeAnnivModal();
+  toast('💍 Countdown started!');
+  renderAnniv();
+}
+function renderAnniv(){
+  const s=hub.settings||{};
+  const card=document.getElementById('anniv-card');
+  const content=document.getElementById('anniv-content');
+  if(!s.annivDate){
+    content.innerHTML=`<div class="anniv-label">💍 Set Your Special Date</div><div class="anniv-sub">Tap to add your anniversary and start the countdown</div>`;
+    return;
+  }
+  const target=new Date(s.annivDate+'T00:00:00');
+  const now=new Date();
+  // find next occurrence of this date (annual recurrence)
+  let next=new Date(now.getFullYear(),target.getMonth(),target.getDate());
+  if(next<now) next=new Date(now.getFullYear()+1,target.getMonth(),target.getDate());
+  const diffMs=next-now;
+  const days=Math.floor(diffMs/(1000*60*60*24));
+  const hours=Math.floor((diffMs%(1000*60*60*24))/(1000*60*60));
+  const mins=Math.floor((diffMs%(1000*60*60))/(1000*60));
+  const yearsTogether=now.getFullYear()-target.getFullYear();
+  content.innerHTML=`
+    <div class="anniv-label">💍 ${s.annivLabel||'Our Anniversary'}</div>
+    <div class="anniv-title">${days===0?"It's today! 🎉":`${days} days to go`}</div>
+    <div class="anniv-countdown">
+      <div class="anniv-unit"><span class="anniv-num">${days}</span><span class="anniv-unit-lbl">days</span></div>
+      <div class="anniv-unit"><span class="anniv-num">${hours}</span><span class="anniv-unit-lbl">hrs</span></div>
+      <div class="anniv-unit"><span class="anniv-num">${mins}</span><span class="anniv-unit-lbl">min</span></div>
+      ${yearsTogether>0?`<div class="anniv-unit"><span class="anniv-num">${yearsTogether}</span><span class="anniv-unit-lbl">years</span></div>`:''}
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════
+//  MEMORY WALL
+// ═══════════════════════════════════════════════
+let pendingMemoryData=null;
+function previewMemory(){
+  const file=document.getElementById('memory-file').files[0];
+  if(!file)return;
+  if(file.size>4*1024*1024){toast('⚠️ Image too large — pick one under 4MB');return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    pendingMemoryData=e.target.result;
+    document.getElementById('memory-preview').src=pendingMemoryData;
+    document.getElementById('memory-preview-wrap').style.display='block';
+  };
+  reader.readAsDataURL(file);
+}
+async function saveMemory(){
+  if(!pendingMemoryData){toast('📷 Choose a photo first');return;}
+  const caption=document.getElementById('memory-caption').value.trim();
+  hub.memories=hub.memories||[];
+  hub.memories.unshift({id:Date.now(),img:pendingMemoryData,caption:caption||'A beautiful moment',date:ds(new Date()),by:myName});
+  await push('memories');
+  document.getElementById('memory-file').value='';
+  document.getElementById('memory-caption').value='';
+  document.getElementById('memory-preview-wrap').style.display='none';
+  pendingMemoryData=null;
+  toast('📌 Pinned to your memory wall!');
+  renderMemoryWall();
+}
+function renderMemoryWall(){
+  const mem=hub.memories||[];
+  document.getElementById('memory-grid').innerHTML=mem.length
+    ?mem.map(m=>`<div class="memory-tile"><img src="${m.img}" alt="memory"/><div class="memory-cap">${m.caption}</div><div class="memory-meta">${fd(m.date)} · ${m.by}</div></div>`).join('')
+    :`<div class="empty" style="grid-column:1/-1"><i>📸</i><p>Pin your first memory!</p></div>`;
 }
 
 document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeMo();});

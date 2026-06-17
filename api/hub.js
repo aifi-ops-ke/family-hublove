@@ -2,12 +2,14 @@ if (!global._hubs) global._hubs = {};
 
 function getHub(code) {
   if (!global._hubs[code]) {
-    global._hubs[code] = { events: [], goals: [], diary: [], wishes: [], story: [], bucket: [], notes: [], moods: [], presence: {}, streak: { count: 0, lastDate: null, openedToday: {} } };
+    global._hubs[code] = { events: [], goals: [], diary: [], wishes: [], story: [], bucket: [], notes: [], moods: [], memories: [], settings: {}, presence: {}, streak: { count: 0, lastDate: null, openedToday: {} } };
   }
   if (!global._hubs[code].story) global._hubs[code].story = [];
   if (!global._hubs[code].bucket) global._hubs[code].bucket = [];
   if (!global._hubs[code].notes) global._hubs[code].notes = [];
   if (!global._hubs[code].moods) global._hubs[code].moods = [];
+  if (!global._hubs[code].memories) global._hubs[code].memories = [];
+  if (!global._hubs[code].settings) global._hubs[code].settings = {};
   if (!global._hubs[code].presence) global._hubs[code].presence = {};
   if (!global._hubs[code].streak) global._hubs[code].streak = { count: 0, lastDate: null, openedToday: {} };
   return global._hubs[code];
@@ -31,7 +33,19 @@ export default function handler(req, res) {
   const { code, collection } = req.query;
   if (!code) return res.status(400).json({ error: 'Hub code required' });
 
-  const allowed = ['events', 'goals', 'diary', 'wishes', 'story', 'bucket', 'notes', 'moods'];
+  const allowed = ['events', 'goals', 'diary', 'wishes', 'story', 'bucket', 'notes', 'moods', 'memories'];
+
+  // SETTINGS — anniversary date, theme preference (object, not array)
+  if (collection === 'settings') {
+    const hub = getHub(code);
+    if (req.method === 'POST') {
+      hub.settings = { ...hub.settings, ...(req.body || {}) };
+      return res.status(200).json({ ok: true, settings: hub.settings });
+    }
+    if (req.method === 'GET') {
+      return res.status(200).json({ data: hub.settings });
+    }
+  }
 
   // PRESENCE — heartbeat ping system
   if (collection === 'presence') {
