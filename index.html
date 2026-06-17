@@ -899,6 +899,12 @@ async function launch(){
 async function loadAll(initial=false){
   try{
     const r=await fetch(`${API}?code=${encodeURIComponent(hubCode)}`);
+    if(r.status===503){
+      setDot('off');
+      document.getElementById('stxt').textContent='⚠️ DB not connected';
+      if(initial)toast('⚠️ Database not connected yet — see setup instructions');
+      return;
+    }
     if(!r.ok)throw new Error('fetch failed');
     const j=await r.json();
     const newHash=JSON.stringify(j);
@@ -909,6 +915,7 @@ async function loadAll(initial=false){
     if(curTab==='home'){renderMoods();renderNotes();renderAnniv();}
   }catch(e){setDot('off');if(!appReady)toast('⚠️ Connection issue — retrying...');}
 }
+
 
 
 async function push(col){

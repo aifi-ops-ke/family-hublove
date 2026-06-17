@@ -2,7 +2,13 @@ import { Redis } from '@upstash/redis';
 
 // Vercel's Redis integration auto-injects these env vars once you add
 // the "Redis" storage integration from the Storage tab in your project.
-const redis = Redis.fromEnv();
+let redis = null;
+let redisError = null;
+try {
+  redis = Redis.fromEnv();
+} catch (e) {
+  redisError = e.message;
+}
 
 const DEFAULTS = {
   events: [], goals: [], diary: [], wishes: [], story: [], bucket: [],
@@ -38,6 +44,14 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
+
+  if (!redis) {
+    return res.status(503).json({
+      error: 'Database not connected yet',
+      detail: 'Go to your Vercel project → Storage tab → Connect a Redis database, then redeploy.',
+      raw: redisError
+    });
+  }
 
   const { code, collection } = req.query;
   if (!code) return res.status(400).json({ error: 'Hub code required' });
