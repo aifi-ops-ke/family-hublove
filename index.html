@@ -371,6 +371,71 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
   margin-bottom:14px;position:relative}
 .love-letter-card::before{content:'💌';position:absolute;top:-12px;left:16px;font-size:24px;
   background:#fffdf5;padding:0 4px}
+
+/* ── STREAK ── */
+.streak-banner{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#fff3e0,#ffe8d6);
+  border-radius:16px;padding:13px 15px;margin-bottom:13px;border:1px solid #ffd9b3}
+.streak-flame{font-size:30px;animation:flicker 1.5s infinite}
+@keyframes flicker{0%,100%{transform:scale(1) rotate(-2deg)}50%{transform:scale(1.1) rotate(2deg)}}
+.streak-info{display:flex;flex-direction:column}
+.streak-num{font-size:22px;font-weight:900;color:#e8693f;line-height:1}
+.streak-lbl{font-size:10px;color:#a8643f;font-weight:700}
+.streak-hint{margin-left:auto;font-size:10px;color:#a8643f;font-weight:600;text-align:right;max-width:110px;line-height:1.3}
+
+/* ── MOOD ── */
+.mood-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px}
+.mood-card{background:#fff;border-radius:16px;padding:13px;text-align:center;box-shadow:var(--sh);
+  border:1px solid rgba(74,111,165,.08)}
+.mood-who{font-size:10px;font-weight:800;color:var(--muted);margin-bottom:6px}
+.mood-emoji{font-size:32px;margin-bottom:4px}
+.mood-note{font-size:10px;color:var(--blue2);font-weight:700;line-height:1.3}
+.mood-set-btn{width:100%;padding:11px;background:var(--bluel);border:2px dashed var(--blue3);
+  border-radius:13px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;color:var(--blue2);
+  cursor:pointer;margin-bottom:13px;transition:all .2s}
+.mood-set-btn:active{background:var(--blue3);color:#fff}
+.mood-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:6px}
+.mood-opt{background:var(--greyl);border-radius:13px;padding:12px 4px;text-align:center;cursor:pointer;
+  font-size:26px;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:4px}
+.mood-opt span{font-size:9px;font-weight:700;color:var(--muted)}
+.mood-opt:active{background:var(--bluel);transform:scale(.95)}
+
+/* ── NOTES ── */
+.notes-banner{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#fff0f3,#ffe4ea);
+  border-radius:16px;padding:13px 15px;margin-bottom:14px;cursor:pointer;border:1px solid #ffd0db;transition:all .2s}
+.notes-banner:active{transform:scale(.98)}
+.notes-icon{font-size:26px}
+.notes-text h4{font-size:13px;font-weight:800;color:#c44a6e}
+.notes-text p{font-size:10px;color:var(--muted);margin-top:2px}
+.notes-arrow{margin-left:auto;font-size:16px;color:#c44a6e}
+.notes-hero{background:linear-gradient(135deg,#7a2d4a,#c44a6e,#e88aa8);border-radius:20px;padding:22px 18px;
+  color:#fff;margin-bottom:16px;text-align:center;position:relative;overflow:hidden}
+.notes-hero::before{content:'💌';position:absolute;top:-10px;right:-6px;font-size:60px;opacity:.15;transform:rotate(15deg)}
+.notes-hero h2{font-family:'Lora',serif;font-size:19px;font-weight:600;margin-bottom:6px}
+.notes-hero p{font-size:12px;opacity:.88;line-height:1.5}
+.note-card{background:#fffdf5;border:2px dashed #f0c5d4;border-radius:16px;padding:15px;margin-bottom:10px;
+  position:relative;cursor:pointer;transition:all .2s}
+.note-card:active{transform:scale(.98)}
+.note-card.unread{border-color:#e88aa8;background:linear-gradient(135deg,#fff5f7,#ffeef2)}
+.note-seal{font-size:20px;position:absolute;top:-10px;left:14px;background:#fffdf5;padding:0 4px}
+.note-from{font-size:10px;font-weight:800;color:#c44a6e;margin-bottom:4px}
+.note-body{font-size:12px;color:#555;line-height:1.6}
+.note-date{font-size:9px;color:var(--muted);margin-top:6px;font-weight:600}
+.note-new-badge{position:absolute;top:8px;right:10px;background:#e88aa8;color:#fff;font-size:8px;
+  font-weight:800;padding:2px 7px;border-radius:8px;text-transform:uppercase}
+
+/* ── NEW GAME EXTRAS ── */
+.wheel-wrap{display:flex;flex-direction:column;align-items:center;padding:10px 0}
+.wheel{width:200px;height:200px;border-radius:50%;position:relative;margin-bottom:18px;
+  background:conic-gradient(#4A6FA5 0deg 60deg,#c44a6e 60deg 120deg,#4CAF82 120deg 180deg,
+  #9B7FD4 180deg 240deg,#F5A623 240deg 300deg,#6B93C9 300deg 360deg);
+  transition:transform 3s cubic-bezier(.17,.67,.21,1.0);box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.wheel-pointer{position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:24px;z-index:5}
+.wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;
+  background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;
+  box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.compliment-timer{font-size:36px;font-weight:900;color:var(--blue2);text-align:center;margin:10px 0}
+.fill-blank{background:var(--bluel);border:2px dashed var(--blue3);border-radius:10px;padding:3px 10px;
+  font-weight:800;color:var(--blue2);display:inline-block;min-width:60px;text-align:center}
 </style>
 </head>
 <body>
@@ -423,6 +488,31 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
   </div>
   <div class="screens">
     <div id="s-home" class="scr on">
+      <div class="streak-banner" id="streak-banner">
+        <div class="streak-flame">🔥</div>
+        <div class="streak-info"><div class="streak-num" id="streak-num">0</div><div class="streak-lbl">day love streak</div></div>
+        <div class="streak-hint" id="streak-hint">Open the hub daily to keep it going!</div>
+      </div>
+      <div class="mood-row">
+        <div class="mood-card" id="mood-card-him">
+          <div class="mood-who">👨 Him</div>
+          <div class="mood-emoji" id="mood-emoji-him">❓</div>
+          <div class="mood-note" id="mood-note-him">No mood yet</div>
+        </div>
+        <div class="mood-card" id="mood-card-her">
+          <div class="mood-who">👩 Her</div>
+          <div class="mood-emoji" id="mood-emoji-her">❓</div>
+          <div class="mood-note" id="mood-note-her">No mood yet</div>
+        </div>
+      </div>
+      <button class="mood-set-btn" onclick="openMoodPicker()">😊 Set my mood today</button>
+
+      <div class="notes-banner" id="notes-banner" onclick="go('notes')">
+        <span class="notes-icon">💌</span>
+        <div class="notes-text"><h4>Secret Love Notes</h4><p id="notes-preview">Tap to check your mailbox</p></div>
+        <span class="notes-arrow">→</span>
+      </div>
+
       <div class="banner"><h4>💑 Next up for you two</h4><p id="next-up">Loading...</p></div>
       <div class="stitle" id="today-lbl">Today</div>
       <div id="today-evts"><div class="ld"><div class="sp"></div>Loading...</div></div>
@@ -579,12 +669,78 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
           <button class="sb" onclick="saveLetterToStory()" style="margin-top:10px">💕 Save to Our Story</button>
         </div>
       </div>
+
+      <!-- Compliment Battle -->
+      <div id="game-compliment" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>💞 Compliment Battle</h3><p>60 seconds, unlimited love</p></div></div>
+        <div class="card" style="text-align:center">
+          <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px">Take turns giving genuine compliments until time runs out. No repeats!</div>
+          <div class="compliment-timer" id="comp-timer">60</div>
+          <div class="game-controls">
+            <button class="game-btn gbtn-primary" onclick="startCompliment()" id="comp-start-btn">▶️ Start 60s</button>
+            <button class="game-btn gbtn-secondary" onclick="resetCompliment()">🔄 Reset</button>
+          </div>
+        </div>
+        <div class="prompt-card sweet" style="margin-top:14px"><div class="prompt-tag">Need inspiration?</div><div class="prompt-text" id="comp-prompt">I love the way you...</div></div>
+      </div>
+
+      <!-- Love Horoscope -->
+      <div id="game-horoscope" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🔮 Love Horoscope</h3><p>Today's playful prediction</p></div></div>
+        <div class="prompt-card deep" id="horo-card"><div class="prompt-tag">✨ Today's Reading</div><div class="prompt-text" id="horo-text">Tap below for your daily love horoscope</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="newHoroscope()">🔮 Reveal Today's Horoscope</button></div>
+      </div>
+
+      <!-- Daily Challenge -->
+      <div id="game-challenge" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🎯 Daily Couple Challenge</h3><p>One small thing, every day</p></div></div>
+        <div class="prompt-card sweet" id="chal-card"><div class="prompt-tag">Today's Challenge</div><div class="prompt-text" id="chal-text">Tap below to get today's challenge</div></div>
+        <div class="game-controls">
+          <button class="game-btn gbtn-primary" onclick="newChallenge()" style="background:linear-gradient(135deg,#c44a6e,#e88aa8)">🎯 Get Challenge</button>
+          <button class="game-btn gbtn-secondary" onclick="completeChallenge()">✅ Done!</button>
+        </div>
+        <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--muted)" id="chal-streak">Challenges completed: <strong id="chal-count">0</strong></div>
+      </div>
+
+      <!-- Finish The Sentence -->
+      <div id="game-finish" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🗣️ Finish The Sentence</h3><p>Complete it out loud to each other</p></div></div>
+        <div class="prompt-card deep" id="finish-card"><div class="prompt-tag">Complete this:</div><div class="prompt-text" id="finish-text">Tap below to begin</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextFinish()">✍️ Next Sentence</button></div>
+      </div>
+
+      <!-- Spin The Wheel -->
+      <div id="game-wheel" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🎡 Spin The Wheel</h3><p>Let it pick your next activity</p></div></div>
+        <div class="wheel-wrap">
+          <div style="position:relative">
+            <div class="wheel-pointer">🔻</div>
+            <div class="wheel" id="wheel-el"><div class="wheel-center">💕</div></div>
+          </div>
+          <button class="sb" onclick="spinWheel()" style="max-width:200px">🎡 Spin!</button>
+        </div>
+        <div class="prompt-card sweet" id="wheel-card"><div class="prompt-tag">Your Activity</div><div class="prompt-text" id="wheel-text">Spin to find out what you're doing tonight!</div></div>
+      </div>
     </div>
     <div id="s-wishlist" class="scr">
       <div class="stitle">Our Wishlist ⭐</div>
       <div class="qr"><input class="qi" id="wish-in" placeholder="A trip, activity, or dream..."/><button class="qb" onclick="addWish()">+</button></div>
       <div class="slbl">❤️ Vote on what to do next</div>
       <div id="wish-list"><div class="ld"><div class="sp"></div>Loading...</div></div>
+    </div>
+    <div id="s-notes" class="scr">
+      <div class="game-header"><button class="game-back" onclick="go('home')">←</button><div class="game-title-row"><h3 style="font-family:'Lora',serif;font-size:17px;font-weight:600;color:var(--blue2)">💌 Secret Love Notes</h3></div></div>
+      <div class="notes-hero">
+        <h2>💌 Secret Love Notes</h2>
+        <p>Leave a hidden note for your partner to discover. They'll only see it's "from them" once they open it!</p>
+      </div>
+      <div class="card">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px">Leave a secret note 🤫</div>
+        <textarea class="din" id="note-text" placeholder="Write something sweet, funny, or just because..."></textarea>
+        <button class="sb" onclick="sendNote()" style="margin-top:9px">💌 Leave This Note</button>
+      </div>
+      <div class="slbl">📬 Your Mailbox</div>
+      <div id="notes-list"><div class="ld"><div class="sp"></div>Loading...</div></div>
     </div>
   </div>
 </div>
@@ -609,6 +765,26 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
     <button class="sb" onclick="saveEv()">✅ Save Event</button>
   </div>
 </div>
+
+<div class="ov" id="mood-modal">
+  <div class="mo">
+    <h3>How are you feeling? <button class="mx" onclick="closeMoodModal()">✕</button></h3>
+    <div class="mood-grid">
+      <div class="mood-opt" onclick="pickMood('😍','In love')">😍<span>In love</span></div>
+      <div class="mood-opt" onclick="pickMood('😊','Happy')">😊<span>Happy</span></div>
+      <div class="mood-opt" onclick="pickMood('🥰','Loved')">🥰<span>Loved</span></div>
+      <div class="mood-opt" onclick="pickMood('😌','Relaxed')">😌<span>Relaxed</span></div>
+      <div class="mood-opt" onclick="pickMood('😴','Tired')">😴<span>Tired</span></div>
+      <div class="mood-opt" onclick="pickMood('😢','Sad')">😢<span>Sad</span></div>
+      <div class="mood-opt" onclick="pickMood('😤','Stressed')">😤<span>Stressed</span></div>
+      <div class="mood-opt" onclick="pickMood('🥳','Excited')">🥳<span>Excited</span></div>
+      <div class="mood-opt" onclick="pickMood('🤔','Thoughtful')">🤔<span>Thoughtful</span></div>
+    </div>
+    <input class="qi" id="mood-note-input" placeholder="Add a quick note (optional)..." style="width:100%;margin-top:14px"/>
+    <button class="sb" onclick="saveMood()" style="margin-top:10px">💕 Save My Mood</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -629,7 +805,7 @@ const API='/api/hub';
 let myName='',hubCode='',myRole='him';
 let curTab='home',curMo=new Date().getMonth(),curYr=new Date().getFullYear(),selDay=null;
 let hub={events:[],goals:[],diary:[],wishes:[],story:[]};
-let pollTimer=null,presenceTimer=null,presencePollTimer=null,lastHash='',appReady=false;
+let pollTimer=null,presenceTimer=null,presencePollTimer=null,presenceTimer2=null,lastHash='',appReady=false;
 let presenceState={};
 
 const CE={date:'💑',outing:'🌳',birthday:'🎂',health:'💊',chores:'🧹',celebration:'🎉',reminder:'⏰',other:'📌'};
@@ -655,7 +831,7 @@ window.addEventListener('load',()=>{
   if(n&&c){myName=n;hubCode=c;myRole=r||'him';launch();}
 });
 
-function doLogout(){if(!confirm('Log out?'))return;clearInterval(pollTimer);clearInterval(presenceTimer);clearInterval(presencePollTimer);localStorage.clear();location.reload();}
+function doLogout(){if(!confirm('Log out?'))return;clearInterval(pollTimer);clearInterval(presenceTimer);clearInterval(presencePollTimer);clearInterval(presenceTimer2);localStorage.clear();location.reload();}
 
 async function launch(){
   document.getElementById('setup').style.display='none';
@@ -667,6 +843,8 @@ async function launch(){
   await loadAll(true);
   startPoll();
   startPresence();
+  pingStreak();
+  presenceTimer2=setInterval(pingStreak,30000);
 }
 
 async function loadAll(initial=false){
@@ -676,9 +854,10 @@ async function loadAll(initial=false){
     const j=await r.json();
     const newHash=JSON.stringify(j);
     if(!initial&&lastHash&&newHash!==lastHash){notify('💕 Partner just updated the hub!');}
-    hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];hub.story=j.story||[];hub.bucket=j.bucket||[];
+    hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];hub.story=j.story||[];hub.bucket=j.bucket||[];hub.notes=j.notes||[];hub.moods=j.moods||[];
     if(initial){await seedAll();}
     lastHash=newHash;setDot('live');appReady=true;renderCur();
+    if(curTab==='home'){renderMoods();renderNotes();}
   }catch(e){setDot('off');if(!appReady)toast('⚠️ Connection issue — retrying...');}
 }
 
@@ -783,10 +962,13 @@ function renderCur(){
   if(curTab==='home')renderHome();if(curTab==='calendar')renderCal();
   if(curTab==='plan')renderPlan();if(curTab==='diary')renderDiary();
   if(curTab==='story')renderStory();if(curTab==='games')renderGameMenu();
+  if(curTab==='notes')renderNotes();
   if(curTab==='wishlist')renderWish();
 }
 
 function renderHome(){
+  renderMoods();
+  renderNotes();
   const td=ds(new Date());
   const te=hub.events.filter(e=>e.date===td);
   document.getElementById('today-evts').innerHTML=te.length?te.map(evH).join(''):`<div class="empty"><i>🌤️</i><p>Nothing today — enjoy the free time!</p></div>`;
@@ -937,6 +1119,11 @@ const GAMES=[
   {id:'dice',icon:'🎲',name:'Memory Lane Dice',desc:'Roll & reminisce',badge:'sweet'},
   {id:'bucket',icon:'🗺️',name:'Our Bucket List',desc:'Dream together',badge:'sweet'},
   {id:'letter',icon:'💌',name:'Love Letter Prompts',desc:'Write from the heart',badge:'sweet'},
+  {id:'compliment',icon:'💞',name:'Compliment Battle',desc:'60 seconds of love',badge:'sweet'},
+  {id:'horoscope',icon:'🔮',name:'Love Horoscope',desc:"Today's playful reading",badge:'fun'},
+  {id:'challenge',icon:'🎯',name:'Daily Challenge',desc:'One small thing daily',badge:'deep'},
+  {id:'finish',icon:'🗣️',name:'Finish The Sentence',desc:'Say it out loud',badge:'deep'},
+  {id:'wheel',icon:'🎡',name:'Spin The Wheel',desc:'Random date night picker',badge:'fun'},
 ];
 
 function renderGameMenu(){
@@ -1175,6 +1362,239 @@ function saveLetterToStory(){
   push('story');
   document.getElementById('letter-text-area').value='';
   toast('💌 Saved to Our Story!');
+}
+
+
+// ═══════════════════════════════════════════════
+//  5 MORE GAMES
+// ═══════════════════════════════════════════════
+
+// 11. COMPLIMENT BATTLE
+const COMP_PROMPTS=[
+  "I love the way you...",
+  "You always make me smile when you...",
+  "One thing I admire about you is...",
+  "You're incredibly good at...",
+  "I feel so lucky because you...",
+];
+let compTimerInterval=null,compSeconds=60;
+function startCompliment(){
+  if(compTimerInterval)return;
+  document.getElementById('comp-prompt').textContent=COMP_PROMPTS[Math.floor(Math.random()*COMP_PROMPTS.length)];
+  document.getElementById('comp-start-btn').textContent='⏳ Running...';
+  compTimerInterval=setInterval(()=>{
+    compSeconds--;
+    document.getElementById('comp-timer').textContent=compSeconds;
+    if(compSeconds<=0){
+      clearInterval(compTimerInterval);compTimerInterval=null;
+      document.getElementById('comp-start-btn').textContent='▶️ Start 60s';
+      toast('💞 Time\'s up! How many compliments did you give?');
+    }
+  },1000);
+}
+function resetCompliment(){
+  clearInterval(compTimerInterval);compTimerInterval=null;
+  compSeconds=60;
+  document.getElementById('comp-timer').textContent=60;
+  document.getElementById('comp-start-btn').textContent='▶️ Start 60s';
+}
+
+// 12. LOVE HOROSCOPE
+const HOROSCOPES=[
+  "Today, a small gesture from your partner will mean more than usual. Notice it.",
+  "The stars say: initiate the hug today. You won't regret it.",
+  "A great day for trying something new together — even just a new recipe.",
+  "Your partner needs reassurance today. A simple 'I love you' goes far.",
+  "Today favors deep conversation over small talk. Ask a real question.",
+  "Plan something spontaneous tonight — even a 10-minute walk together counts.",
+  "Your patience will be especially appreciated today. Choose kindness.",
+  "A great day to revisit an old memory together and laugh about it.",
+  "Today, compliment something you don't usually mention. Watch their face light up.",
+  "The universe says: put the phones down for one full hour today, just the two of you.",
+];
+function newHoroscope(){
+  document.getElementById('horo-text').textContent=HOROSCOPES[Math.floor(Math.random()*HOROSCOPES.length)];
+}
+
+// 13. DAILY CHALLENGE
+const CHALLENGES=[
+  "Send your partner a voice note telling them one thing you appreciate about them.",
+  "Cook or order their favorite meal today, no occasion needed.",
+  "Write down 3 reasons you're grateful for them and read it out loud.",
+  "Give a genuine 20-second hug today, no rushing it.",
+  "Plan tomorrow's first hour together — even just coffee.",
+  "Compliment them in front of someone else today.",
+  "Put your phone away for the first 30 minutes you're together today.",
+  "Ask them about their day and really listen — no interrupting.",
+  "Leave a small surprise note somewhere they'll find it today.",
+  "Recreate your first date in some small way today.",
+  "Tell them your favorite memory of the week so far.",
+  "Hold hands for at least 5 minutes today without letting go.",
+];
+let chalCount=0;
+function newChallenge(){
+  document.getElementById('chal-text').textContent=CHALLENGES[Math.floor(Math.random()*CHALLENGES.length)];
+}
+function completeChallenge(){
+  if(document.getElementById('chal-text').textContent==='Tap below to get today\'s challenge'){
+    toast('Get a challenge first!');return;
+  }
+  chalCount++;
+  document.getElementById('chal-count').textContent=chalCount;
+  toast('🎉 Challenge completed! You two are amazing.');
+}
+
+// 14. FINISH THE SENTENCE
+const FINISH_SENTENCES=[
+  "The thing I love most about us is...",
+  "If I could describe our love in one word, it would be...",
+  "My favorite place to be with you is...",
+  "I knew I loved you when...",
+  "The best decision we ever made was...",
+  "When I think about our future, I imagine...",
+  "You make me feel ___ every single day.",
+  "If today was our last day together, I would want to...",
+  "The thing that makes our relationship strong is...",
+  "I'm most thankful for you when...",
+];
+function nextFinish(){
+  document.getElementById('finish-text').textContent=FINISH_SENTENCES[Math.floor(Math.random()*FINISH_SENTENCES.length)];
+}
+
+// 15. SPIN THE WHEEL
+const WHEEL_ACTIVITIES=[
+  "Cook dinner together from scratch",
+  "Watch a movie neither of you has seen",
+  "Take a walk and talk about your dreams",
+  "Have a mini dance party at home",
+  "Write each other a short letter",
+  "Try a new restaurant or cuisine",
+];
+let wheelSpinning=false;
+function spinWheel(){
+  if(wheelSpinning)return;
+  wheelSpinning=true;
+  const wheel=document.getElementById('wheel-el');
+  const idx=Math.floor(Math.random()*WHEEL_ACTIVITIES.length);
+  const segmentDeg=360/WHEEL_ACTIVITIES.length;
+  const targetDeg=360*4 + (360 - (idx*segmentDeg) - segmentDeg/2);
+  wheel.style.transform=`rotate(${targetDeg}deg)`;
+  setTimeout(()=>{
+    document.getElementById('wheel-text').textContent=WHEEL_ACTIVITIES[idx];
+    wheelSpinning=false;
+  },3000);
+}
+
+// ═══════════════════════════════════════════════
+//  STREAK TRACKER
+// ═══════════════════════════════════════════════
+async function pingStreak(){
+  try{
+    const r=await fetch(`${API}?code=${encodeURIComponent(hubCode)}&collection=streak`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:myRole})
+    });
+    const j=await r.json();
+    if(j.streak) renderStreak(j.streak);
+  }catch(e){}
+}
+function renderStreak(streak){
+  document.getElementById('streak-num').textContent=streak.count||0;
+  const opened=streak.openedToday||{};
+  const bothOpened=opened.him&&opened.her;
+  document.getElementById('streak-hint').textContent=bothOpened
+    ?'Both opened today! 🔥'
+    :'Waiting for partner to open today...';
+}
+
+// ═══════════════════════════════════════════════
+//  MOOD CHECK-IN
+// ═══════════════════════════════════════════════
+let pickedMoodEmoji=null,pickedMoodLabel=null;
+function openMoodPicker(){
+  document.getElementById('mood-modal').classList.add('on');
+}
+function closeMoodModal(){
+  document.getElementById('mood-modal').classList.remove('on');
+}
+function pickMood(emoji,label){
+  pickedMoodEmoji=emoji;pickedMoodLabel=label;
+  document.querySelectorAll('.mood-opt').forEach(o=>o.style.background='');
+  toast(`${emoji} ${label} selected`);
+}
+async function saveMood(){
+  if(!pickedMoodEmoji){toast('⚠️ Pick a mood first');return;}
+  const note=document.getElementById('mood-note-input').value.trim();
+  const moods=hub.moods||[];
+  const today=ds(new Date());
+  const filtered=moods.filter(m=>!(m.role===myRole&&m.date===today));
+  filtered.push({role:myRole,date:today,emoji:pickedMoodEmoji,label:pickedMoodLabel,note,name:myName});
+  hub.moods=filtered;
+  await push('moods');
+  closeMoodModal();
+  document.getElementById('mood-note-input').value='';
+  pickedMoodEmoji=null;pickedMoodLabel=null;
+  toast('💕 Mood saved!');
+  renderMoods();
+}
+function renderMoods(){
+  const today=ds(new Date());
+  const moods=hub.moods||[];
+  ['him','her'].forEach(r=>{
+    const m=moods.find(x=>x.role===r&&x.date===today);
+    const emEl=document.getElementById('mood-emoji-'+r);
+    const noteEl=document.getElementById('mood-note-'+r);
+    if(m){
+      emEl.textContent=m.emoji;
+      noteEl.textContent=m.note?`"${m.note}"`:m.label;
+    }else{
+      emEl.textContent='❓';
+      noteEl.textContent='No mood yet';
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  SECRET LOVE NOTES
+// ═══════════════════════════════════════════════
+async function sendNote(){
+  const text=document.getElementById('note-text').value.trim();
+  if(!text){toast('✏️ Write a note first!');return;}
+  const notes=hub.notes||[];
+  notes.push({id:Date.now(),text,from:myRole,fromName:myName,date:ds(new Date()),readBy:[myRole]});
+  hub.notes=notes;
+  await push('notes');
+  document.getElementById('note-text').value='';
+  toast('💌 Note left in the mailbox!');
+  renderNotes();
+}
+function renderNotes(){
+  const notes=(hub.notes||[]).filter(n=>n.from!==myRole).sort((a,b)=>b.id-a.id);
+  const unreadCount=notes.filter(n=>!(n.readBy||[]).includes(myRole)).length;
+  document.getElementById('notes-preview').textContent=unreadCount>0
+    ?`${unreadCount} new note${unreadCount>1?'s':''} waiting for you! 💕`
+    :'Tap to check your mailbox';
+  document.getElementById('notes-list').innerHTML=notes.length
+    ?notes.map(n=>{
+      const unread=!(n.readBy||[]).includes(myRole);
+      return `<div class="note-card${unread?' unread':''}" onclick="openNote(${n.id})">
+        ${unread?'<span class="note-new-badge">New</span>':''}
+        <span class="note-seal">💌</span>
+        <div class="note-from">From ${n.fromName||'your love'}</div>
+        <div class="note-body">${unread?'Tap to reveal this secret note...':n.text}</div>
+        <div class="note-date">${fd(n.date)}</div>
+      </div>`;
+    }).join('')
+    :`<div class="empty"><i>💌</i><p>No notes yet — your partner will leave some soon!</p></div>`;
+}
+function openNote(id){
+  const n=(hub.notes||[]).find(x=>x.id===id);
+  if(!n)return;
+  if(!(n.readBy||[]).includes(myRole)){
+    n.readBy=[...(n.readBy||[]),myRole];
+    push('notes');
+  }
+  renderNotes();
 }
 
 document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeMo();});
