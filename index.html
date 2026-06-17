@@ -235,6 +235,50 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
   font-weight:700;opacity:0;transition:all .3s;z-index:400;white-space:nowrap;pointer-events:none;
   max-width:90vw;overflow:hidden;text-overflow:ellipsis;box-shadow:0 4px 16px rgba(45,74,122,.4)}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── PRESENCE BAR ── */
+.presence-bar{display:flex;align-items:center;gap:10px;padding:9px 14px;background:#fff;
+  border-bottom:1px solid var(--border);flex-shrink:0}
+.pp{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--muted)}
+.pp-avatar{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:13px;position:relative;background:var(--greyl);border:2px solid var(--border);transition:all .3s}
+.pp-avatar.online{border-color:#4ade80;background:#eafff1}
+.pp-dot{position:absolute;bottom:-1px;right:-1px;width:8px;height:8px;border-radius:50%;
+  background:#d1d5db;border:2px solid #fff}
+.pp-dot.online{background:#4ade80;box-shadow:0 0 4px #4ade80}
+.pp-status{font-size:10px;color:var(--muted)}
+.pp-status.online{color:#22a35a;font-weight:800}
+.pp-sep{width:1px;height:20px;background:var(--border)}
+
+/* ── LOVE STORY ── */
+.story-hero{background:linear-gradient(135deg,#2d4a7a,#4A6FA5,#8aafd4);border-radius:20px;
+  padding:24px 18px;color:#fff;margin-bottom:16px;text-align:center;position:relative;overflow:hidden}
+.story-hero::before{content:'💕';position:absolute;top:-10px;left:-10px;font-size:60px;opacity:.15;transform:rotate(-15deg)}
+.story-hero::after{content:'💙';position:absolute;bottom:-15px;right:-10px;font-size:70px;opacity:.15;transform:rotate(15deg)}
+.story-hero h2{font-family:'Lora',serif;font-size:20px;font-weight:600;margin-bottom:6px}
+.story-hero p{font-size:12px;opacity:.85;line-height:1.6}
+.story-counter{display:flex;justify-content:center;gap:18px;margin-top:14px}
+.sc-item{text-align:center}
+.sc-num{font-size:24px;font-weight:900;display:block}
+.sc-lbl{font-size:9px;opacity:.8;text-transform:uppercase;letter-spacing:.5px}
+
+.timeline{position:relative;padding-left:24px;margin-top:8px}
+.timeline::before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:2px;
+  background:linear-gradient(180deg,var(--blue3),var(--bluel))}
+.tl-item{position:relative;margin-bottom:18px}
+.tl-dot{position:absolute;left:-24px;top:2px;width:16px;height:16px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue2),var(--blue3));border:3px solid #fff;
+  box-shadow:0 0 0 2px var(--blue3)}
+.tl-card{background:#fff;border-radius:16px;padding:13px 15px;box-shadow:var(--sh);
+  border:1px solid rgba(74,111,165,.1)}
+.tl-date{font-size:10px;color:var(--blue3);font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.tl-title{font-family:'Lora',serif;font-size:14px;font-weight:600;color:var(--blue2);margin-top:3px}
+.tl-text{font-size:12px;color:#555;line-height:1.6;margin-top:6px}
+.tl-by{font-size:10px;color:var(--muted);font-weight:700;margin-top:7px}
+
+.story-form{background:#fff;border-radius:18px;padding:15px;box-shadow:var(--sh);margin-bottom:16px;
+  border:1px solid rgba(74,111,165,.08)}
+.story-form-title{font-size:12px;font-weight:800;color:var(--blue2);margin-bottom:8px;display:flex;align-items:center;gap:6px}
 </style>
 </head>
 <body>
@@ -270,12 +314,18 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
       <div class="mep" id="mep" onclick="doLogout()">👤 Me</div>
     </div>
   </div>
+  <div class="presence-bar" id="presence-bar">
+    <div class="pp" id="pp-him"><div class="pp-avatar" id="pp-av-him">👨</div><div><div id="pp-name-him">Him</div><div class="pp-status" id="pp-status-him">offline</div></div></div>
+    <div class="pp-sep"></div>
+    <div class="pp" id="pp-her"><div class="pp-avatar" id="pp-av-her">👩</div><div><div id="pp-name-her">Her</div><div class="pp-status" id="pp-status-her">offline</div></div></div>
+  </div>
   <div class="nb" id="nb"><div class="pulse"></div><span id="nmsg">Partner updated!</span></div>
   <div class="nav">
     <div class="nt on" onclick="go('home')"><i>🏠</i>Home</div>
     <div class="nt" onclick="go('calendar')"><i>📅</i>Calendar</div>
     <div class="nt" onclick="go('plan')"><i>🎯</i>Plan</div>
     <div class="nt" onclick="go('diary')"><i>📖</i>Diary</div>
+    <div class="nt" onclick="go('story')"><i>💞</i>Story</div>
     <div class="nt" onclick="go('wishlist')"><i>⭐</i>Wishlist</div>
   </div>
   <div class="screens">
@@ -313,6 +363,25 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
       </div>
       <div class="slbl">📚 Our Memories</div>
       <div id="diary-list"><div class="ld"><div class="sp"></div>Loading...</div></div>
+    </div>
+    <div id="s-story" class="scr">
+      <div class="story-hero">
+        <h2>💕 Our Love Story</h2>
+        <p>Every chapter, every milestone, every little moment that made us "us."</p>
+        <div class="story-counter">
+          <div class="sc-item"><span class="sc-num" id="story-days">—</span><span class="sc-lbl">Days Together</span></div>
+          <div class="sc-item"><span class="sc-num" id="story-moments">—</span><span class="sc-lbl">Moments Saved</span></div>
+        </div>
+      </div>
+      <div class="story-form">
+        <div class="story-form-title">💌 Add a chapter to our story</div>
+        <input type="text" class="qi" id="story-title" placeholder="Title (e.g. The Day We Met)" style="width:100%;margin-bottom:8px"/>
+        <input type="date" class="qi" id="story-date" style="width:100%;margin-bottom:8px"/>
+        <textarea class="din" id="story-text" placeholder="Tell this part of our story..." style="margin-top:0"></textarea>
+        <button class="sb" onclick="saveStory()" style="margin-top:9px">💞 Add to Our Story</button>
+      </div>
+      <div class="slbl">📜 Our Timeline</div>
+      <div id="story-list"><div class="ld"><div class="sp"></div>Loading...</div></div>
     </div>
     <div id="s-wishlist" class="scr">
       <div class="stitle">Our Wishlist ⭐</div>
@@ -362,8 +431,9 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
 const API='/api/hub';
 let myName='',hubCode='',myRole='him';
 let curTab='home',curMo=new Date().getMonth(),curYr=new Date().getFullYear(),selDay=null;
-let hub={events:[],goals:[],diary:[],wishes:[]};
-let pollTimer=null,lastHash='',appReady=false;
+let hub={events:[],goals:[],diary:[],wishes:[],story:[]};
+let pollTimer=null,presenceTimer=null,presencePollTimer=null,lastHash='',appReady=false;
+let presenceState={};
 
 const CE={date:'💑',outing:'🌳',birthday:'🎂',health:'💊',chores:'🧹',celebration:'🎉',reminder:'⏰',other:'📌'};
 const CC={date:'blue',outing:'leaf',birthday:'rose',health:'rose',chores:'sun',celebration:'lav',reminder:'blue3',other:'grey'};
@@ -388,7 +458,7 @@ window.addEventListener('load',()=>{
   if(n&&c){myName=n;hubCode=c;myRole=r||'him';launch();}
 });
 
-function doLogout(){if(!confirm('Log out?'))return;clearInterval(pollTimer);localStorage.clear();location.reload();}
+function doLogout(){if(!confirm('Log out?'))return;clearInterval(pollTimer);clearInterval(presenceTimer);clearInterval(presencePollTimer);localStorage.clear();location.reload();}
 
 async function launch(){
   document.getElementById('setup').style.display='none';
@@ -399,6 +469,7 @@ async function launch(){
   setDot('connecting');
   await loadAll(true);
   startPoll();
+  startPresence();
 }
 
 async function loadAll(initial=false){
@@ -408,7 +479,7 @@ async function loadAll(initial=false){
     const j=await r.json();
     const newHash=JSON.stringify(j);
     if(!initial&&lastHash&&newHash!==lastHash){notify('💕 Partner just updated the hub!');}
-    hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];
+    hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];hub.story=j.story||[];
     if(initial){await seedAll();}
     lastHash=newHash;setDot('live');appReady=true;renderCur();
   }catch(e){setDot('off');if(!appReady)toast('⚠️ Connection issue — retrying...');}
@@ -424,6 +495,42 @@ async function push(col){
 }
 
 function startPoll(){pollTimer=setInterval(()=>loadAll(false),4000);}
+
+// ── PRESENCE: heartbeat ping + poll who's online ──
+async function pingPresence(){
+  try{
+    await fetch(`${API}?code=${encodeURIComponent(hubCode)}&collection=presence`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:myRole})
+    });
+  }catch(e){}
+}
+async function pollPresence(){
+  try{
+    const r=await fetch(`${API}?code=${encodeURIComponent(hubCode)}&collection=presence`);
+    const j=await r.json();
+    presenceState=j.data||{};
+    renderPresence();
+  }catch(e){}
+}
+function startPresence(){
+  pingPresence();
+  pollPresence();
+  presenceTimer=setInterval(pingPresence,5000);
+  presencePollTimer=setInterval(pollPresence,5000);
+}
+function renderPresence(){
+  ['him','her'].forEach(r=>{
+    const online=!!presenceState[r];
+    const av=document.getElementById('pp-av-'+r);
+    const st=document.getElementById('pp-status-'+r);
+    if(av) av.classList.toggle('online',online);
+    if(st){ st.textContent=online?'online now':'offline'; st.classList.toggle('online',online); }
+  });
+  // Update names if known
+  if(myRole==='him') document.getElementById('pp-name-him').textContent=myName+' (you)';
+  if(myRole==='her') document.getElementById('pp-name-her').textContent=myName+' (you)';
+}
 function aD(n){const d=new Date();d.setDate(d.getDate()+n);return ds(d);}
 
 async function seedAll(){
@@ -460,6 +567,10 @@ async function seedAll(){
     ];
     await push('wishes');dirty=true;
   }
+  if(!hub.story.length){
+    hub.story=[{id:1,title:"The Beginning of Our Story",date:ds(new Date()),text:"This is where it all starts — our very own space to keep every chapter of us. More memories to come 💕",by:"both"}];
+    await push('story');dirty=true;
+  }
   if(dirty)lastHash='';
 }
 
@@ -468,13 +579,13 @@ function go(t){
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.nt').forEach(x=>x.classList.remove('on'));
   document.getElementById('s-'+t).classList.add('on');
-  ['home','calendar','plan','diary','wishlist'].forEach((x,i)=>{if(x===t)document.querySelectorAll('.nt')[i].classList.add('on');});
+  ['home','calendar','plan','diary','story','wishlist'].forEach((x,i)=>{if(x===t)document.querySelectorAll('.nt')[i].classList.add('on');});
   renderCur();
 }
 function renderCur(){
   if(curTab==='home')renderHome();if(curTab==='calendar')renderCal();
   if(curTab==='plan')renderPlan();if(curTab==='diary')renderDiary();
-  if(curTab==='wishlist')renderWish();
+  if(curTab==='story')renderStory();if(curTab==='wishlist')renderWish();
 }
 
 function renderHome(){
@@ -543,6 +654,36 @@ function saveDiary(){
   hub.diary.unshift({id:Date.now(),title:ti||'A Memory',date:ds(new Date()),text:tx,by:myName});
   document.getElementById('d-title').value='';document.getElementById('d-body').value='';
   push('diary');toast('📖 Memory saved!');renderDiary();
+}
+
+function renderStory(){
+  const sorted=[...hub.story].sort((a,b)=>a.date.localeCompare(b.date));
+  document.getElementById('story-moments').textContent=hub.story.length;
+  if(sorted.length){
+    const first=new Date(sorted[0].date+'T00:00:00');
+    const days=Math.max(0,Math.floor((new Date()-first)/(1000*60*60*24)));
+    document.getElementById('story-days').textContent=days;
+  }else{
+    document.getElementById('story-days').textContent='0';
+  }
+  document.getElementById('story-list').innerHTML=sorted.length
+    ?`<div class="timeline">${sorted.map(s=>`<div class="tl-item"><div class="tl-dot"></div><div class="tl-card"><div class="tl-date">${fdLong(s.date)}</div><div class="tl-title">${s.title}</div><div class="tl-text">${s.text}</div><div class="tl-by">✍️ ${s.by||'Us'}</div></div></div>`).join('')}</div>`
+    :`<div class="empty"><i>💞</i><p>Start writing your story together!</p></div>`;
+}
+function saveStory(){
+  const ti=document.getElementById('story-title').value.trim();
+  const dt=document.getElementById('story-date').value||ds(new Date());
+  const tx=document.getElementById('story-text').value.trim();
+  if(!ti&&!tx){toast('✏️ Write something first!');return;}
+  hub.story.push({id:Date.now(),title:ti||'A Chapter',date:dt,text:tx,by:myName});
+  document.getElementById('story-title').value='';
+  document.getElementById('story-text').value='';
+  document.getElementById('story-date').value='';
+  push('story');toast('💞 Added to our story!');renderStory();
+}
+function fdLong(s){
+  const d=new Date(s+'T12:00:00');
+  return d.toLocaleDateString('en-KE',{day:'numeric',month:'long',year:'numeric'});
 }
 
 function renderWish(){

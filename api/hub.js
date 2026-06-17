@@ -2,8 +2,10 @@ if (!global._hubs) global._hubs = {};
 
 function getHub(code) {
   if (!global._hubs[code]) {
-    global._hubs[code] = { events: [], goals: [], diary: [], wishes: [] };
+    global._hubs[code] = { events: [], goals: [], diary: [], wishes: [], story: [], presence: {} };
   }
+  if (!global._hubs[code].story) global._hubs[code].story = [];
+  if (!global._hubs[code].presence) global._hubs[code].presence = {};
   return global._hubs[code];
 }
 
@@ -16,7 +18,26 @@ export default function handler(req, res) {
   const { code, collection } = req.query;
   if (!code) return res.status(400).json({ error: 'Hub code required' });
 
-  const allowed = ['events', 'goals', 'diary', 'wishes'];
+  const allowed = ['events', 'goals', 'diary', 'wishes', 'story'];
+
+  // PRESENCE — heartbeat ping system
+  if (collection === 'presence') {
+    const hub = getHub(code);
+    if (req.method === 'POST') {
+      const { name } = req.body || {};
+      if (!name) return res.status(400).json({ error: 'name required' });
+      hub.presence[name] = Date.now();
+      return res.status(200).json({ ok: true });
+    }
+    if (req.method === 'GET') {
+      const now = Date.now();
+      const online = {};
+      for (const [name, ts] of Object.entries(hub.presence)) {
+        online[name] = (now - ts) < 12000; // online if pinged in last 12s
+      }
+      return res.status(200).json({ data: online });
+    }
+  }
 
   if (req.method === 'GET') {
     const hub = getHub(code);
