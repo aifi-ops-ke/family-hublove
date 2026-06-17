@@ -1,0 +1,9 @@
+{
+  "name": "our-love-hub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Our Love Hub - real-time shared couple planning app",
+  "dependencies": {
+    "@upstash/redis": "^1.34.0"
+  }
+}
