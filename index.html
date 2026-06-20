@@ -493,11 +493,54 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
   border-radius:16px;padding:13px 15px;margin-bottom:13px;border:1px solid #b8ddf8;cursor:pointer}
 .partner-loc-banner h4{font-size:12px;font-weight:800;color:var(--blue2)}
 .partner-loc-banner p{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* ── GRATITUDE ── */
+.gratitude-card{background:linear-gradient(135deg,#fffaf0,#fff3d6);border-radius:18px;padding:15px;
+  margin-bottom:13px;border:1px solid #f5e0a8;box-shadow:var(--sh)}
+.gratitude-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.gratitude-header span{font-size:20px}
+.gratitude-header h4{font-size:13px;font-weight:800;color:#8a6b1f}
+.gratitude-input{background:#fffdf7;border-color:#f0dca0!important}
+.gratitude-btn{background:linear-gradient(135deg,#c98a0a,#e8b94a)!important;
+  box-shadow:0 6px 18px rgba(201,138,10,.3)!important}
+.gratitude-entry{background:rgba(255,255,255,.6);border-radius:12px;padding:10px 12px;margin-bottom:8px;
+  font-size:12px;color:#6b5418;line-height:1.5;border-left:3px solid #e8b94a}
+.gratitude-entry .g-who{font-size:10px;font-weight:800;color:#c98a0a;margin-bottom:2px}
+
+/* ── NUMBERS GRID ── */
+.numbers-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:13px}
+.numbers-grid .sc{padding:12px 8px}
+.numbers-grid .sn{font-size:20px}
+.numbers-grid .sl{font-size:9px;line-height:1.3}
+
+/* ── ENTRANCE ANIMATIONS ── */
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.scr.on > *{animation:fadeSlideUp .35s ease both}
+.scr.on > *:nth-child(1){animation-delay:0s}
+.scr.on > *:nth-child(2){animation-delay:.03s}
+.scr.on > *:nth-child(3){animation-delay:.06s}
+.scr.on > *:nth-child(4){animation-delay:.09s}
+.scr.on > *:nth-child(5){animation-delay:.12s}
+.scr.on > *:nth-child(6){animation-delay:.15s}
+.scr.on > *:nth-child(n+7){animation-delay:.18s}
+
+/* ── SPLASH SCREEN ── */
+#splash{position:fixed;inset:0;z-index:1000;background:linear-gradient(145deg,#1a2a4a 0%,#2d4a7a 35%,#4A6FA5 65%,#8aafd4 100%);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .6s ease;}
+#splash.hide{opacity:0;pointer-events:none}
+.splash-heart{font-size:64px;animation:splashPulse 1.4s ease-in-out infinite}
+@keyframes splashPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.splash-title{font-family:'Lora',serif;font-size:22px;font-weight:600;color:#fff;margin-top:16px;
+  opacity:0;animation:splashFadeIn .6s ease forwards .3s}
+.splash-sub{font-size:12px;color:rgba(255,255,255,.75);margin-top:6px;opacity:0;
+  animation:splashFadeIn .6s ease forwards .5s}
+@keyframes splashFadeIn{to{opacity:1}}
 </style>
 </head>
 <body>
 
 <!-- floating hearts background -->
+<div id="splash"><div class="splash-heart">💕</div><div class="splash-title">Our Love Hub</div><div class="splash-sub">Opening your shared space...</div></div>
 <div class="hearts" id="hearts"></div>
 
 <div id="setup">
@@ -581,14 +624,27 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
         <span class="notes-arrow">→</span>
       </div>
 
+      <div class="gratitude-card" id="gratitude-card">
+        <div class="gratitude-header"><span>🌻</span><h4>Today I'm grateful for...</h4></div>
+        <div id="gratitude-display"></div>
+        <textarea class="din gratitude-input" id="gratitude-input" placeholder="One small thing about them, today..." style="margin-top:0"></textarea>
+        <button class="sb gratitude-btn" onclick="saveGratitude()">🌻 Save Today's Gratitude</button>
+      </div>
+
       <div class="banner"><h4>💑 Next up for you two</h4><p id="next-up">Loading...</p></div>
       <div class="stitle" id="today-lbl">Today</div>
       <div id="today-evts"><div class="ld"><div class="sp"></div>Loading...</div></div>
       <div class="slbl">⏰ Coming up this week</div>
       <div id="reminders"></div>
-      <div class="stats">
+
+      <div class="slbl">💞 Our Numbers</div>
+      <div class="numbers-grid">
         <div class="sc"><div class="sn" id="st-ev" style="color:var(--blue)">—</div><div class="sl">Events this month</div></div>
         <div class="sc"><div class="sn" id="st-gl" style="color:var(--leaf)">—</div><div class="sl">Goals completed</div></div>
+        <div class="sc"><div class="sn" id="st-days" style="color:#c44a6e">—</div><div class="sl">Days together</div></div>
+        <div class="sc"><div class="sn" id="st-msgs" style="color:var(--lav)">—</div><div class="sl">Messages sent</div></div>
+        <div class="sc"><div class="sn" id="st-notes" style="color:#e8693f">—</div><div class="sl">Secret notes</div></div>
+        <div class="sc"><div class="sn" id="st-photos" style="color:var(--sun)">—</div><div class="sl">Memories pinned</div></div>
       </div>
     </div>
     <div id="s-chat" class="scr" style="padding:0;display:flex;flex-direction:column">
@@ -1018,7 +1074,7 @@ async function saveSettingsStorage(code, patch){
 
 let myName='',hubCode='',myRole='him';
 let curTab='home',curMo=new Date().getMonth(),curYr=new Date().getFullYear(),selDay=null;
-let hub={events:[],goals:[],diary:[],wishes:[],story:[],bucket:[],notes:[],moods:[],memories:[],settings:{},chat:[],location:{}};
+let hub={events:[],goals:[],diary:[],wishes:[],story:[],bucket:[],notes:[],moods:[],memories:[],settings:{},chat:[],location:{},gratitude:[]};
 let pollTimer=null,presenceTimer=null,presencePollTimer=null,presenceTimer2=null,lastHash='',appReady=false;
 let presenceState={};
 let locationWatchId=null,locationShareTimer=null,locationExpiresAt=null;
@@ -1044,9 +1100,15 @@ async function joinHub(){
 window.addEventListener('load',()=>{
   const n=localStorage.getItem('fh_n'),c=localStorage.getItem('fh_c'),r=localStorage.getItem('fh_r');
   if(n&&c){myName=n;hubCode=c;myRole=r||'him';launch();}
+  setTimeout(hideSplash,900);
 });
+function hideSplash(){
+  const splash=document.getElementById('splash');
+  if(splash){splash.classList.add('hide');setTimeout(()=>splash.remove(),700);}
+}
 
 function doLogout(){if(!confirm('Log out?'))return;clearInterval(pollTimer);clearInterval(presenceTimer);clearInterval(presencePollTimer);clearInterval(presenceTimer2);localStorage.clear();location.reload();}
+
 
 async function launch(){
   document.getElementById('setup').style.display='none';
@@ -1072,13 +1134,14 @@ async function loadAll(initial=false){
       detectAndNotifyChanges(j);
     }
     const newHash=JSON.stringify(j);
-    hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];hub.story=j.story||[];hub.bucket=j.bucket||[];hub.notes=j.notes||[];hub.moods=j.moods||[];hub.memories=j.memories||[];hub.settings=j.settings||{};hub.chat=j.chat||[];
+    hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];hub.story=j.story||[];hub.bucket=j.bucket||[];hub.notes=j.notes||[];hub.moods=j.moods||[];hub.memories=j.memories||[];hub.settings=j.settings||{};hub.chat=j.chat||[];hub.gratitude=j.gratitude||[];
     if(initial){await seedAll();}
     lastHash=newHash;setDot('live');appReady=true;renderCur();
-    if(curTab==='home'){renderMoods();renderNotes();renderAnniv();}
+    if(curTab==='home'){renderMoods();renderNotes();renderAnniv();renderGratitude();renderNumbers();}
     if(curTab==='chat'){renderChat();}
   }catch(e){setDot('off');if(!appReady)toast('⚠️ Connection issue — retrying...');}
 }
+
 
 function detectAndNotifyChanges(incoming){
   const checks=[
@@ -1280,6 +1343,8 @@ function renderHome(){
   renderMoods();
   renderNotes();
   renderAnniv();
+  renderGratitude();
+  renderNumbers();
   const td=ds(new Date());
   const te=hub.events.filter(e=>e.date===td);
   document.getElementById('today-evts').innerHTML=te.length?te.map(evH).join(''):`<div class="empty"><i>🌤️</i><p>Nothing today — enjoy the free time!</p></div>`;
@@ -2872,6 +2937,65 @@ function renderMoods(){
       noteEl.textContent='No mood yet';
     }
   });
+}
+
+// ═══════════════════════════════════════════════
+//  DAILY GRATITUDE
+// ═══════════════════════════════════════════════
+function renderGratitude(){
+  const today=ds(new Date());
+  const entries=(hub.gratitude||[]).filter(g=>g.date===today);
+  const mine=entries.find(g=>g.role===myRole);
+  const display=document.getElementById('gratitude-display');
+  const input=document.getElementById('gratitude-input');
+  let html='';
+  entries.forEach(g=>{
+    if(g.role!==myRole){
+      html+=`<div class="gratitude-entry"><div class="g-who">${g.name} is grateful for...</div>${g.text}</div>`;
+    }
+  });
+  display.innerHTML=html;
+  if(mine){
+    input.value=mine.text;
+    input.disabled=true;
+    document.querySelector('.gratitude-btn').textContent='🌻 Saved for today';
+  }else{
+    input.disabled=false;
+    if(!input.value)input.value='';
+    document.querySelector('.gratitude-btn').textContent='🌻 Save Today\'s Gratitude';
+  }
+}
+async function saveGratitude(){
+  const today=ds(new Date());
+  const existing=(hub.gratitude||[]).find(g=>g.role===myRole&&g.date===today);
+  if(existing){toast('Already saved for today 🌻');return;}
+  const text=document.getElementById('gratitude-input').value.trim();
+  if(!text){toast('✏️ Write something first!');return;}
+  hub.gratitude=hub.gratitude||[];
+  hub.gratitude.push({id:Date.now(),role:myRole,name:myName,date:today,text});
+  await push('gratitude');
+  toast('🌻 Saved! Your partner will see it too.');
+  renderGratitude();
+}
+
+// ═══════════════════════════════════════════════
+//  OUR NUMBERS
+// ═══════════════════════════════════════════════
+function renderNumbers(){
+  const mp=`${new Date().getFullYear()}-${String(new Date().getMonth()+1).padStart(2,'0')}`;
+  document.getElementById('st-ev').textContent=hub.events.filter(e=>e.date.startsWith(mp)).length;
+  document.getElementById('st-gl').textContent=hub.goals.filter(g=>g.done).length;
+  const s=hub.settings||{};
+  if(s.annivDate){
+    const target=new Date(s.annivDate+'T00:00:00');
+    const days=Math.max(0,Math.floor((new Date()-target)/(1000*60*60*24)));
+    document.getElementById('st-days').textContent=days;
+  }else{
+    document.getElementById('st-days').textContent='—';
+  }
+  document.getElementById('st-msgs').textContent=(hub.chat||[]).length;
+  document.getElementById('st-notes').textContent=(hub.notes||[]).length;
+  document.getElementById('st-photos').textContent=(hub.memories||[]).length;
 }
 
 // ═══════════════════════════════════════════════

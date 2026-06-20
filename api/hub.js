@@ -12,7 +12,7 @@ function defaultHub() {
     events: [], goals: [], diary: [], wishes: [], story: [], bucket: [],
     notes: [], moods: [], memories: [], settings: {}, presence: {},
     streak: { count: 0, lastDate: null, openedToday: {} },
-    chat: [], location: {}
+    chat: [], location: {}, gratitude: []
   };
 }
 
@@ -97,7 +97,7 @@ export default async function handler(req, res) {
   const { code, collection } = req.query;
   if (!code) return res.status(400).json({ error: 'Hub code required' });
 
-  const allowed = ['events', 'goals', 'diary', 'wishes', 'story', 'bucket', 'notes', 'moods', 'memories', 'chat'];
+  const allowed = ['events', 'goals', 'diary', 'wishes', 'story', 'bucket', 'notes', 'moods', 'memories', 'chat', 'gratitude'];
 
   try {
     if (collection === 'settings') {
