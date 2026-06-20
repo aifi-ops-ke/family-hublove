@@ -426,8 +426,9 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
 /* ── NEW GAME EXTRAS ── */
 .wheel-wrap{display:flex;flex-direction:column;align-items:center;padding:10px 0}
 .wheel{width:200px;height:200px;border-radius:50%;position:relative;margin-bottom:18px;
-  background:conic-gradient(#4A6FA5 0deg 60deg,#c44a6e 60deg 120deg,#4CAF82 120deg 180deg,
-  #9B7FD4 180deg 240deg,#F5A623 240deg 300deg,#6B93C9 300deg 360deg);
+  background:conic-gradient(#4A6FA5 0deg 36deg,#c44a6e 36deg 72deg,#4CAF82 72deg 108deg,
+  #9B7FD4 108deg 144deg,#F5A623 144deg 180deg,#6B93C9 180deg 216deg,#E8697A 216deg 252deg,
+  #3D5A87 252deg 288deg,#7a2d4a 288deg 324deg,#1d9e75 324deg 360deg);
   transition:transform 3s cubic-bezier(.17,.67,.21,1.0);box-shadow:0 8px 30px rgba(0,0,0,.25)}
 .wheel-pointer{position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:24px;z-index:5}
 .wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;
@@ -760,6 +761,58 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
           <button class="sb" onclick="spinWheel()" style="max-width:200px">🎡 Spin!</button>
         </div>
         <div class="prompt-card sweet" id="wheel-card"><div class="prompt-tag">Your Activity</div><div class="prompt-text" id="wheel-text">Spin to find out what you're doing tonight!</div></div>
+      </div>
+
+      <div id="game-thisthat" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>💭 This or That</h3><p>Quick picks, no overthinking</p></div></div>
+        <div class="prompt-card deep" id="tt-card"><div class="prompt-tag">Round <span id="tt-round">1</span></div><div class="prompt-text" id="tt-a">Tap below to start</div><div style="font-size:11px;opacity:.6;margin:8px 0">— or —</div><div class="prompt-text" id="tt-b" style="display:none"></div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextThisThat()">⚡ Next Pair</button></div>
+      </div>
+
+      <div id="game-storybuilder" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🃏 Story Builder</h3><p>Take turns, one line each, build a tale</p></div></div>
+        <div class="card">
+          <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px">Starting line:</div>
+          <div class="prompt-card sweet" style="min-height:auto;padding:18px" id="sb-starter">Tap below to begin a new story</div>
+        </div>
+        <div class="card">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px" id="sb-turn">Your turn — add the next line</div>
+          <textarea class="din" id="sb-input" placeholder="Continue the story..." style="min-height:60px"></textarea>
+          <button class="sb" onclick="addStoryLine()" style="margin-top:9px">➕ Add Line</button>
+        </div>
+        <div class="slbl">📖 Your Story So Far</div>
+        <div id="sb-lines"></div>
+        <div class="game-controls" style="margin-top:10px">
+          <button class="game-btn gbtn-secondary" onclick="newStoryBuilder()">🔄 Start New Story</button>
+          <button class="game-btn gbtn-primary" onclick="saveStoryBuilderToStory()" style="background:linear-gradient(135deg,#c44a6e,#e88aa8)">💞 Save to Our Story</button>
+        </div>
+      </div>
+
+      <div id="game-guessyear" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🎯 Guess The Year</h3><p>Test your memory of us</p></div></div>
+        <div class="card" style="text-align:center">
+          <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:10px">One of you picks a real shared memory and says it out loud. The other guesses the year it happened!</div>
+          <input class="qi" id="gy-memory" placeholder="e.g. 'The trip to the coast'" style="width:100%;margin-bottom:10px;text-align:center"/>
+          <input class="qi" id="gy-guess" type="number" placeholder="Guessed year" style="width:100%;margin-bottom:10px;text-align:center"/>
+          <input class="qi" id="gy-actual" type="number" placeholder="Actual year" style="width:100%;margin-bottom:14px;text-align:center"/>
+          <button class="sb" onclick="checkYearGuess()">✅ Check The Guess</button>
+        </div>
+        <div id="gy-result"></div>
+        <div class="score-row" style="margin-top:14px">
+          <div class="score-box"><h5>CORRECT</h5><div class="score-val" id="gy-correct">0</div></div>
+          <div class="score-box"><h5>ROUNDS</h5><div class="score-val" id="gy-rounds">0</div></div>
+        </div>
+      </div>
+
+      <div id="game-trivia" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🏆 Couple Trivia</h3><p>Race to answer first</p></div></div>
+        <div class="score-row">
+          <div class="score-box"><h5>SCORE</h5><div class="score-val" id="triv-score">0</div></div>
+          <div class="score-box"><h5>QUESTION</h5><div class="score-val" id="triv-num">1</div></div>
+        </div>
+        <div class="prompt-card deep" id="triv-card"><div class="prompt-tag">Trivia Question</div><div class="prompt-text" id="triv-q">Tap below to begin</div></div>
+        <div id="triv-options"></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextTrivia()">➡️ Next Question</button></div>
       </div>
     </div>
     <div id="s-wishlist" class="scr">
@@ -1297,6 +1350,10 @@ const GAMES=[
   {id:'challenge',icon:'🎯',name:'Daily Challenge',desc:'One small thing daily',badge:'deep'},
   {id:'finish',icon:'🗣️',name:'Finish The Sentence',desc:'Say it out loud',badge:'deep'},
   {id:'wheel',icon:'🎡',name:'Spin The Wheel',desc:'Random date night picker',badge:'fun'},
+  {id:'thisthat',icon:'💭',name:'This or That',desc:'Quick-fire preferences',badge:'fun'},
+  {id:'storybuilder',icon:'🃏',name:'Story Builder',desc:'Build a silly tale together',badge:'sweet'},
+  {id:'guessyear',icon:'🎯',name:'Guess The Year',desc:'How well do you remember us?',badge:'deep'},
+  {id:'trivia',icon:'🏆',name:'Couple Trivia',desc:'Race to the right answer',badge:'fun'},
 ];
 
 function renderGameMenu(){
@@ -1328,6 +1385,18 @@ const TRUTHS=[
   "What's a fear you have about our relationship, if any?",
   "What's something I do that makes you feel most loved?",
   "If you could relive one day with me, which would it be?",
+  "What's something you used to think about love that I changed?",
+  "What's a habit of mine you had to get used to?",
+  "What's the most nervous you've ever been around me?",
+  "What's something you wish I asked you about more?",
+  "What's a moment you felt truly proud to call me yours?",
+  "What's something you've forgiven me for that still mattered?",
+  "What's a dream you have that you haven't told me fully about?",
+  "What's the silliest thing you've ever done because of me?",
+  "What's something about our relationship you'd never change?",
+  "What's a time you felt most understood by me?",
+  "What's one thing you think I do better than I realize?",
+  "What's a worry about the future you carry quietly?",
 ];
 const DARES=[
   "Give your partner a 30-second compliment with no pauses.",
@@ -1340,6 +1409,16 @@ const DARES=[
   "Slow dance for 20 seconds, no music needed.",
   "Whisper the sweetest thing you can think of in their ear.",
   "Hold eye contact for 30 seconds without laughing.",
+  "Describe your partner like a movie trailer narrator.",
+  "Recreate the face you made the day you met.",
+  "Give your partner a nickname right now and use it for the next hour.",
+  "Act out your favorite memory together in 15 seconds.",
+  "Tell your partner 3 things you're grateful for about them, no repeats.",
+  "Draw your partner's face with your eyes closed.",
+  "Do your partner's signature laugh as best you can.",
+  "Plan a fake surprise date out loud, on the spot.",
+  "Text your partner a poem about them, even a bad one.",
+  "Give your partner a 10-second forehead kiss.",
 ];
 function playTD(type){
   const arr=type==='truth'?TRUTHS:DARES;
@@ -1366,6 +1445,16 @@ const COUPLE_Q=[
   "What's something you want more of in our relationship?",
   "What's a memory from your childhood you want me to know about?",
   "What's the bravest thing you've ever done?",
+  "What's a value you hope we always agree on?",
+  "What's something about money you wish we talked about more?",
+  "What's a way I support you that you don't say thank you for enough?",
+  "What's something you want to learn together?",
+  "How do you want to be celebrated on your birthday?",
+  "What's a fight we had that taught you something important?",
+  "What's a part of your daily routine you wish I understood better?",
+  "What does feeling 'safe' with someone mean to you?",
+  "What's something about your family you want me to understand more?",
+  "What's a small ritual you'd want us to keep forever?",
 ];
 
 // 3. SPICY QUESTIONS
@@ -1382,6 +1471,12 @@ const SPICY_Q=[
   "What's your favorite way for me to show affection physically?",
   "Describe the perfect romantic evening, no holding back.",
   "What's something I wear (or don't) that you love?",
+  "What's the most spontaneous thing you wish we'd do together?",
+  "What's a compliment about my body you've never said out loud?",
+  "What's your favorite memory of us being close?",
+  "What's something you think about when you miss me?",
+  "What's a song that makes you think of us, intimately?",
+  "What's one thing you'd want to be braver about asking me for?",
 ];
 
 // 4. WOULD YOU RATHER
@@ -1398,6 +1493,14 @@ const WYR_Q=[
   "Would you rather have a pet dog or a pet cat together?",
   "Would you rather I remember every anniversary perfectly, or surprise you randomly with gifts?",
   "Would you rather have unlimited travel but a small house, or your dream house but rarely travel?",
+  "Would you rather we always know exactly what we want, or always discover it together?",
+  "Would you rather I cook badly but try every week, or never try and order in?",
+  "Would you rather have one long honeymoon now, or many small trips over years?",
+  "Would you rather we live near your family or mine?",
+  "Would you rather I be brutally punctual or relaxed about time?",
+  "Would you rather have separate hobbies or always do the same ones together?",
+  "Would you rather we argue it out immediately or take space first?",
+  "Would you rather have a loud, big family gathering life or a quiet, small one?",
 ];
 
 let cqI=0;
@@ -1476,6 +1579,14 @@ const QUIZ_PROMPTS=[
   "Ask: What's my love language?",
   "Ask: What's something that always makes me laugh?",
   "Ask: What's my favorite thing about our relationship?",
+  "Ask: What's my middle name (or a nickname I've had)?",
+  "Ask: What's my biggest pet peeve?",
+  "Ask: What's the last thing I told you I was excited about?",
+  "Ask: What side of the bed do I prefer?",
+  "Ask: What's my favorite season and why?",
+  "Ask: What's something I'm secretly insecure about?",
+  "Ask: What's my favorite way to spend a free afternoon?",
+  "Ask: What's a song I've said I love recently?",
 ];
 let quizScore=0,quizRound=1;
 function nextQuiz(){
@@ -1493,6 +1604,12 @@ const DICE_PROMPTS=[
   "Remember a time your partner made you feel really proud.",
   "Share a memory of a trip or outing that you loved.",
   "Talk about a moment you knew this was something real.",
+  "Describe the first gift you ever gave each other.",
+  "Talk about a time you laughed so hard together you cried.",
+  "Remember the most nervous you were before a big moment together.",
+  "Talk about a time you two solved a problem really well as a team.",
+  "Describe a place you'd love to revisit together someday.",
+  "Talk about the most spontaneous thing you've ever done together.",
 ];
 function rollDice(){
   const die=document.getElementById('die1');
@@ -1539,6 +1656,10 @@ const LETTER_PROMPTS=[
   "Describe them as if introducing them to a stranger who'll never meet them.",
   "Write about what 'us' means to you.",
   "Tell them what you'd want them to know if words ran out tomorrow.",
+  "Write about the version of yourself they helped you become.",
+  "Describe the sound of their laugh in words.",
+  "Write about a hard day they made easier just by being there.",
+  "Tell them what you hope for the two of you in ten years.",
 ];
 function saveLetterToStory(){
   const text=document.getElementById('letter-text-area').value.trim();
@@ -1561,6 +1682,9 @@ const COMP_PROMPTS=[
   "One thing I admire about you is...",
   "You're incredibly good at...",
   "I feel so lucky because you...",
+  "Something that makes you uniquely you is...",
+  "You handle hard moments by...",
+  "The way you treat others shows me...",
 ];
 let compTimerInterval=null,compSeconds=60;
 function startCompliment(){
@@ -1596,6 +1720,12 @@ const HOROSCOPES=[
   "A great day to revisit an old memory together and laugh about it.",
   "Today, compliment something you don't usually mention. Watch their face light up.",
   "The universe says: put the phones down for one full hour today, just the two of you.",
+  "A misunderstanding may surface today — meet it with curiosity, not defense.",
+  "Today rewards small acts of service more than big gestures.",
+  "Your partner may need quiet company more than conversation today.",
+  "The stars favor laughter today — find a reason to be silly together.",
+  "A good day to say the thing you've been holding back.",
+  "Today, notice one thing you're grateful for about them out loud.",
 ];
 function newHoroscope(){
   document.getElementById('horo-text').textContent=nextFromDeck('horo', HOROSCOPES);
@@ -1615,6 +1745,10 @@ const CHALLENGES=[
   "Recreate your first date in some small way today.",
   "Tell them your favorite memory of the week so far.",
   "Hold hands for at least 5 minutes today without letting go.",
+  "Send them a photo from your day with one line about why it made you think of them.",
+  "Ask what they need from you today, and actually do it.",
+  "Tell them one way they've grown that you've noticed.",
+  "Do one small chore for them without being asked.",
 ];
 let chalCount=0;
 function newChallenge(){
@@ -1641,6 +1775,12 @@ const FINISH_SENTENCES=[
   "If today was our last day together, I would want to...",
   "The thing that makes our relationship strong is...",
   "I'm most thankful for you when...",
+  "The first thing I think of when I wake up next to you is...",
+  "If our love had a soundtrack, it would sound like...",
+  "The bravest thing love has ever asked of me is...",
+  "I feel most like myself with you when...",
+  "The thing I never want to take for granted is...",
+  "Ten years from now, I hope we...",
 ];
 function nextFinish(){
   document.getElementById('finish-text').textContent=nextFromDeck('finish', FINISH_SENTENCES);
@@ -1654,6 +1794,10 @@ const WHEEL_ACTIVITIES=[
   "Have a mini dance party at home",
   "Write each other a short letter",
   "Try a new restaurant or cuisine",
+  "Plan next month's date night together",
+  "Take turns picking 3 songs and just listen",
+  "Do a 10-minute stretch or workout together",
+  "Look through old photos and pick a favorite",
 ];
 let wheelSpinning=false;
 function spinWheel(){
@@ -1670,6 +1814,141 @@ function spinWheel(){
     wheelSpinning=false;
   },3000);
 }
+
+// ═══════════════════════════════════════════════
+//  4 MORE GAMES
+// ═══════════════════════════════════════════════
+
+// 16. THIS OR THAT
+const THIS_OR_THAT=[
+  ["Movie night in","Date night out"],
+  ["Sweet messages","Funny messages"],
+  ["Mountains","Beach"],
+  ["Save for a trip","Spend on today"],
+  ["Morning person","Night person"],
+  ["Plan everything","Go with the flow"],
+  ["Big group hangouts","Just us two"],
+  ["Coffee dates","Tea dates"],
+  ["Texting all day","One deep call"],
+  ["Cook together","Order in together"],
+  ["Surprise gifts","Planned gifts"],
+  ["Slow mornings","Early adventures"],
+  ["Comfort food","Trying new food"],
+  ["Long term plans","Living in the moment"],
+  ["Quiet apologies","Big gestures"],
+  ["Phone calls","Voice notes"],
+];
+let ttRound=0;
+function nextThisThat(){
+  ttRound++;
+  document.getElementById('tt-round').textContent=ttRound;
+  const pair=nextFromDeck('thisthat', THIS_OR_THAT);
+  document.getElementById('tt-a').textContent=pair[0];
+  document.getElementById('tt-b').textContent=pair[1];
+  document.getElementById('tt-b').style.display='block';
+}
+
+// 17. STORY BUILDER
+const STORY_STARTERS=[
+  "Once upon a time, the two of us decided to open a tiny café that only served breakfast at midnight...",
+  "It started as a normal Tuesday, until we found a mysterious key under our doormat...",
+  "We woke up one morning to find our whole apartment had turned into a tiny boat...",
+  "A talking cat showed up at our door claiming to be our future pet...",
+  "We won a contest neither of us remembered entering: a free trip to anywhere, starting tomorrow...",
+  "Our neighbor turned out to be a retired superhero who needed our help just once...",
+  "We found an old letter addressed to us, dated ten years in the future...",
+];
+let sbLines=[];
+function newStoryBuilder(){
+  const starter=nextFromDeck('sbstarter', STORY_STARTERS);
+  sbLines=[starter];
+  document.getElementById('sb-starter').textContent=starter;
+  document.getElementById('sb-input').value='';
+  renderStoryBuilderLines();
+  toast('🃏 New story started!');
+}
+function addStoryLine(){
+  if(sbLines.length===0){toast('🃏 Start a new story first!');return;}
+  const line=document.getElementById('sb-input').value.trim();
+  if(!line){toast('✏️ Write the next line first!');return;}
+  sbLines.push(line);
+  document.getElementById('sb-input').value='';
+  renderStoryBuilderLines();
+  const turnEl=document.getElementById('sb-turn');
+  turnEl.textContent = sbLines.length%2===0 ? "Your turn — add the next line" : "Partner's turn — add the next line";
+}
+function renderStoryBuilderLines(){
+  document.getElementById('sb-lines').innerHTML=sbLines.slice(1).length
+    ? sbLines.slice(1).map((l,i)=>`<div class="card" style="padding:11px 14px;font-size:12px;color:#555;line-height:1.6">${l}</div>`).join('')
+    : `<div class="empty"><i>🃏</i><p>Add the first line to continue the story!</p></div>`;
+}
+function saveStoryBuilderToStory(){
+  if(sbLines.length<2){toast('🃏 Write a bit more of the story first!');return;}
+  const fullText=sbLines.join(' ');
+  hub.story.push({id:Date.now(),title:'🃏 A Story We Made Up',date:ds(new Date()),text:fullText,by:myName});
+  push('story');
+  toast('💞 Saved to Our Story!');
+}
+
+// 18. GUESS THE YEAR
+let gyCorrect=0,gyRounds=0;
+function checkYearGuess(){
+  const guess=parseInt(document.getElementById('gy-guess').value);
+  const actual=parseInt(document.getElementById('gy-actual').value);
+  if(!guess||!actual){toast('⚠️ Fill in both years');return;}
+  gyRounds++;
+  const diff=Math.abs(guess-actual);
+  const correct=diff===0;
+  if(correct)gyCorrect++;
+  document.getElementById('gy-correct').textContent=gyCorrect;
+  document.getElementById('gy-rounds').textContent=gyRounds;
+  document.getElementById('gy-result').innerHTML=`<div class="card" style="text-align:center;border-left:4px solid var(--${correct?'leaf':'rose'})">
+    <div style="font-size:24px">${correct?'🎉':'😅'}</div>
+    <div style="font-size:13px;font-weight:800;color:var(--blue2);margin-top:6px">${correct?'Spot on!':`Off by ${diff} year${diff!==1?'s':''}`}</div>
+  </div>`;
+  document.getElementById('gy-guess').value='';
+  document.getElementById('gy-actual').value='';
+  document.getElementById('gy-memory').value='';
+}
+
+// 19. COUPLE TRIVIA
+const TRIVIA_QUESTIONS=[
+  {q:"What's generally considered the traditional 1st wedding anniversary gift?",opts:["Paper","Gold","Wood","Silver"],answer:0},
+  {q:"What flower is traditionally associated with romantic love?",opts:["Tulip","Rose","Daisy","Lily"],answer:1},
+  {q:"In numerology, which number is often linked to partnership and union?",opts:["1","7","2","9"],answer:2},
+  {q:"What's the 'love hormone' often released during bonding moments?",opts:["Adrenaline","Oxytocin","Cortisol","Melatonin"],answer:1},
+  {q:"Which language gave us the word 'romance'?",opts:["Latin/French roots","German","Greek","Japanese"],answer:0},
+  {q:"What's commonly called the language of love in pop culture?",opts:["Math","Music","Silence","Color"],answer:1},
+  {q:"Which finger is traditionally used for an engagement ring in many cultures?",opts:["Thumb","Index","Ring finger","Pinky"],answer:2},
+  {q:"What's a 'love language' framework popularized by a relationship author?",opts:["5 Love Languages","3 Bonds","7 Habits","Color Code"],answer:0},
+];
+let trivScore=0,trivNum=1,trivAnswered=false;
+function nextTrivia(){
+  trivAnswered=false;
+  trivNum++;
+  document.getElementById('triv-num').textContent=trivNum;
+  const q=nextFromDeck('trivia', TRIVIA_QUESTIONS);
+  document.getElementById('triv-q').textContent=q.q;
+  document.getElementById('triv-options').innerHTML=q.opts.map((o,i)=>
+    `<div class="quiz-option" onclick="answerTrivia(this,${i},${q.answer})">${o}</div>`
+  ).join('');
+}
+function answerTrivia(el,picked,answer){
+  if(trivAnswered)return;
+  trivAnswered=true;
+  document.querySelectorAll('#triv-options .quiz-option').forEach((o,i)=>{
+    if(i===answer)o.classList.add('correct');
+  });
+  if(picked===answer){
+    trivScore++;
+    document.getElementById('triv-score').textContent=trivScore;
+    toast('🎉 Correct!');
+  }else{
+    el.classList.add('wrong');
+    toast('Close! Check the highlighted answer.');
+  }
+}
+
 
 // ═══════════════════════════════════════════════
 //  STREAK TRACKER
