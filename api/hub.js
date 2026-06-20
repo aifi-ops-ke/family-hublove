@@ -1,33 +1,79 @@
-import { Redis } from '@upstash/redis';
+// api/hub.js — persists all hub data inside this very GitHub repo
+// (data/store.json), using the GitHub Contents API as the database.
+// No external service, no dashboard setup, no tokens to copy.
 
-// Vercel's Redis integration auto-injects these env vars once you add
-// the "Redis" storage integration from the Storage tab in your project.
-let redis = null;
-let redisError = null;
-try {
-  redis = Redis.fromEnv();
-} catch (e) {
-  redisError = e.message;
+const GITHUB_TOKEN = process.env.GH_STORE_TOKEN;
+const REPO = 'aifi-ops-ke/family-hublove';
+const FILE_PATH = 'data/store.json';
+const API_BASE = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
+
+function defaultHub() {
+  return {
+    events: [], goals: [], diary: [], wishes: [], story: [], bucket: [],
+    notes: [], moods: [], memories: [], settings: {}, presence: {},
+    streak: { count: 0, lastDate: null, openedToday: {} }
+  };
 }
 
-const DEFAULTS = {
-  events: [], goals: [], diary: [], wishes: [], story: [], bucket: [],
-  notes: [], moods: [], memories: [], settings: {}, presence: {},
-  streak: { count: 0, lastDate: null, openedToday: {} }
-};
-
-function key(code, collection) {
-  return `hub:${code}:${collection}`;
+async function ghFetch(url, options = {}) {
+  return fetch(url, {
+    ...options,
+    headers: {
+      'Authorization': `token ${GITHUB_TOKEN}`,
+      'Accept': 'application/vnd.github+json',
+      'User-Agent': 'our-love-hub',
+      ...(options.headers || {})
+    }
+  });
 }
 
-async function getCollection(code, collection) {
-  const data = await redis.get(key(code, collection));
-  if (data !== null && data !== undefined) return data;
-  return DEFAULTS[collection] ?? [];
+async function readStore() {
+  const res = await ghFetch(API_BASE);
+  if (!res.ok) {
+    if (res.status === 404) return { content: {}, sha: null };
+    throw new Error(`GitHub read failed: ${res.status}`);
+  }
+  const json = await res.json();
+  const decoded = Buffer.from(json.content, 'base64').toString('utf-8');
+  let content;
+  try { content = JSON.parse(decoded); } catch (e) { content = {}; }
+  return { content, sha: json.sha };
 }
 
-async function setCollection(code, collection, data) {
-  await redis.set(key(code, collection), data);
+async function writeStore(content, sha) {
+  const body = {
+    message: 'Update hub data',
+    content: Buffer.from(JSON.stringify(content)).toString('base64'),
+    sha: sha || undefined
+  };
+  const res = await ghFetch(API_BASE, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`GitHub write failed: ${res.status} ${errText}`);
+  }
+  return res.json();
+}
+
+// Simple retry wrapper for write conflicts (sha mismatch when two requests
+// land close together) — re-reads latest sha and retries once.
+async function withHub(code, mutator) {
+  let { content: store, sha } = await readStore();
+  if (!store[code]) store[code] = defaultHub();
+  const hub = store[code];
+  const result = mutator(hub);
+  try {
+    await writeStore(store, sha);
+  } catch (e) {
+    // conflict: re-read fresh sha and retry once
+    const fresh = await readStore();
+    fresh.content[code] = hub;
+    await writeStore(fresh.content, fresh.sha);
+  }
+  return result !== undefined ? result : hub;
 }
 
 function todayStr() {
@@ -45,97 +91,79 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  if (!redis) {
-    return res.status(503).json({
-      error: 'Database not connected yet',
-      detail: 'Go to your Vercel project → Storage tab → Connect a Redis database, then redeploy.',
-      raw: redisError
-    });
-  }
-
   const { code, collection } = req.query;
   if (!code) return res.status(400).json({ error: 'Hub code required' });
 
   const allowed = ['events', 'goals', 'diary', 'wishes', 'story', 'bucket', 'notes', 'moods', 'memories'];
 
   try {
-    // SETTINGS — anniversary date, theme (object, not array)
     if (collection === 'settings') {
       if (req.method === 'POST') {
-        const current = await getCollection(code, 'settings');
-        const updated = { ...current, ...(req.body || {}) };
-        await setCollection(code, 'settings', updated);
+        const updated = await withHub(code, (hub) => {
+          hub.settings = { ...hub.settings, ...(req.body || {}) };
+          return hub.settings;
+        });
         return res.status(200).json({ ok: true, settings: updated });
       }
       if (req.method === 'GET') {
-        const data = await getCollection(code, 'settings');
-        return res.status(200).json({ data });
+        const { content } = await readStore();
+        const hub = content[code] || defaultHub();
+        return res.status(200).json({ data: hub.settings || {} });
       }
     }
 
-    // PRESENCE — heartbeat ping
     if (collection === 'presence') {
       if (req.method === 'POST') {
         const { name } = req.body || {};
         if (!name) return res.status(400).json({ error: 'name required' });
-        const presence = await getCollection(code, 'presence');
-        presence[name] = Date.now();
-        await setCollection(code, 'presence', presence);
+        await withHub(code, (hub) => { hub.presence[name] = Date.now(); });
         return res.status(200).json({ ok: true });
       }
       if (req.method === 'GET') {
-        const presence = await getCollection(code, 'presence');
+        const { content } = await readStore();
+        const hub = content[code] || defaultHub();
         const now = Date.now();
         const online = {};
-        for (const [name, ts] of Object.entries(presence)) {
-          online[name] = (now - ts) < 12000;
+        for (const [name, ts] of Object.entries(hub.presence || {})) {
+          online[name] = (now - ts) < 20000;
         }
         return res.status(200).json({ data: online });
       }
     }
 
-    // STREAK — relationship streak tracker
     if (collection === 'streak') {
       if (req.method === 'POST') {
         const { name } = req.body || {};
-        const streak = await getCollection(code, 'streak');
-        const today = todayStr();
-        const yesterday = yesterdayStr();
-        if (!streak.openedToday) streak.openedToday = {};
-        if (streak.lastDate !== today) {
-          if (streak.lastDate === yesterday) {
-            streak.count += 1;
-          } else if (streak.lastDate !== null) {
-            streak.count = 1;
-          } else {
-            streak.count = 1;
+        const streak = await withHub(code, (hub) => {
+          const today = todayStr();
+          const yesterday = yesterdayStr();
+          if (!hub.streak.openedToday) hub.streak.openedToday = {};
+          if (hub.streak.lastDate !== today) {
+            if (hub.streak.lastDate === yesterday) hub.streak.count += 1;
+            else hub.streak.count = 1;
+            hub.streak.lastDate = today;
+            hub.streak.openedToday = {};
           }
-          streak.lastDate = today;
-          streak.openedToday = {};
-        }
-        if (name) streak.openedToday[name] = true;
-        await setCollection(code, 'streak', streak);
+          if (name) hub.streak.openedToday[name] = true;
+          return hub.streak;
+        });
         return res.status(200).json({ ok: true, streak });
       }
       if (req.method === 'GET') {
-        const streak = await getCollection(code, 'streak');
-        return res.status(200).json({ data: streak });
+        const { content } = await readStore();
+        const hub = content[code] || defaultHub();
+        return res.status(200).json({ data: hub.streak });
       }
     }
 
-    // STANDARD COLLECTIONS
     if (req.method === 'GET') {
+      const { content } = await readStore();
+      const hub = content[code] || defaultHub();
       if (collection) {
         if (!allowed.includes(collection)) return res.status(400).json({ error: 'Bad collection' });
-        const data = await getCollection(code, collection);
-        return res.status(200).json({ data });
+        return res.status(200).json({ data: hub[collection] });
       }
-      // full hub fetch
-      const result = {};
-      for (const c of allowed) {
-        result[c] = await getCollection(code, c);
-      }
-      return res.status(200).json(result);
+      return res.status(200).json(hub);
     }
 
     if (req.method === 'POST') {
@@ -146,7 +174,7 @@ export default async function handler(req, res) {
       if (!body || !Array.isArray(body.data)) {
         return res.status(400).json({ error: 'body.data must be an array' });
       }
-      await setCollection(code, collection, body.data);
+      await withHub(code, (hub) => { hub[collection] = body.data; });
       return res.status(200).json({ ok: true });
     }
 

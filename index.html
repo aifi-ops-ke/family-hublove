@@ -851,6 +851,48 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
 })();
 
 const API='/api/hub';
+
+async function fetchFullHub(code){
+  const r=await fetch(`${API}?code=${encodeURIComponent(code)}`);
+  if(!r.ok)throw new Error('fetch failed: '+r.status);
+  return await r.json();
+}
+
+async function pushCollection(code, collection, data){
+  const r=await fetch(`${API}?code=${encodeURIComponent(code)}&collection=${collection}`,{
+    method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({data})
+  });
+  return r.ok;
+}
+
+async function pingPresenceStorage(code, role){
+  await fetch(`${API}?code=${encodeURIComponent(code)}&collection=presence`,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:role})
+  });
+}
+async function getPresenceStorage(code){
+  const r=await fetch(`${API}?code=${encodeURIComponent(code)}&collection=presence`);
+  const j=await r.json();
+  return j.data||{};
+}
+async function pingStreakStorage(code, role){
+  const r=await fetch(`${API}?code=${encodeURIComponent(code)}&collection=streak`,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:role})
+  });
+  const j=await r.json();
+  return j.streak;
+}
+async function saveSettingsStorage(code, patch){
+  const r=await fetch(`${API}?code=${encodeURIComponent(code)}&collection=settings`,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(patch)
+  });
+  const j=await r.json();
+  return j.settings;
+}
+
 let myName='',hubCode='',myRole='him';
 let curTab='home',curMo=new Date().getMonth(),curYr=new Date().getFullYear(),selDay=null;
 let hub={events:[],goals:[],diary:[],wishes:[],story:[],bucket:[],notes:[],moods:[],memories:[],settings:{}};
@@ -898,15 +940,7 @@ async function launch(){
 
 async function loadAll(initial=false){
   try{
-    const r=await fetch(`${API}?code=${encodeURIComponent(hubCode)}`);
-    if(r.status===503){
-      setDot('off');
-      document.getElementById('stxt').textContent='⚠️ DB not connected';
-      if(initial)toast('⚠️ Database not connected yet — see setup instructions');
-      return;
-    }
-    if(!r.ok)throw new Error('fetch failed');
-    const j=await r.json();
+    const j=await fetchFullHub(hubCode);
     const newHash=JSON.stringify(j);
     if(!initial&&lastHash&&newHash!==lastHash){notify('💕 Partner just updated the hub!');}
     hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];hub.story=j.story||[];hub.bucket=j.bucket||[];hub.notes=j.notes||[];hub.moods=j.moods||[];hub.memories=j.memories||[];hub.settings=j.settings||{};
@@ -918,11 +952,10 @@ async function loadAll(initial=false){
 
 
 
+
 async function push(col){
   try{
-    await fetch(`${API}?code=${encodeURIComponent(hubCode)}&collection=${col}`,{
-      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({data:hub[col]})
-    });
+    await pushCollection(hubCode, col, hub[col]);
     lastHash='';
   }catch(e){console.warn('push failed',e);}
 }
@@ -931,18 +964,11 @@ function startPoll(){pollTimer=setInterval(()=>loadAll(false),4000);}
 
 // ── PRESENCE: heartbeat ping + poll who's online ──
 async function pingPresence(){
-  try{
-    await fetch(`${API}?code=${encodeURIComponent(hubCode)}&collection=presence`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:myRole})
-    });
-  }catch(e){}
+  try{ await pingPresenceStorage(hubCode, myRole); }catch(e){}
 }
 async function pollPresence(){
   try{
-    const r=await fetch(`${API}?code=${encodeURIComponent(hubCode)}&collection=presence`);
-    const j=await r.json();
-    presenceState=j.data||{};
+    presenceState=await getPresenceStorage(hubCode);
     renderPresence();
   }catch(e){}
 }
@@ -1227,12 +1253,9 @@ const DARES=[
   "Whisper the sweetest thing you can think of in their ear.",
   "Hold eye contact for 30 seconds without laughing.",
 ];
-let tdLast=null;
 function playTD(type){
   const arr=type==='truth'?TRUTHS:DARES;
-  let pick;
-  do{ pick=arr[Math.floor(Math.random()*arr.length)]; }while(pick===tdLast&&arr.length>1);
-  tdLast=pick;
+  const pick=nextFromDeck('td-'+type, arr);
   document.getElementById('td-tag').textContent=type==='truth'?'💭 TRUTH':'🔥 DARE';
   document.getElementById('td-text').textContent=pick;
   document.getElementById('td-card').className='prompt-card '+(type==='truth'?'deep':'spicy');
@@ -1290,14 +1313,29 @@ const WYR_Q=[
 ];
 
 let cqI=0;
+function shuffleArray(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+const qDecks={};
+function nextFromDeck(prefix, bank){
+  if(!qDecks[prefix] || qDecks[prefix].length===0){
+    qDecks[prefix]=shuffleArray(bank);
+  }
+  return qDecks[prefix].pop();
+}
 function nextQ(prefix){
   let bank,textId,numId;
   if(prefix==='cq'){bank=COUPLE_Q;textId='cq-text';numId='cq-num';}
   if(prefix==='sp'){bank=SPICY_Q;textId='sp-text';numId='sp-num';}
   if(prefix==='wyr'){bank=WYR_Q;textId='wyr-text';numId=null;}
   if(prefix==='letter'){bank=LETTER_PROMPTS;textId='letter-text';numId=null;}
-  const idx=Math.floor(Math.random()*bank.length);
-  document.getElementById(textId).textContent=bank[idx];
+  const next=nextFromDeck(prefix, bank);
+  document.getElementById(textId).textContent=next;
   if(numId){ cqI++; document.getElementById(numId).textContent=cqI; }
 }
 
@@ -1356,7 +1394,7 @@ function nextQuiz(){
   quizScore++;quizRound++;
   document.getElementById('quiz-score').textContent=quizScore;
   document.getElementById('quiz-round').textContent=quizRound;
-  document.getElementById('quiz-text').textContent=QUIZ_PROMPTS[Math.floor(Math.random()*QUIZ_PROMPTS.length)];
+  document.getElementById('quiz-text').textContent=nextFromDeck('quiz', QUIZ_PROMPTS);
 }
 
 // 8. MEMORY LANE DICE
@@ -1378,9 +1416,9 @@ function rollDice(){
     count++;
     if(count>8){
       clearInterval(interval);
-      const idx=Math.floor(Math.random()*DICE_PROMPTS.length);
-      die.textContent=faces[idx%6];
-      document.getElementById('dice-text').textContent=DICE_PROMPTS[idx];
+      const prompt=nextFromDeck('dice', DICE_PROMPTS);
+      die.textContent=faces[Math.floor(Math.random()*6)];
+      document.getElementById('dice-text').textContent=prompt;
     }
   },80);
 }
@@ -1439,7 +1477,7 @@ const COMP_PROMPTS=[
 let compTimerInterval=null,compSeconds=60;
 function startCompliment(){
   if(compTimerInterval)return;
-  document.getElementById('comp-prompt').textContent=COMP_PROMPTS[Math.floor(Math.random()*COMP_PROMPTS.length)];
+  document.getElementById('comp-prompt').textContent=nextFromDeck('comp', COMP_PROMPTS);
   document.getElementById('comp-start-btn').textContent='⏳ Running...';
   compTimerInterval=setInterval(()=>{
     compSeconds--;
@@ -1472,7 +1510,7 @@ const HOROSCOPES=[
   "The universe says: put the phones down for one full hour today, just the two of you.",
 ];
 function newHoroscope(){
-  document.getElementById('horo-text').textContent=HOROSCOPES[Math.floor(Math.random()*HOROSCOPES.length)];
+  document.getElementById('horo-text').textContent=nextFromDeck('horo', HOROSCOPES);
 }
 
 // 13. DAILY CHALLENGE
@@ -1492,7 +1530,7 @@ const CHALLENGES=[
 ];
 let chalCount=0;
 function newChallenge(){
-  document.getElementById('chal-text').textContent=CHALLENGES[Math.floor(Math.random()*CHALLENGES.length)];
+  document.getElementById('chal-text').textContent=nextFromDeck('chal', CHALLENGES);
 }
 function completeChallenge(){
   if(document.getElementById('chal-text').textContent==='Tap below to get today\'s challenge'){
@@ -1517,7 +1555,7 @@ const FINISH_SENTENCES=[
   "I'm most thankful for you when...",
 ];
 function nextFinish(){
-  document.getElementById('finish-text').textContent=FINISH_SENTENCES[Math.floor(Math.random()*FINISH_SENTENCES.length)];
+  document.getElementById('finish-text').textContent=nextFromDeck('finish', FINISH_SENTENCES);
 }
 
 // 15. SPIN THE WHEEL
@@ -1534,7 +1572,8 @@ function spinWheel(){
   if(wheelSpinning)return;
   wheelSpinning=true;
   const wheel=document.getElementById('wheel-el');
-  const idx=Math.floor(Math.random()*WHEEL_ACTIVITIES.length);
+  const indices=WHEEL_ACTIVITIES.map((_,i)=>i);
+  const idx=nextFromDeck('wheel', indices);
   const segmentDeg=360/WHEEL_ACTIVITIES.length;
   const targetDeg=360*4 + (360 - (idx*segmentDeg) - segmentDeg/2);
   wheel.style.transform=`rotate(${targetDeg}deg)`;
@@ -1549,12 +1588,8 @@ function spinWheel(){
 // ═══════════════════════════════════════════════
 async function pingStreak(){
   try{
-    const r=await fetch(`${API}?code=${encodeURIComponent(hubCode)}&collection=streak`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:myRole})
-    });
-    const j=await r.json();
-    if(j.streak) renderStreak(j.streak);
+    const streak=await pingStreakStorage(hubCode, myRole);
+    if(streak) renderStreak(streak);
   }catch(e){}
 }
 function renderStreak(streak){
@@ -1671,10 +1706,7 @@ async function saveAnniv(){
   const label=document.getElementById('anniv-label').value.trim()||'Our Anniversary';
   if(!date){toast('⚠️ Pick a date first');return;}
   hub.settings={...hub.settings,annivDate:date,annivLabel:label};
-  await fetch(`${API}?code=${encodeURIComponent(hubCode)}&collection=settings`,{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({annivDate:date,annivLabel:label})
-  });
+  await saveSettingsStorage(hubCode,{annivDate:date,annivLabel:label});
   closeAnnivModal();
   toast('💍 Countdown started!');
   renderAnniv();
