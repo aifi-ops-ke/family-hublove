@@ -1069,44 +1069,56 @@ function renderPresence(){
 function aD(n){const d=new Date();d.setDate(d.getDate()+n);return ds(d);}
 
 async function seedAll(){
-  let dirty=false;
-  if(!hub.events.length){
-    const y=new Date().getFullYear(),m=String(new Date().getMonth()+1).padStart(2,'0');
-    hub.events=[
-      {id:1,name:"💑 Dinner Date Night",date:aD(3),time:"19:00",cat:"date",notes:"Pick a nice spot!",by:"both",done:false},
-      {id:2,name:"🌳 Karura Forest Walk",date:aD(7),time:"08:00",cat:"outing",notes:"Pack breakfast",by:"both",done:false},
-      {id:3,name:"🎂 Mum's Birthday",date:`${y}-${m}-18`,time:"18:00",cat:"birthday",notes:"Book restaurant!",by:"both",done:false},
-      {id:4,name:"🎉 Movie Night",date:aD(0),time:"20:00",cat:"celebration",notes:"Your pick!",by:"both",done:false},
-    ];
-    await push('events');dirty=true;
+  // CRITICAL SAFETY CHECK: only seed a hub ONE TIME EVER, on its true first
+  // creation. We never re-seed based on empty arrays, because an empty
+  // array can also mean "fetch failed" or "partner cleared everything on
+  // purpose" — re-seeding in those cases would silently destroy real data.
+  if(hub.settings && hub.settings.seeded){
+    return;
   }
-  if(!hub.goals.length){
-    hub.goals=[
-      {id:1,text:"💑 Weekly date night (no phones!)",done:false,by:"both"},
-      {id:2,text:"🌅 Watch a sunrise together",done:false,by:"both"},
-      {id:3,text:"🍳 Cook a new recipe together",done:true,by:"both"},
-      {id:4,text:"📵 Phone-free Sunday mornings",done:false,by:"both"},
-    ];
-    await push('goals');dirty=true;
+  // Extra safety: if ANY real data already exists anywhere, treat the hub
+  // as already initialized and never seed, even if the flag is missing
+  // (covers hubs created before this fix).
+  const hasAnyData = (hub.events&&hub.events.length) || (hub.goals&&hub.goals.length) ||
+    (hub.diary&&hub.diary.length) || (hub.wishes&&hub.wishes.length) ||
+    (hub.story&&hub.story.length) || (hub.bucket&&hub.bucket.length) ||
+    (hub.notes&&hub.notes.length) || (hub.moods&&hub.moods.length) ||
+    (hub.memories&&hub.memories.length);
+  if(hasAnyData){
+    await saveSettingsStorage(hubCode,{seeded:true});
+    hub.settings={...hub.settings,seeded:true};
+    return;
   }
-  if(!hub.diary.length){
-    hub.diary=[{id:1,title:"Welcome to Our Hub! 💕",date:ds(new Date()),text:"We just set up our shared Love Hub. Here's to planning everything together — every event, every memory, every dream 💙",by:"both"}];
-    await push('diary');dirty=true;
-  }
-  if(!hub.wishes.length){
-    hub.wishes=[
-      {id:1,emoji:"✈️",text:"Trip to Zanzibar 🏖️",votes:4},
-      {id:2,emoji:"🎡",text:"Masai Mara safari weekend",votes:3},
-      {id:3,emoji:"🍕",text:"Cooking class together",votes:2},
-      {id:4,emoji:"🎭",text:"Theatre / live show date",votes:3},
-    ];
-    await push('wishes');dirty=true;
-  }
-  if(!hub.story.length){
-    hub.story=[{id:1,title:"The Beginning of Our Story",date:ds(new Date()),text:"This is where it all starts — our very own space to keep every chapter of us. More memories to come 💕",by:"both"}];
-    await push('story');dirty=true;
-  }
-  if(dirty)lastHash='';
+
+  const y=new Date().getFullYear(),m=String(new Date().getMonth()+1).padStart(2,'0');
+  hub.events=[
+    {id:1,name:"💑 Dinner Date Night",date:aD(3),time:"19:00",cat:"date",notes:"Pick a nice spot!",by:"both",done:false},
+    {id:2,name:"🌳 Karura Forest Walk",date:aD(7),time:"08:00",cat:"outing",notes:"Pack breakfast",by:"both",done:false},
+    {id:3,name:"🎂 Mum's Birthday",date:`${y}-${m}-18`,time:"18:00",cat:"birthday",notes:"Book restaurant!",by:"both",done:false},
+    {id:4,name:"🎉 Movie Night",date:aD(0),time:"20:00",cat:"celebration",notes:"Your pick!",by:"both",done:false},
+  ];
+  await push('events');
+  hub.goals=[
+    {id:1,text:"💑 Weekly date night (no phones!)",done:false,by:"both"},
+    {id:2,text:"🌅 Watch a sunrise together",done:false,by:"both"},
+    {id:3,text:"🍳 Cook a new recipe together",done:true,by:"both"},
+    {id:4,text:"📵 Phone-free Sunday mornings",done:false,by:"both"},
+  ];
+  await push('goals');
+  hub.diary=[{id:1,title:"Welcome to Our Hub! 💕",date:ds(new Date()),text:"We just set up our shared Love Hub. Here's to planning everything together — every event, every memory, every dream 💙",by:"both"}];
+  await push('diary');
+  hub.wishes=[
+    {id:1,emoji:"✈️",text:"Trip to Zanzibar 🏖️",votes:4},
+    {id:2,emoji:"🎡",text:"Masai Mara safari weekend",votes:3},
+    {id:3,emoji:"🍕",text:"Cooking class together",votes:2},
+    {id:4,emoji:"🎭",text:"Theatre / live show date",votes:3},
+  ];
+  await push('wishes');
+  hub.story=[{id:1,title:"The Beginning of Our Story",date:ds(new Date()),text:"This is where it all starts — our very own space to keep every chapter of us. More memories to come 💕",by:"both"}];
+  await push('story');
+  await saveSettingsStorage(hubCode,{seeded:true});
+  hub.settings={...hub.settings,seeded:true};
+  lastHash='';
 }
 
 function go(t){
