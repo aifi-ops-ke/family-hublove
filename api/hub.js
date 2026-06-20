@@ -11,7 +11,8 @@ function defaultHub() {
   return {
     events: [], goals: [], diary: [], wishes: [], story: [], bucket: [],
     notes: [], moods: [], memories: [], settings: {}, presence: {},
-    streak: { count: 0, lastDate: null, openedToday: {} }
+    streak: { count: 0, lastDate: null, openedToday: {} },
+    chat: [], location: {}
   };
 }
 
@@ -96,7 +97,7 @@ export default async function handler(req, res) {
   const { code, collection } = req.query;
   if (!code) return res.status(400).json({ error: 'Hub code required' });
 
-  const allowed = ['events', 'goals', 'diary', 'wishes', 'story', 'bucket', 'notes', 'moods', 'memories'];
+  const allowed = ['events', 'goals', 'diary', 'wishes', 'story', 'bucket', 'notes', 'moods', 'memories', 'chat'];
 
   try {
     if (collection === 'settings') {
@@ -130,6 +131,32 @@ export default async function handler(req, res) {
           online[name] = (now - ts) < 20000;
         }
         return res.status(200).json({ data: online });
+      }
+    }
+
+    if (collection === 'location') {
+      if (req.method === 'POST') {
+        const { name, lat, lng, expiresAt, stop } = req.body || {};
+        if (!name) return res.status(400).json({ error: 'name required' });
+        await withHub(code, (hub) => {
+          if (!hub.location) hub.location = {};
+          if (stop) {
+            delete hub.location[name];
+          } else {
+            hub.location[name] = { lat, lng, expiresAt, updatedAt: Date.now() };
+          }
+        });
+        return res.status(200).json({ ok: true });
+      }
+      if (req.method === 'GET') {
+        const { content } = await readStore();
+        const hub = content[code] || defaultHub();
+        const now = Date.now();
+        const active = {};
+        for (const [name, loc] of Object.entries(hub.location || {})) {
+          if (loc.expiresAt && loc.expiresAt > now) active[name] = loc;
+        }
+        return res.status(200).json({ data: active });
       }
     }
 

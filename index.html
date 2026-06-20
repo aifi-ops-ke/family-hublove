@@ -459,6 +459,40 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
 .memory-tile img{width:100%;height:110px;object-fit:cover;display:block}
 .memory-cap{padding:8px 10px;font-size:10px;color:var(--ink);font-weight:600;line-height:1.3}
 .memory-meta{padding:0 10px 8px;font-size:9px;color:var(--muted)}
+
+/* ── CHAT ── */
+.chat-location-bar{display:flex;align-items:center;gap:8px;padding:9px 14px;background:linear-gradient(90deg,#fff3e0,#ffe8d6);
+  border-bottom:1px solid #ffd9b3;font-size:11px;font-weight:700;color:#a8643f;flex-shrink:0}
+.loc-stop-btn{margin-left:auto;background:#fff;border:1px solid #ffd9b3;border-radius:10px;padding:4px 10px;
+  font-size:10px;font-weight:800;color:#e8693f;cursor:pointer}
+.chat-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;-webkit-overflow-scrolling:touch}
+.chat-bubble{max-width:78%;padding:10px 13px;border-radius:16px;font-size:13px;line-height:1.45;
+  box-shadow:0 1px 4px rgba(74,111,165,.08);word-wrap:break-word}
+.chat-bubble.me{align-self:flex-end;background:linear-gradient(135deg,var(--blue2),var(--blue3));color:#fff;
+  border-bottom-right-radius:4px}
+.chat-bubble.them{align-self:flex-start;background:#fff;color:var(--ink);border:1px solid var(--border);
+  border-bottom-left-radius:4px}
+.chat-bubble.location{display:flex;flex-direction:column;gap:6px;cursor:pointer}
+.chat-time{font-size:9px;opacity:.65;margin-top:3px;display:block}
+.chat-input-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#fff;
+  border-top:1px solid var(--border);flex-shrink:0}
+.chat-loc-btn{background:var(--bluel);border:none;border-radius:50%;width:36px;height:36px;font-size:16px;
+  cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.chat-input{flex:1;padding:10px 14px;border:2px solid var(--border);border-radius:20px;font-family:'Nunito',sans-serif;
+  font-size:13px;outline:none;color:var(--ink);background:#fafbff}
+.chat-input:focus{border-color:var(--blue)}
+.chat-send-btn{background:linear-gradient(135deg,var(--blue2),var(--blue3));border:none;border-radius:50%;
+  width:36px;height:36px;font-size:15px;color:#fff;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 10px rgba(74,111,165,.35)}
+.chat-send-btn:active{transform:scale(.9)}
+.chat-day-sep{align-self:center;font-size:10px;color:var(--muted);font-weight:700;background:var(--greyl);
+  padding:3px 12px;border-radius:10px;margin:6px 0}
+
+/* ── LOCATION SHARING ── */
+.partner-loc-banner{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#e8f4fd,#d4ecff);
+  border-radius:16px;padding:13px 15px;margin-bottom:13px;border:1px solid #b8ddf8;cursor:pointer}
+.partner-loc-banner h4{font-size:12px;font-weight:800;color:var(--blue2)}
+.partner-loc-banner p{font-size:10px;color:var(--muted);margin-top:2px}
 </style>
 </head>
 <body>
@@ -502,6 +536,7 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
   <div class="nb" id="nb"><div class="pulse"></div><span id="nmsg">Partner updated!</span></div>
   <div class="nav">
     <div class="nt on" onclick="go('home')"><i>🏠</i>Home</div>
+    <div class="nt" onclick="go('chat')"><i>💬</i>Chat</div>
     <div class="nt" onclick="go('calendar')"><i>📅</i>Calendar</div>
     <div class="nt" onclick="go('plan')"><i>🎯</i>Plan</div>
     <div class="nt" onclick="go('diary')"><i>📖</i>Diary</div>
@@ -511,6 +546,10 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
   </div>
   <div class="screens">
     <div id="s-home" class="scr on">
+      <div class="partner-loc-banner" id="partner-loc-banner" style="display:none" onclick="viewPartnerLocation()">
+        <span style="font-size:22px">📍</span>
+        <div><h4 id="partner-loc-title">Partner is sharing their location</h4><p id="partner-loc-sub">Tap to view on map</p></div>
+      </div>
       <div class="anniv-card" id="anniv-card" onclick="openAnnivModal()">
         <div class="anniv-content" id="anniv-content">
           <div class="anniv-label">💍 Set Your Special Date</div>
@@ -550,6 +589,21 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
       <div class="stats">
         <div class="sc"><div class="sn" id="st-ev" style="color:var(--blue)">—</div><div class="sl">Events this month</div></div>
         <div class="sc"><div class="sn" id="st-gl" style="color:var(--leaf)">—</div><div class="sl">Goals completed</div></div>
+      </div>
+    </div>
+    <div id="s-chat" class="scr" style="padding:0;display:flex;flex-direction:column">
+      <div class="chat-location-bar" id="chat-location-bar" style="display:none">
+        <span>📍</span>
+        <div id="chat-location-text">Sharing location...</div>
+        <button class="loc-stop-btn" onclick="stopSharingLocation()">Stop</button>
+      </div>
+      <div class="chat-messages" id="chat-messages">
+        <div class="ld"><div class="sp"></div>Loading...</div>
+      </div>
+      <div class="chat-input-bar">
+        <button class="chat-loc-btn" onclick="openLocationModal()" title="Share location">📍</button>
+        <input class="chat-input" id="chat-input" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendChat()"/>
+        <button class="chat-send-btn" onclick="sendChat()">➤</button>
       </div>
     </div>
     <div id="s-calendar" class="scr">
@@ -887,6 +941,22 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
   </div>
 </div>
 
+<div class="ov" id="location-modal">
+  <div class="mo">
+    <h3>📍 Share My Location <button class="mx" onclick="closeLocationModal()">✕</button></h3>
+    <div class="hint" style="margin-bottom:14px">Your exact location will be visible to your partner for the time you choose, then it automatically stops sharing. You can also stop early anytime.</div>
+    <div class="fr"><label>Share for how long?</label>
+      <select id="loc-duration">
+        <option value="15">15 minutes</option>
+        <option value="30">30 minutes</option>
+        <option value="60" selected>1 hour</option>
+        <option value="180">3 hours</option>
+      </select>
+    </div>
+    <button class="sb" onclick="startSharingLocation()">📍 Start Sharing</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -948,9 +1018,10 @@ async function saveSettingsStorage(code, patch){
 
 let myName='',hubCode='',myRole='him';
 let curTab='home',curMo=new Date().getMonth(),curYr=new Date().getFullYear(),selDay=null;
-let hub={events:[],goals:[],diary:[],wishes:[],story:[],bucket:[],notes:[],moods:[],memories:[],settings:{}};
+let hub={events:[],goals:[],diary:[],wishes:[],story:[],bucket:[],notes:[],moods:[],memories:[],settings:{},chat:[],location:{}};
 let pollTimer=null,presenceTimer=null,presencePollTimer=null,presenceTimer2=null,lastHash='',appReady=false;
 let presenceState={};
+let locationWatchId=null,locationShareTimer=null,locationExpiresAt=null;
 
 const CE={date:'💑',outing:'🌳',birthday:'🎂',health:'💊',chores:'🧹',celebration:'🎉',reminder:'⏰',other:'📌'};
 const CC={date:'blue',outing:'leaf',birthday:'rose',health:'rose',chores:'sun',celebration:'lav',reminder:'blue3',other:'grey'};
@@ -990,6 +1061,8 @@ async function launch(){
   startPresence();
   pingStreak();
   presenceTimer2=setInterval(pingStreak,30000);
+  pollPartnerLocation();
+  setInterval(pollPartnerLocation,8000);
 }
 
 async function loadAll(initial=false){
@@ -999,10 +1072,11 @@ async function loadAll(initial=false){
       detectAndNotifyChanges(j);
     }
     const newHash=JSON.stringify(j);
-    hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];hub.story=j.story||[];hub.bucket=j.bucket||[];hub.notes=j.notes||[];hub.moods=j.moods||[];hub.memories=j.memories||[];hub.settings=j.settings||{};
+    hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];hub.story=j.story||[];hub.bucket=j.bucket||[];hub.notes=j.notes||[];hub.moods=j.moods||[];hub.memories=j.memories||[];hub.settings=j.settings||{};hub.chat=j.chat||[];
     if(initial){await seedAll();}
     lastHash=newHash;setDot('live');appReady=true;renderCur();
     if(curTab==='home'){renderMoods();renderNotes();renderAnniv();}
+    if(curTab==='chat'){renderChat();}
   }catch(e){setDot('off');if(!appReady)toast('⚠️ Connection issue — retrying...');}
 }
 
@@ -1040,6 +1114,17 @@ function detectAndNotifyChanges(incoming){
   const partnerMoodAfter=afterMoods.find(m=>m.role===partnerRole&&m.date===today);
   if(partnerMoodAfter && (!partnerMoodBefore || partnerMoodBefore.emoji!==partnerMoodAfter.emoji)){
     changed.push({key:'moods', label:`set their mood to ${partnerMoodAfter.emoji}`, icon:'😊'});
+  }
+  // new chat messages from partner - notify with actual message preview
+  const beforeChat=hub.chat||[];
+  const afterChat=incoming.chat||[];
+  const newMsgsFromPartner=afterChat.filter(m=>m.from!==myRole && !beforeChat.some(b=>b.id===m.id));
+  if(newMsgsFromPartner.length){
+    const last=newMsgsFromPartner[newMsgsFromPartner.length-1];
+    const preview=last.type==='location' ? `${last.fromName} shared their location 📍` : `${last.fromName}: ${last.text}`;
+    notify(`💬 ${preview}`);
+    sendBrowserNotification(preview);
+    if(curTab==='chat')renderChat();
   }
   if(changed.length){
     const first=changed[0];
@@ -1179,7 +1264,7 @@ function go(t){
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.nt').forEach(x=>x.classList.remove('on'));
   document.getElementById('s-'+t).classList.add('on');
-  ['home','calendar','plan','diary','story','games','wishlist'].forEach((x,i)=>{if(x===t)document.querySelectorAll('.nt')[i].classList.add('on');});
+  ['home','chat','calendar','plan','diary','story','games','wishlist'].forEach((x,i)=>{if(x===t)document.querySelectorAll('.nt')[i].classList.add('on');});
   renderCur();
 }
 function renderCur(){
@@ -1187,6 +1272,7 @@ function renderCur(){
   if(curTab==='plan')renderPlan();if(curTab==='diary')renderDiary();
   if(curTab==='story')renderStory();if(curTab==='games')renderGameMenu();
   if(curTab==='notes')renderNotes();
+  if(curTab==='chat')renderChat();
   if(curTab==='wishlist')renderWish();
 }
 
@@ -1397,6 +1483,82 @@ const TRUTHS=[
   "What's a time you felt most understood by me?",
   "What's one thing you think I do better than I realize?",
   "What's a worry about the future you carry quietly?",
+  "What's the moment you realized this relationship was different?",
+  "What's something small I do that secretly annoys you?",
+  "What's a compliment you've received about me that made you proud?",
+  "What's something you wish we did more of together?",
+  "What's a memory of us that always makes you smile when you think of it?",
+  "What's the most you've ever missed me?",
+  "What's a quality of mine you hope our future kids would have?",
+  "What's something you learned about love from your parents that you bring into us?",
+  "What's the hardest thing you've had to tell me?",
+  "What's a moment you felt the most loved by me?",
+  "What's something you think I underestimate about myself?",
+  "What's a time you were scared to lose me?",
+  "What's something about me you find endlessly interesting?",
+  "What's a way I've surprised you over time?",
+  "What's the most vulnerable you've ever felt with me?",
+  "What's a goal of mine you secretly cheer for the most?",
+  "What's something I said once that you still remember?",
+  "What's a way you think we've grown closer this past year?",
+  "What's something you appreciate about how I handle conflict?",
+  "What's a tiny thing I do that makes you feel safe?",
+  "What's a memory from early on that still makes you nervous-happy?",
+  "What's something you hope I never stop doing?",
+  "What's a way I've changed for the better since we met?",
+  "What's something you wish you'd said to me sooner?",
+  "What's the most thoughtful thing I've ever done without realizing it?",
+  "What's a moment you felt truly seen by me?",
+  "What's something about my personality you didn't expect to fall for?",
+  "What's a worry you had early on that turned out to be wrong?",
+  "What's something you think we do better than most couples?",
+  "What's a time my support meant more than I knew?",
+  "What's a part of yourself you only show to me?",
+  "What's something you hope never changes between us?",
+  "What's a moment you felt grateful just to be near me?",
+  "What's something I've taught you about patience?",
+  "What's a quiet moment with me you replay in your head?",
+  "What's something you wish people knew about us as a couple?",
+  "What's the most you've laughed because of something I did?",
+  "What's a fear about love this relationship helped heal?",
+  "What's something about my family you've come to appreciate?",
+  "What's a time you felt proud of how we handled something hard together?",
+  "What's something I do during arguments that you respect?",
+  "What's a tiny gesture of mine that means more than I realize?",
+  "What's something you've never admitted you find romantic about me?",
+  "What's a moment you knew I truly understood you?",
+  "What's something you think makes our love story unique?",
+  "What's a way I make ordinary days feel special?",
+  "What's something you hope we still do together when we're old?",
+  "What's a time you felt completely at peace with me?",
+  "What's something you've never told anyone else but me?",
+  "What's a moment you felt unconditionally accepted by me?",
+  "What's something I do that makes hard days easier?",
+  "What's a quality of mine you hope rubs off on you?",
+  "What's a time you felt butterflies even after being together a while?",
+  "What's the kindest assumption you've ever made about my intentions?",
+  "What's a way I've shown up for you that you didn't expect?",
+  "What's something about getting older together that excites you?",
+  "What's a time you chose me over something easier?",
+  "What's the most patient you've ever had to be with me?",
+  "What's something you think I don't say enough but should?",
+  "What's a way you've felt closer to me through hard times?",
+  "What's something about my laugh or smile you love?",
+  "What's a time being honest with me was harder than you expected?",
+  "What's something you secretly hope I never find out... that you'd tell me now?",
+  "What's a way I've made you feel braver?",
+  "What's something about commitment that scared you before us?",
+  "What's a moment you felt like we were truly a team?",
+  "What's something small you do for me that you never mention?",
+  "What's a way our love has surprised you, even now?",
+  "What's something you hope I remember about you in 50 years?",
+  "What's the most honest thing you can say about us right now?",
+  "What's a compliment you'd give me in front of your closest friend?",
+  "What's something you've learned about yourself through loving me?",
+  "What's the smallest moment with me you still think about?",
+  "What's a way you hope we celebrate the next big milestone?",
+  "What's something about loving me that feels effortless?",
+  "What's the thing you'd want me to know if you couldn't speak for a day?",
 ];
 const DARES=[
   "Give your partner a 30-second compliment with no pauses.",
@@ -1419,6 +1581,86 @@ const DARES=[
   "Plan a fake surprise date out loud, on the spot.",
   "Text your partner a poem about them, even a bad one.",
   "Give your partner a 10-second forehead kiss.",
+  "Tell your partner the story of how you met as if it's a legend.",
+  "Give your partner a genuine compliment using only one-word answers.",
+  "Recreate your partner's reaction the last time they were really happy.",
+  "Hum your partner's favorite song until they guess it.",
+  "Give your partner a 'thank you' speech like you're winning an award for being with them.",
+  "Do a slow-motion replay of your last hug.",
+  "Tell your partner the most romantic thing you can think of in under 5 seconds.",
+  "Act like a news reporter announcing how amazing your partner is.",
+  "Give your partner a piggyback ride across the room (if safe to do).",
+  "Whisper a secret compliment you've never said out loud.",
+  "Write 'I love you' somewhere creative using only your finger in the air.",
+  "Give your partner a 15-second back hug.",
+  "Tell your partner your favorite physical feature of theirs, out loud.",
+  "Do your best slow-mo romantic walk toward your partner.",
+  "Give your partner a playful nickname based on something they did today.",
+  "Act out the moment you knew you loved them, silently.",
+  "Tell your partner a cheesy pickup line as if meeting for the first time.",
+  "Give your partner a gentle hand massage for 30 seconds.",
+  "Recreate your partner's most common facial expression.",
+  "Whisper 3 things you're looking forward to doing together.",
+  "Give your partner a forehead-to-forehead moment for 10 seconds, no talking.",
+  "Tell your partner what you'd write on a billboard about them.",
+  "Do an exaggerated bow and declare your love dramatically.",
+  "Give your partner a compliment using a movie-trailer voice.",
+  "Recreate the way you greeted each other on your very first date.",
+  "Tell your partner the silliest nickname you've ever thought of calling them.",
+  "Give your partner a kiss on the hand like in an old romance film.",
+  "Act out proposing (just for fun) in the silliest way possible.",
+  "Tell your partner one thing about today that made you think of them.",
+  "Give your partner a 'slow clap' appreciation for something small they did.",
+  "Whisper your favorite memory of them into their ear.",
+  "Recreate the most dramatic movie kiss scene, but just the buildup, played for laughs.",
+  "Tell your partner three things you'd miss most if you were apart for a week.",
+  "Give your partner a slow, sincere 'thank you for choosing me' moment.",
+  "Do an impression of how your partner orders food at a restaurant.",
+  "Tell your partner the corniest love metaphor you can think of, on the spot.",
+  "Give your partner a playful twirl like in an old-fashioned dance.",
+  "Whisper the next 3 things you want to do together this month.",
+  "Tell your partner what their love feels like, using only colors and weather.",
+  "Give your partner an exaggerated round of applause for something small they did today.",
+  "Recreate the most awkward moment from your early dating days, for laughs.",
+  "Tell your partner a fake fortune-teller prediction about your future together.",
+  "Give your partner a 'red carpet' introduction as if they're a celebrity.",
+  "Whisper one thing you're most proud of about them.",
+  "Do your best slow-motion run toward your partner like in a movie reunion.",
+  "Tell your partner the silliest compliment you can think of in 5 seconds.",
+  "Give your partner a gentle squeeze-hug and hold it for 10 full seconds.",
+  "Recreate your partner's reaction the last time you surprised them.",
+  "Whisper a promise you intend to keep this week.",
+  "Tell your partner what song should play when you two walk into a room together.",
+  "Give your partner a dramatic, over-the-top wink and a compliment.",
+  "Do your partner's most-used phrase in their voice as best you can.",
+  "Whisper the first nice thing you ever thought about them.",
+  "Tell your partner the most unforgettable thing about your first kiss.",
+  "Give your partner a 'best partner ever' trophy speech, fully dramatic.",
+  "Recreate the way you both laughed the hardest together.",
+  "Tell your partner the most romantic place you'd want to be right now.",
+  "Give your partner a slow, sincere compliment about their personality, not looks.",
+  "Whisper one reason you'd choose them again, every time.",
+  "Do a dramatic countdown to a kiss, then deliver it.",
+  "Tell your partner what you'd name a song written about them.",
+  "Give your partner a 'best moment of the day' shoutout, on the spot.",
+  "Recreate your partner's happy dance, if they have one.",
+  "Whisper your favorite thing about today, mentioning them.",
+  "Tell your partner the nicest thing a stranger could say about your relationship.",
+  "Give your partner a long, comfortable silence while holding hands — no talking for 20 seconds.",
+  "Tell your partner one thing you'd never want them to doubt about your love.",
+  "Give your partner a slow clap and call them your favorite person, dramatically.",
+  "Recreate the way you both reacted to your first 'I love you'.",
+  "Whisper a silly inside joke only you two understand.",
+  "Tell your partner the most spontaneous thing you wish you'd done together.",
+  "Give your partner a 'this is your theme song' moment and hum it.",
+  "Do a slow, theatrical bow and thank your partner for existing.",
+  "Tell your partner what you'd write on their trophy for 'best partner ever'.",
+  "Give your partner a gentle nose-to-nose moment, no words, just smiles.",
+  "Whisper the most romantic thing you've thought but never said.",
+  "Tell your partner the silliest thing you find irresistibly charming about them.",
+  "Give your partner a dramatic slow walk-in like a soap opera reunion.",
+  "Recreate the most embarrassing thing you've done to impress them.",
+  "Whisper one wish you have for the two of you this year.",
 ];
 function playTD(type){
   const arr=type==='truth'?TRUTHS:DARES;
@@ -1455,6 +1697,81 @@ const COUPLE_Q=[
   "What does feeling 'safe' with someone mean to you?",
   "What's something about your family you want me to understand more?",
   "What's a small ritual you'd want us to keep forever?",
+  "What's something about adulthood you wish we navigated differently?",
+  "What's a way you'd want us to handle disagreements better?",
+  "What's something you want us to prioritize more this year?",
+  "What's a fear about the future you want us to face together, not alone?",
+  "What's something about my friendships or family you want to understand more?",
+  "What's a hobby you wish we shared?",
+  "What's something you want to be more vulnerable with me about?",
+  "What's a way you want us to support each other's careers?",
+  "What's something about rest and downtime that matters to you?",
+  "What's a tradition from your childhood you want to bring into our life?",
+  "What's something about trust you want us to keep building?",
+  "What's a way you want to be shown appreciation that I might be missing?",
+  "What's something about independence you want us to protect in our relationship?",
+  "What's a future conversation you've been putting off?",
+  "What's something about how we spend money that you want to revisit?",
+  "What's a way you want us to handle stress better as a team?",
+  "What's something about intimacy, emotional or physical, you want more of?",
+  "What's a boundary you want us to respect more?",
+  "What's something you want to forgive yourself for, with my support?",
+  "What's a way you want to grow individually while we grow together?",
+  "What's something about long-term commitment that excites you?",
+  "What's a memory you want to recreate exactly as it happened?",
+  "What's something you want us to be braver about, together?",
+  "What's a quality in your parents' relationship you hope we have?",
+  "What's something about communication style you wish I understood better?",
+  "What's a small disappointment you've never voiced?",
+  "What's something about your past relationships that shaped how you love now?",
+  "What's a way you want to be celebrated when you succeed at something?",
+  "What's something about home and comfort that matters most to you?",
+  "What's a way you'd want us to handle a big life change together?",
+  "What's something you hope we never stop doing, even decades from now?",
+  "What's a value about honesty you want us to hold onto?",
+  "What's something about rest you wish I respected more?",
+  "What's a way you want to feel chosen by me, every day?",
+  "What's something about growing older together that comforts you?",
+  "What's a conversation about the future you want to have soon?",
+  "What's something about forgiveness you've learned through us?",
+  "What's a way you want us to keep romance alive long-term?",
+  "What's something about partnership you think we do exceptionally well?",
+  "What's a quiet fear about commitment you've never said out loud?",
+  "What's something you want to be reminded of on hard days?",
+  "What's a way you want to be supported during personal growth?",
+  "What's something about our differences that you've come to appreciate?",
+  "What's a hope you have for how our relationship will be remembered?",
+  "What's something about being chosen every day that means a lot to you?",
+  "What's a way you want us to keep curiosity alive about each other?",
+  "What's something about loyalty that you think we do right?",
+  "What's a way you want us to handle jealousy if it ever comes up?",
+  "What's something about humor that keeps our relationship light?",
+  "What's a way you want to be reassured during uncertain times?",
+  "What's something about our routines you'd want to protect from getting stale?",
+  "What's a way you want us to keep learning about each other for years?",
+  "What's something about generosity you've noticed in how I love you?",
+  "What's a way you want to handle it when one of us is having a hard week?",
+  "What's something about accountability you respect in how we handle mistakes?",
+  "What's a way you want our love to look different in ten years, in a good way?",
+  "What's something about emotional safety you feel with me?",
+  "What's a way you want us to keep adventure alive even in routine life?",
+  "What's something about patience you've had to practice more because of love?",
+  "What's a way you want us to celebrate ordinary Tuesdays, not just big days?",
+  "What's something about resilience you've seen in our relationship?",
+  "What's a way you want to feel more like a team in daily logistics?",
+  "What's something about admiration you still feel for me, even now?",
+  "What's a way you want us to handle disappointment with each other gently?",
+  "What's something about consistency that makes you feel secure with me?",
+  "What's a way you want us to keep choosing each other on hard days?",
+  "What's something you hope we teach each other in the next chapter of life?",
+  "What's a way you want to be more playful with me, even as life gets busier?",
+  "What's something about devotion that you've come to understand through us?",
+  "What's a way you want our home to feel, emotionally, not just physically?",
+  "What's something about partnership in parenting (now or someday) that matters to you?",
+  "What's a way you want us to handle big decisions as equals?",
+  "What's something about softness you've allowed yourself to show because of me?",
+  "What's a quiet hope you have for our relationship that you've never said aloud?",
+  "What's something you want me to know about how you experience love, that I might miss?",
 ];
 
 // 3. SPICY QUESTIONS
@@ -1477,6 +1794,88 @@ const SPICY_Q=[
   "What's something you think about when you miss me?",
   "What's a song that makes you think of us, intimately?",
   "What's one thing you'd want to be braver about asking me for?",
+  "What's a touch from me that always gets your attention?",
+  "What's the most you've wanted me in a public place, and had to hide it?",
+  "What's a memory of us together that you replay when you miss me?",
+  "What's something about my voice that you find attractive?",
+  "What's a way you'd want to be surprised romantically tonight?",
+  "What's something you've thought about saying mid-conversation but held back?",
+  "What's a scent or detail about me that drives you crazy?",
+  "What's the longest you've thought about a single moment with me?",
+  "What's something playful you wish I initiated more?",
+  "What's a place we've been that you secretly thought was romantic?",
+  "What's a compliment about my confidence that you've never said?",
+  "What's something about getting ready together that you secretly enjoy?",
+  "What's a way you wish I teased you more?",
+  "What's the boldest thing you've thought about doing for date night?",
+  "What's something about slow mornings together that you crave?",
+  "What's a way you want me to make you feel desired today?",
+  "What's something playful you'd want us to try this week?",
+  "What's a memory of anticipation before seeing me that you loved?",
+  "What's something about my confidence in certain moments that excites you?",
+  "What's a small flirty thing you wish I did more often?",
+  "What's something you'd whisper to me if no one else could hear?",
+  "What's a way distance has made you want me more?",
+  "What's the most spontaneous you've wanted to be with me?",
+  "What's a moment of closeness with me that felt unforgettable?",
+  "What's something about my touch you find comforting and exciting at once?",
+  "What's a memory of getting ready for a date that you found romantic?",
+  "What's something about candlelight or quiet evenings with me that you love?",
+  "What's a way you'd want to be pursued more, even after being together a while?",
+  "What's something about my eyes or smile that catches you off guard sometimes?",
+  "What's a way slow dancing or close moments make you feel about us?",
+  "What's something about anticipation before a date that excites you?",
+  "What's a memory of us laughing close together that felt intimate?",
+  "What's something about whispered conversations late at night that you love?",
+  "What's a way you'd want me to surprise you affectionately this week?",
+  "What's something about comfortable silence together that feels romantic to you?",
+  "What's a memory of holding hands that you still think about?",
+  "What's something about getting dressed up for each other that excites you?",
+  "What's a way you want more spontaneous affection in everyday moments?",
+  "What's something about slow good mornings together that you crave?",
+  "What's a memory of a long hug that meant more than words could?",
+  "What's something about my presence in a room that you notice immediately?",
+  "What's a way you'd want to feel chosen physically, not just emotionally?",
+  "What's something about closeness after a long day apart that you love?",
+  "What's a romantic gesture from a movie you secretly wish I'd do?",
+  "What's something about the way I say your name that you like?",
+  "What's a memory of us dancing, even just in the kitchen, that you loved?",
+  "What's something about jealousy, even a small flicker, that you've felt and never said?",
+  "What's a way you want me to make the first move more often?",
+  "What's something about texting throughout the day that keeps the spark alive for you?",
+  "What's a memory of a goodbye kiss that you still think about?",
+  "What's something about my hands that you find attractive?",
+  "What's a way you want me to compliment you that I rarely do?",
+  "What's something about being playful and teasing with me that you enjoy?",
+  "What's a memory of us being silly and flirty together that stands out?",
+  "What's something about confidence in me that you find magnetic?",
+  "What's a way you'd want to be more daring with me, even in small ways?",
+  "What's something about late-night conversations with me that feels intimate?",
+  "What's a memory of physical comfort, like a hug after a hard day, that meant a lot?",
+  "What's something about my style or how I dress that you find appealing?",
+  "What's a way you want romance to feel more present in ordinary weeks?",
+  "What's something about being missed by me that you find romantic?",
+  "What's a memory of us cooking or doing something domestic that felt romantic anyway?",
+  "What's something about trust in intimacy that you've grown into with me?",
+  "What's a way you want affection to look different on a regular Tuesday versus a special date?",
+  "What's something about my confidence in bed (broadly speaking) that you appreciate?",
+  "What's a memory of us being affectionate in front of others that you liked?",
+  "What's something about slow, unhurried time together that you wish we had more of?",
+  "What's a way you'd want to flirt with me like we just started dating?",
+  "What's something about vulnerability in intimacy that you've come to feel safe with?",
+  "What's a memory of a spontaneous kiss that surprised you?",
+  "What's something about how I look at you that makes you feel desired?",
+  "What's a way you want to feel more pursued, even years into this relationship?",
+  "What's something about playful jealousy (in a healthy way) that's ever come up between us?",
+  "What's a memory of getting caught up in a moment with me that you loved?",
+  "What's something about comfort and excitement coexisting in our intimacy that you value?",
+  "What's a way you'd want a date night to end that we haven't tried?",
+  "What's something about my confidence walking into a room that you notice?",
+  "What's a memory of slow mornings turning romantic that you cherish?",
+  "What's something about feeling safe enough to be fully yourself with me, intimately?",
+  "What's a way you want our chemistry to keep evolving as time goes on?",
+  "What's something about anticipation building throughout a date that excites you?",
+  "What's a memory of a quiet, intimate moment that needed no words at all?",
 ];
 
 // 4. WOULD YOU RATHER
@@ -1501,6 +1900,86 @@ const WYR_Q=[
   "Would you rather have separate hobbies or always do the same ones together?",
   "Would you rather we argue it out immediately or take space first?",
   "Would you rather have a loud, big family gathering life or a quiet, small one?",
+  "Would you rather we always plan vacations far in advance, or decide last minute?",
+  "Would you rather I be extremely affectionate in public, or keep it private?",
+  "Would you rather we have one shared bank account or always split everything?",
+  "Would you rather live in a big city or a small quiet town together?",
+  "Would you rather I remember small details perfectly, or be more big-picture?",
+  "Would you rather we host gatherings at our place, or always go to others'?",
+  "Would you rather have a home full of plants or full of art?",
+  "Would you rather we celebrate small wins loudly, or quietly to ourselves?",
+  "Would you rather I always initiate plans, or always go with your lead?",
+  "Would you rather we have a strict morning routine or wing it daily?",
+  "Would you rather travel slow and stay long, or see many places quickly?",
+  "Would you rather we keep a shared calendar for everything, or keep it loose?",
+  "Would you rather I be the optimist or the realist in tough moments?",
+  "Would you rather we learn a new skill together, or each pursue our own?",
+  "Would you rather have one big yearly trip, or several small getaways?",
+  "Would you rather we keep a strict budget, or be more relaxed about spending?",
+  "Would you rather I express feelings immediately, or process first then talk?",
+  "Would you rather have a home that's always full of guests, or mostly just us?",
+  "Would you rather we prioritize career growth or lifestyle balance first?",
+  "Would you rather I plan date nights, or we take turns surprising each other?",
+  "Would you rather live somewhere with four seasons, or warm weather year-round?",
+  "Would you rather we keep most traditions from our families, or build all new ones?",
+  "Would you rather have deep roots in one place, or move every few years?",
+  "Would you rather I be more vocal about feelings, or show love through actions?",
+  "Would you rather we always cook from scratch, or rely on quick simple meals?",
+  "Would you rather have a home office each, or share one space?",
+  "Would you rather we prioritize saving aggressively, or enjoying the present more?",
+  "Would you rather I always tell you my day in detail, or just the highlights?",
+  "Would you rather we keep pets as part of our family, or stay pet-free?",
+  "Would you rather we always agree to disagree quickly, or talk things out fully every time?",
+  "Would you rather have a home filled with books, or filled with music?",
+  "Would you rather we make new friends as a couple, or keep our separate friend groups close?",
+  "Would you rather we always check in daily by call, or trust the silence between us?",
+  "Would you rather have one deeply loyal best friend couple, or many casual friend couples?",
+  "Would you rather we prioritize physical health together, or mental rest together?",
+  "Would you rather I be the planner for trips, or you take that role?",
+  "Would you rather we live close to family, or have full independence far away?",
+  "Would you rather we celebrate anniversaries big every year, or simply and quietly?",
+  "Would you rather have a home that's always tidy, or always lived-in and cozy?",
+  "Would you rather we keep separate hobbies as 'me time', or always invite each other in?",
+  "Would you rather I handle finances mostly, or we split that responsibility evenly?",
+  "Would you rather we prioritize giving back to others together, or focus inward on us first?",
+  "Would you rather have a slow-paced retirement, or stay busy and active forever?",
+  "Would you rather we keep most things spontaneous, or always have a long-term plan?",
+  "Would you rather I show love through words, or you prefer love through actions?",
+  "Would you rather we celebrate failures as lessons loudly, or quietly move on?",
+  "Would you rather have one shared dream we chase together, or two separate dreams we support?",
+  "Would you rather we always debrief our day every night, or just enjoy being present?",
+  "Would you rather have a tiny minimalist home, or a big home with lots of stuff?",
+  "Would you rather we always vacation somewhere new, or have one favorite place we return to?",
+  "Would you rather I be more affectionate with words, or more affectionate physically?",
+  "Would you rather we host all the holidays at our place, or always travel to family?",
+  "Would you rather we keep a strict 'no phones at dinner' rule, or stay relaxed about it?",
+  "Would you rather have separate morning routines, or always start the day together?",
+  "Would you rather we keep our finances totally transparent, or have some individual privacy?",
+  "Would you rather I always remember important dates, or you take the lead on that?",
+  "Would you rather we move for a dream job opportunity, or prioritize staying rooted?",
+  "Would you rather we always resolve conflict the same night, or sometimes need a day to think?",
+  "Would you rather have a big circle of couple friends, or just a tight few?",
+  "Would you rather we keep growing our careers separately, or build something together?",
+  "Would you rather I plan surprises often, or you prefer always knowing what's coming?",
+  "Would you rather we prioritize travel experiences, or building a dream home?",
+  "Would you rather have quiet weekends at home, or always be out doing something?",
+  "Would you rather we keep our love private mostly, or share our journey more publicly?",
+  "Would you rather I express love loudly and often, or you prefer subtlety?",
+  "Would you rather we always split chores evenly, or divide based on what each enjoys?",
+  "Would you rather have a big celebration for every milestone, or keep it intimate just us two?",
+  "Would you rather we always make big decisions together, or trust each other to decide solo sometimes?",
+  "Would you rather I handle the planning for our future, or we map it out together equally?",
+  "Would you rather we live a simple, slow-paced life, or an ambitious, fast-paced one?",
+  "Would you rather we keep date nights structured, or always keep them spontaneous?",
+  "Would you rather have a relationship full of inside jokes, or full of deep conversations?",
+  "Would you rather we always speak our minds immediately, or take time to reflect first?",
+  "Would you rather I surprise you with gifts often, or save up for one big meaningful one?",
+  "Would you rather we build a five-year plan together, or take life one year at a time?",
+  "Would you rather have a partner who challenges you to grow, or comforts you as you are?",
+  "Would you rather we always say 'I love you' first thing every morning, or whenever it feels right?",
+  "Would you rather we keep our relationship low-drama always, or accept some passionate ups and downs?",
+  "Would you rather have unconditional support always, or honest pushback when needed?",
+  "Would you rather we always end the day with a hug no matter what, or let space happen naturally?",
 ];
 
 let cqI=0;
@@ -1587,6 +2066,88 @@ const QUIZ_PROMPTS=[
   "Ask: What's something I'm secretly insecure about?",
   "Ask: What's my favorite way to spend a free afternoon?",
   "Ask: What's a song I've said I love recently?",
+  "Ask: What's my favorite childhood memory?",
+  "Ask: What's a food I dislike that most people enjoy?",
+  "Ask: What's my favorite type of weather?",
+  "Ask: Who is my best friend outside of you?",
+  "Ask: What's a skill I wish I had?",
+  "Ask: What's my favorite holiday and why?",
+  "Ask: What's a small thing that instantly improves my mood?",
+  "Ask: What's my dream job, if money weren't a factor?",
+  "Ask: What's something I'm proud of that I rarely talk about?",
+  "Ask: What's my go-to order at our favorite restaurant?",
+  "Ask: What's a habit I'm trying to build or break?",
+  "Ask: What's my favorite way to be comforted when stressed?",
+  "Ask: What's a place from my childhood that means a lot to me?",
+  "Ask: What's my favorite genre of music?",
+  "Ask: What's something that always stresses me out?",
+  "Ask: What's my favorite way to spend a rainy day?",
+  "Ask: What's a fear I had as a child?",
+  "Ask: What's my favorite thing to do on weekends?",
+  "Ask: What's something I collect or used to collect?",
+  "Ask: What's my favorite memory from our relationship?",
+  "Ask: What's a value I consider non-negotiable?",
+  "Ask: What's my biggest accomplishment so far?",
+  "Ask: What's something I always order when we get takeout?",
+  "Ask: What's my favorite way to celebrate good news?",
+  "Ask: What's a hobby I wish I had more time for?",
+  "Ask: What's my comfort drink — coffee, tea, or something else?",
+  "Ask: What's something I worry about that I rarely admit?",
+  "Ask: What's my favorite app on my phone?",
+  "Ask: What's a place I've always wanted to visit?",
+  "Ask: What's my pet peeve in conversations?",
+  "Ask: What's something I'd want to learn if I had a free year?",
+  "Ask: What's my favorite memory with my family?",
+  "Ask: What's something that always makes me cry, happy or sad?",
+  "Ask: What's my go-to karaoke song, if I had one?",
+  "Ask: What's something I find genuinely funny that others might not?",
+  "Ask: What's my favorite scent or smell?",
+  "Ask: What's a fear I've overcome recently?",
+  "Ask: What's my favorite way to wake up in the morning?",
+  "Ask: What's something I'd never want to give up doing?",
+  "Ask: What's my ideal way to spend a birthday?",
+  "Ask: What's something small that always makes me feel loved?",
+  "Ask: What's my biggest pet peeve about myself?",
+  "Ask: What's a compliment that always makes me blush?",
+  "Ask: What's my favorite memory of us traveling, even locally?",
+  "Ask: What's something I secretly find romantic that I rarely admit?",
+  "Ask: What's my favorite way to unwind after a stressful day?",
+  "Ask: What's a goal I had as a kid that I still think about?",
+  "Ask: What's my comfort food when I'm sick?",
+  "Ask: What's something I think I'm better at than I get credit for?",
+  "Ask: What's my favorite thing to do when I'm alone?",
+  "Ask: What's a small luxury I always treat myself to?",
+  "Ask: What's something about getting older that excites me?",
+  "Ask: What's my favorite way to show someone I care?",
+  "Ask: What's a memory from before we met that shaped who I am?",
+  "Ask: What's something I always notice in other people first?",
+  "Ask: What's my ideal vacation style — relaxing or adventurous?",
+  "Ask: What's a quality I admire most in my closest friends?",
+  "Ask: What's something I always do when I'm nervous?",
+  "Ask: What's my favorite season of a TV show, if I have one?",
+  "Ask: What's something I'd want you to never forget about me?",
+  "Ask: What's my favorite thing to do on a lazy Sunday?",
+  "Ask: What's a small fear I have that you've noticed?",
+  "Ask: What's my favorite kind of compliment to receive?",
+  "Ask: What's something I always say when I'm excited?",
+  "Ask: What's my least favorite chore?",
+  "Ask: What's a place that makes me feel instantly calm?",
+  "Ask: What's my go-to excuse when I don't want to do something?",
+  "Ask: What's something I'm trying to get better at right now?",
+  "Ask: What's my favorite way to spend time with friends?",
+  "Ask: What's a memory that always makes me laugh when I think of it?",
+  "Ask: What's something I always notice about a new place I visit?",
+  "Ask: What's my biggest motivation in life right now?",
+  "Ask: What's something I'd do if I won the lottery tomorrow?",
+  "Ask: What's my favorite way to be surprised?",
+  "Ask: What's something I always do before falling asleep?",
+  "Ask: What's a smell that instantly makes me think of home?",
+  "Ask: What's my favorite outdoor activity?",
+  "Ask: What's something I get unreasonably excited about?",
+  "Ask: What's my biggest 'ick' or pet peeve in general?",
+  "Ask: What's something I wish I did more of as a kid?",
+  "Ask: What's my comfort movie or show I rewatch often?",
+  "Ask: What's something I do that I don't realize is a 'tell' when I'm upset?",
 ];
 let quizScore=0,quizRound=1;
 function nextQuiz(){
@@ -1726,6 +2287,90 @@ const HOROSCOPES=[
   "The stars favor laughter today — find a reason to be silly together.",
   "A good day to say the thing you've been holding back.",
   "Today, notice one thing you're grateful for about them out loud.",
+  "The stars suggest slowing down today — rushed love feels thin, take your time.",
+  "A small surprise today will land bigger than you expect. Try it.",
+  "Today favors listening twice as much as speaking.",
+  "Your partner may be carrying something unspoken — ask gently.",
+  "A great day to plan something for next month, together.",
+  "Today rewards physical affection — a hand on the shoulder, a hug that lingers.",
+  "The universe nudges you to apologize for something small before it grows.",
+  "A good day to revisit a shared dream you haven't talked about in a while.",
+  "Today favors spontaneity over the to-do list, just this once.",
+  "Your partner could use a reminder that they're doing better than they think.",
+  "A great day to cook their favorite meal, no occasion needed.",
+  "The stars say: today, choose curiosity over assumption.",
+  "Today rewards quality over quantity in how you spend your time together.",
+  "A good day to write down a memory before it fades — share it later.",
+  "Your patience today will be remembered longer than you think.",
+  "Today favors honesty delivered with extra gentleness.",
+  "A great day to revisit an inside joke and let it make you both laugh again.",
+  "The universe suggests today is for slow mornings, not rushed ones.",
+  "Today rewards small consistency over big gestures — show up the same as always.",
+  "A good day to ask 'how are you, really?' and wait for the real answer.",
+  "Your partner may need space today — give it generously, not anxiously.",
+  "Today favors gratitude over expectation. Notice what's already good.",
+  "A great day to plan a tiny adventure nearby, nothing fancy needed.",
+  "The stars suggest today is for forgiveness, even for something small.",
+  "Today rewards presence — put the distractions down, even briefly.",
+  "A good day to remind your partner of a strength you admire in them.",
+  "Your patience with a flaw of theirs today will mean more than you know.",
+  "Today favors playful teasing over serious discussion, lighten the mood.",
+  "A great day to revisit a place that means something to your story.",
+  "The universe suggests today's lesson is about softness, not winning.",
+  "Today rewards small touches of affection throughout the day, not just at night.",
+  "A good day to ask what they need, instead of guessing.",
+  "Your partner may light up today from a memory you bring up unprompted.",
+  "Today favors quiet acts of care — making their coffee, warming their side of the bed.",
+  "A great day to talk about the future without fear, just curiosity.",
+  "The stars suggest today's challenge is patience with yourself, not just them.",
+  "Today rewards saying 'I'm proud of you' out loud, even for something small.",
+  "A good day to revisit a goal you set together and check in on it.",
+  "Your partner's mood today may shift with one small kind word from you.",
+  "Today favors choosing connection over being right.",
+  "A great day to plan a no-phone evening, even just for an hour.",
+  "The universe suggests today is for noticing effort, not just results.",
+  "Today rewards humor — find something to laugh about together before bed.",
+  "A good day to thank them for something they do that's easy to overlook.",
+  "Your partner may need extra reassurance about something unspoken today.",
+  "Today favors slow eye contact over quick glances — really see each other.",
+  "A great day to revisit your love language and ask if it's still the same.",
+  "The stars say today rewards small risks — say the vulnerable thing.",
+  "Today favors warmth over efficiency in how you speak to each other.",
+  "A good day to plan something neither of you has tried before.",
+  "Your partner today needs to feel chosen, not just loved in theory.",
+  "Today rewards checking in before assuming you know how they feel.",
+  "A great day to revisit a compliment you gave early on and say it again.",
+  "The universe suggests today's growth comes from being patient with change.",
+  "Today favors small celebrations — even finishing a small task deserves a cheer.",
+  "A good day to ask about their dreams, the literal sleeping kind.",
+  "Your partner may appreciate quiet support more than advice today.",
+  "Today rewards remembering a detail they mentioned days ago.",
+  "A great day to plan a future trip, even just in conversation.",
+  "The stars suggest today's theme is reassurance — say it plainly.",
+  "Today favors letting them win the small argument, just to keep the peace.",
+  "A good day to revisit your wedding/relationship vows or promises to each other.",
+  "Your partner today needs less correction and more encouragement.",
+  "Today rewards presence over perfection — just show up fully.",
+  "A great day to bring up a happy memory unprompted, just because.",
+  "The stars suggest today's win is in the small consistent moments, not the grand ones.",
+  "Today favors gentle honesty over silence about something small.",
+  "A good day to say 'I see you trying' to your partner, even if results aren't visible yet.",
+  "Your partner's energy today depends on feeling needed, not just loved.",
+  "Today rewards curiosity about their day instead of jumping to your own news first.",
+  "A great day to plan something just for the joy of it, no productivity required.",
+  "The universe suggests today's growth is in slowing your reactions down by a beat.",
+  "Today favors warmth in your tone, even when you're tired.",
+  "A good day to revisit a promise you made and follow through on it.",
+  "Your partner may feel most loved today through quality time, not gifts or words.",
+  "Today rewards letting go of a small grudge before it grows roots.",
+  "A great day to ask 'what made you smile today?' and really listen to the answer.",
+  "The stars suggest today's lesson is about showing up consistently, not perfectly.",
+  "Today favors small physical affection — a touch on the arm, a hand held a little longer.",
+  "A good day to tell them you noticed something they worked hard on.",
+  "Your patience today is an act of love, even if it goes unnoticed in the moment.",
+  "Today rewards saying less and listening more, especially during a hard topic.",
+  "A great day to plan a future memory together, even something small and simple.",
+  "Today's quiet truth: showing up, again and again, is the whole romance.",
 ];
 function newHoroscope(){
   document.getElementById('horo-text').textContent=nextFromDeck('horo', HOROSCOPES);
@@ -1749,6 +2394,90 @@ const CHALLENGES=[
   "Ask what they need from you today, and actually do it.",
   "Tell them one way they've grown that you've noticed.",
   "Do one small chore for them without being asked.",
+  "Write them a list of 5 tiny things you love about them, no big statements allowed.",
+  "Plan a surprise 10-minute activity for tonight, nothing fancy.",
+  "Tell them about a moment today that reminded you of them.",
+  "Give them your undivided attention for one full conversation, no multitasking.",
+  "Make their favorite drink without being asked.",
+  "Tell them something you're working on about yourself, and ask for their support.",
+  "Give them a genuine compliment about something non-physical today.",
+  "Plan next week's date night together right now.",
+  "Send a throwback photo of you two with a caption about why you love that memory.",
+  "Ask them what's been on their mind lately, and just listen.",
+  "Do something to make their morning easier tomorrow.",
+  "Write a short note about why today, specifically, was better with them in it.",
+  "Tell them one thing you've never thanked them for, but should have.",
+  "Plan a 'no plans' evening — just being together, no agenda.",
+  "Compliment a decision they made recently that you admired.",
+  "Offer to take one task off their plate today, fully.",
+  "Tell them about a goal you have and how they could help you reach it.",
+  "Give them 10 minutes of focused, screen-free conversation before bed.",
+  "Ask them to teach you something they know that you don't.",
+  "Recreate a small tradition from earlier in your relationship today.",
+  "Tell them what you're most looking forward to doing together this month.",
+  "Write a one-line 'why I love you' note and leave it somewhere unexpected.",
+  "Ask what would make their day 1% better, and do that thing.",
+  "Tell them a strength of theirs you wish you had.",
+  "Plan a small surprise for their next hard day, in advance.",
+  "Give them space today without taking it personally, if they need it.",
+  "Tell them one thing about their personality that's grown on you over time.",
+  "Offer a genuine, unprompted apology for something small you've been holding onto.",
+  "Plan a 'yes day' where you say yes to one of their small requests today.",
+  "Tell them about a time they made you feel proud to be with them.",
+  "Write them a note about a future you imagine together.",
+  "Ask them to share a worry, then just hold space for it without fixing it.",
+  "Compliment something about how they handled a hard moment recently.",
+  "Make time today to just sit together, no phones, no tasks, just presence.",
+  "Tell them about a tiny thing they did this week that you appreciated but never mentioned.",
+  "Send a message in the middle of the day just to say you're thinking of them.",
+  "Ask them what their ideal version of today would look like, then try to make part of it happen.",
+  "Compliment their resilience about something they're currently going through.",
+  "Plan a 15-minute walk together with no destination, just to talk.",
+  "Write down one thing you've learned from them this year.",
+  "Tell them about a habit of theirs you've come to love, even if it seemed small at first.",
+  "Offer to handle something stressful on their to-do list today.",
+  "Share a memory of them that made you fall for them a little more.",
+  "Ask them to pick the next movie, show, or activity, no objections.",
+  "Tell them something about their future you're genuinely excited to witness.",
+  "Plan a quiet 10-minute check-in tonight: how are you, really?",
+  "Give them a specific, detailed compliment instead of a general one today.",
+  "Recreate a meal or snack from your early days together.",
+  "Tell them what their support has meant to you this month specifically.",
+  "Offer them 20 minutes of uninterrupted rest today, covering for them if needed.",
+  "Tell them about a time you bragged about them to someone else.",
+  "Ask what's been weighing on their mind, and just hold space, no advice needed.",
+  "Write a tiny 'proud of you' note and place it somewhere they'll find it tomorrow.",
+  "Ask them to share their highlight and lowlight of the day, then really sit with both.",
+  "Tell them one way you want to be a better partner this month, out loud.",
+  "Surprise them with their favorite snack waiting at home today.",
+  "Compliment something they said in a conversation days ago that stuck with you.",
+  "Offer a 5-minute back or foot rub with zero expectations attached.",
+  "Tell them about a small fear you have, and let them comfort you for once.",
+  "Plan a fully unplugged hour together this week, phones in another room.",
+  "Ask them what 'feeling loved' looks like for them this week specifically.",
+  "Recreate the outfit or vibe from your first date, just for fun.",
+  "Tell them which of their qualities you hope to learn from.",
+  "Leave their favorite playlist running when they get home today.",
+  "Ask if there's a conversation they've been avoiding, and gently open the door.",
+  "Compliment their growth in an area they've been working hard on.",
+  "Give them the remote, the playlist, or the choice — fully, no negotiating.",
+  "Tell them one thing about today that wouldn't have been good without them.",
+  "Write down a future date idea and surprise them with it this weekend.",
+  "Ask them what they're most looking forward to this week and help make it happen.",
+  "Tell them a worry you let go of because of their support.",
+  "Plan a fully tech-free dinner together tonight, just conversation.",
+  "Compliment the way they've handled a recent challenge with grace.",
+  "Offer to listen to a full recap of their day without checking your phone once.",
+  "Tell them something you've never said but always meant.",
+  "Plan one small adventure this weekend, even a new park or café.",
+  "Write them a 'reasons I chose you' list with at least 5 items.",
+  "Ask them to pick the next three songs you both listen to, no skipping.",
+  "Tell them one thing you hope they never stop believing about themselves.",
+  "Offer to handle bedtime/morning routine fully today, no help needed from them.",
+  "Compliment their taste — in music, style, or anything they're proud of.",
+  "Tell them about a moment today you wished they were there to see.",
+  "Plan a 'remember when' night — share three old memories back and forth.",
+  "Tell them one thing you're grateful happened today, even if today was hard.",
 ];
 let chalCount=0;
 function newChallenge(){
@@ -1781,6 +2510,90 @@ const FINISH_SENTENCES=[
   "I feel most like myself with you when...",
   "The thing I never want to take for granted is...",
   "Ten years from now, I hope we...",
+  "The moment I felt safest with you was...",
+  "If I had to describe you in three words, they'd be...",
+  "The thing that surprised me most about loving you was...",
+  "When we argue, what I appreciate most about you is...",
+  "The sound I associate most with you is...",
+  "If our relationship were a season, it would be...",
+  "The thing I'm most proud of us for is...",
+  "I feel most loved by you when you...",
+  "The hardest thing we've gotten through together was...",
+  "If I could relive one ordinary day with you, it'd be...",
+  "What I never expected love to feel like, but it does, is...",
+  "The thing I want to tell you more often is...",
+  "When I picture 'home,' I picture...",
+  "The smallest thing you do that means the most is...",
+  "If I wrote you a letter today, the first line would be...",
+  "The thing about growing older that excites me most with you is...",
+  "I think we're at our best when we...",
+  "The moment I stopped being scared of love was when...",
+  "If you could only know one thing about how I feel, it'd be...",
+  "The thing I learned about myself through you is...",
+  "When life gets hard, what keeps us steady is...",
+  "The thing I hope never changes between us is...",
+  "If I could give you one thing money can't buy, it'd be...",
+  "The way you make ordinary days feel special is...",
+  "If I had to pick one memory to relive forever, it'd be...",
+  "The thing I never imagined I'd love about partnership is...",
+  "You taught me that love can feel like...",
+  "If our story were a book, this chapter would be called...",
+  "The thing I want our friends to say about us is...",
+  "When I think of 'forever,' what comes to mind is...",
+  "The most unexpected gift you've given me is...",
+  "If I could bottle one feeling from us, it would be the feeling of...",
+  "The thing I hope you never doubt about yourself is...",
+  "I feel closest to you when we're...",
+  "If today were the first day we met, I'd want to tell you...",
+  "The bravest thing I've done for love is...",
+  "What I want to remember about this season of our life is...",
+  "The thing about loving you that still feels new is...",
+  "If I had one wish for us, it would be...",
+  "The quietest, most ordinary moment with you that I treasure is...",
+  "I think love means choosing you even when...",
+  "The thing I want to thank you for, that I haven't said enough, is...",
+  "When I imagine us decades from now, I hope we still...",
+  "The thing about us that strangers probably notice is...",
+  "If I had to choose one song that represents our love, it'd capture the feeling of...",
+  "The thing I want to apologize for, that I never quite said right, is...",
+  "What love taught me about myself, that I didn't expect, is...",
+  "If we wrote our story for someone else to read, the moral would be...",
+  "The thing I miss when we're apart, even for a day, is...",
+  "I think the secret to 'us' working is...",
+  "If I could freeze one ordinary moment with you, it'd be...",
+  "The thing I want you to know on your hardest days is...",
+  "What makes me certain about us, even on uncertain days, is...",
+  "The way you've changed how I see love is...",
+  "If our relationship had a motto, it would be...",
+  "The thing I think we'll laugh about in twenty years is...",
+  "I never thought I'd feel this way about... until you.",
+  "The thing I want to protect most about 'us' is...",
+  "If I could thank one version of past-me for choosing you, I'd say...",
+  "The quiet promise I make to you every day, without saying it, is...",
+  "What I hope our love teaches the people who watch us is...",
+  "If today were a love letter, the last line would be...",
+  "The thing I never get tired of about you is...",
+  "If I could relive the day we met with everything I know now, I'd...",
+  "The version of love I believe in because of you is...",
+  "When things get hard, what I remind myself about us is...",
+  "The thing about your laugh that I'd recognize anywhere is...",
+  "If I had to explain 'home' to a stranger, I'd describe...",
+  "The promise I want to renew with you today is...",
+  "What I've learned about patience, I learned mostly from...",
+  "The thing I'm most curious to discover about us in the future is...",
+  "If our love were weather, today it would feel like...",
+  "The thing about us I'd want our kids (or future selves) to know is...",
+  "When I think 'I'm lucky,' the first thing I think of is...",
+  "The thing I want to be braver about saying to you is...",
+  "If I wrote our vows again today, I'd add...",
+  "The smallest thing that makes the biggest difference between us is...",
+  "What I hope people feel when they see us together is...",
+  "The thing about commitment I understand now that I didn't before is...",
+  "If today were a chapter title in our story, it'd be called...",
+  "The thing I want to remember about exactly how we are right now is...",
+  "When I picture us laughing in twenty years, I picture us laughing about...",
+  "The truest thing I can say about loving you is...",
+  "If love is a choice we make daily, today I choose you because...",
 ];
 function nextFinish(){
   document.getElementById('finish-text').textContent=nextFromDeck('finish', FINISH_SENTENCES);
@@ -1837,6 +2650,40 @@ const THIS_OR_THAT=[
   ["Long term plans","Living in the moment"],
   ["Quiet apologies","Big gestures"],
   ["Phone calls","Voice notes"],
+  ["Sunrise walks","Sunset walks"],
+  ["Window seat","Aisle seat"],
+  ["Spicy food","Mild food"],
+  ["Road trips","Flights"],
+  ["Reading together","Watching together"],
+  ["Big wedding","Small ceremony"],
+  ["City lights","Starry skies"],
+  ["Spontaneous dates","Planned dates"],
+  ["Sweet notes","Spoken words"],
+  ["Cuddling on the couch","Dancing in the kitchen"],
+  ["Long showers","Quick showers"],
+  ["Savings account","Spending freely"],
+  ["Pets","No pets"],
+  ["Loud arguments that end fast","Quiet ones that take longer"],
+  ["Public affection","Private affection"],
+  ["Staying in pajamas all day","Getting dressed up"],
+  ["Hosting friends","Visiting friends"],
+  ["Music on always","Comfortable silence"],
+  ["Spontaneous trips","Researched trips"],
+  ["Texting first","Waiting to hear back"],
+  ["Window shopping","Online shopping"],
+  ["Early to bed","Late nights"],
+  ["Group photos","Candid photos"],
+  ["Picnics","Restaurant dinners"],
+  ["Long walks","Short intense workouts"],
+  ["Camping","Hotels"],
+  ["Cold weather adventures","Warm weather adventures"],
+  ["Streaming a new show","Rewatching an old favorite"],
+  ["Surprise visits","Scheduled visits"],
+  ["Bold decisions","Careful decisions"],
+  ["Birthday parties","Birthday trips"],
+  ["Hand-written letters","Quick texts"],
+  ["Big dreams discussed often","Small goals tracked daily"],
+  ["Trying a new hobby together","Mastering one we both love"],
 ];
 let ttRound=0;
 function nextThisThat(){
@@ -1921,6 +2768,18 @@ const TRIVIA_QUESTIONS=[
   {q:"What's commonly called the language of love in pop culture?",opts:["Math","Music","Silence","Color"],answer:1},
   {q:"Which finger is traditionally used for an engagement ring in many cultures?",opts:["Thumb","Index","Ring finger","Pinky"],answer:2},
   {q:"What's a 'love language' framework popularized by a relationship author?",opts:["5 Love Languages","3 Bonds","7 Habits","Color Code"],answer:0},
+  {q:"What's the traditional gemstone for a 60th wedding anniversary?",opts:["Diamond","Emerald","Ruby","Sapphire"],answer:0},
+  {q:"What's a common nickname for the 25th wedding anniversary?",opts:["Golden anniversary","Silver anniversary","Pearl anniversary","Ruby anniversary"],answer:1},
+  {q:"What ancient Greek god is most associated with romantic love?",opts:["Zeus","Apollo","Eros","Hermes"],answer:2},
+  {q:"What's the traditional flower for a 1st anniversary in some traditions?",opts:["Carnation","Rose","Lily of the valley","Sunflower"],answer:0},
+  {q:"Which holiday is most associated with romantic love worldwide?",opts:["New Year's Day","Valentine's Day","Halloween","Thanksgiving"],answer:1},
+  {q:"What's a common term for a couple's matching personality types in pop psychology?",opts:["Soulmates","Twin flames","Power couple","Love language match"],answer:1},
+  {q:"What's the term for the early intense romantic feeling some couples experience?",opts:["Limerence","Nostalgia","Euphoria","Empathy"],answer:0},
+  {q:"In tarot, which card is often associated with romantic partnership?",opts:["The Tower","The Lovers","The Hermit","The Sun"],answer:1},
+  {q:"What's the traditional material for a 10th anniversary gift?",opts:["Tin/Aluminum","Leather","Wood","Glass"],answer:0},
+  {q:"What's a common term for the period after the honeymoon phase fades?",opts:["The plateau","Disillusionment","Settling stage","Reality phase"],answer:1},
+  {q:"What's the Japanese concept of finding a soulmate often called?",opts:["Ikigai","Koi no yokan","Wabi-sabi","Kintsugi"],answer:1},
+  {q:"What's a common term for couples who finish each other's sentences and habits?",opts:["Mirror couples","Sync syndrome","Codependent","Twin behavior"],answer:1},
 ];
 let trivScore=0,trivNum=1,trivAnswered=false;
 function nextTrivia(){
@@ -2057,6 +2916,143 @@ function openNote(id){
   }
   renderNotes();
 }
+
+// ═══════════════════════════════════════════════
+//  CHAT
+// ═══════════════════════════════════════════════
+function renderChat(){
+  const messages=hub.chat||[];
+  const container=document.getElementById('chat-messages');
+  if(!messages.length){
+    container.innerHTML=`<div class="empty"><i>💬</i><p>Say hello — this is just for the two of you 💕</p></div>`;
+    return;
+  }
+  let html='';
+  let lastDay='';
+  messages.forEach(m=>{
+    const day=ds(new Date(m.ts));
+    if(day!==lastDay){
+      html+=`<div class="chat-day-sep">${fd(day)}</div>`;
+      lastDay=day;
+    }
+    const mine=m.from===myRole;
+    const time=new Date(m.ts).toLocaleTimeString('en-KE',{hour:'numeric',minute:'2-digit'});
+    if(m.type==='location'){
+      html+=`<div class="chat-bubble location ${mine?'me':'them'}" onclick="openMapLink(${m.lat},${m.lng})">
+        <div>📍 ${mine?'You':m.fromName} shared a location</div>
+        <div style="font-size:11px;opacity:.8">Tap to open in Maps</div>
+        <span class="chat-time">${time}</span>
+      </div>`;
+    }else{
+      html+=`<div class="chat-bubble ${mine?'me':'them'}">${escapeHtml(m.text)}<span class="chat-time">${time}</span></div>`;
+    }
+  });
+  container.innerHTML=html;
+  container.scrollTop=container.scrollHeight;
+}
+function escapeHtml(s){
+  const d=document.createElement('div');
+  d.textContent=s;
+  return d.innerHTML;
+}
+async function sendChat(){
+  const input=document.getElementById('chat-input');
+  const text=input.value.trim();
+  if(!text)return;
+  hub.chat=hub.chat||[];
+  hub.chat.push({id:Date.now(),from:myRole,fromName:myName,text,ts:Date.now(),type:'text'});
+  if(hub.chat.length>300)hub.chat=hub.chat.slice(-300);
+  input.value='';
+  await pushCollection(hubCode,'chat',hub.chat);
+  lastHash='';
+  renderChat();
+}
+function openMapLink(lat,lng){
+  window.open(`https://www.google.com/maps?q=${lat},${lng}`,'_blank');
+}
+
+// ═══════════════════════════════════════════════
+//  LOCATION SHARING (opt-in, time-limited, stoppable)
+// ═══════════════════════════════════════════════
+function openLocationModal(){
+  document.getElementById('location-modal').classList.add('on');
+}
+function closeLocationModal(){
+  document.getElementById('location-modal').classList.remove('on');
+}
+function startSharingLocation(){
+  if(!('geolocation' in navigator)){
+    toast('⚠️ Location not supported on this device');
+    return;
+  }
+  const minutes=parseInt(document.getElementById('loc-duration').value);
+  locationExpiresAt=Date.now()+minutes*60000;
+  closeLocationModal();
+  toast('📍 Sharing your location...');
+  pushLocationUpdate();
+  if(locationWatchId)navigator.geolocation.clearWatch(locationWatchId);
+  locationWatchId=navigator.geolocation.watchPosition(
+    pos=>{ pushLocationUpdate(pos.coords.latitude,pos.coords.longitude); },
+    err=>{ toast('⚠️ Could not get your location'); },
+    {enableHighAccuracy:true,maximumAge:10000}
+  );
+  if(locationShareTimer)clearTimeout(locationShareTimer);
+  locationShareTimer=setTimeout(stopSharingLocation, minutes*60000);
+  document.getElementById('chat-location-bar').style.display='flex';
+  document.getElementById('chat-location-text').textContent=`Sharing your location for ${minutes} min`;
+}
+function pushLocationUpdate(lat,lng){
+  if(lat===undefined){
+    navigator.geolocation.getCurrentPosition(
+      pos=>sendLocationToHub(pos.coords.latitude,pos.coords.longitude),
+      ()=>{}
+    );
+  }else{
+    sendLocationToHub(lat,lng);
+  }
+}
+async function sendLocationToHub(lat,lng){
+  await fetch(`${API}?code=${encodeURIComponent(hubCode)}&collection=location`,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:myRole,lat,lng,expiresAt:locationExpiresAt})
+  });
+  // also drop a chat bubble the first time so partner sees it in chat history
+}
+async function stopSharingLocation(){
+  if(locationWatchId){navigator.geolocation.clearWatch(locationWatchId);locationWatchId=null;}
+  if(locationShareTimer){clearTimeout(locationShareTimer);locationShareTimer=null;}
+  locationExpiresAt=null;
+  document.getElementById('chat-location-bar').style.display='none';
+  await fetch(`${API}?code=${encodeURIComponent(hubCode)}&collection=location`,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:myRole,stop:true})
+  });
+  toast('📍 Stopped sharing your location');
+}
+async function pollPartnerLocation(){
+  try{
+    const r=await fetch(`${API}?code=${encodeURIComponent(hubCode)}&collection=location`);
+    const j=await r.json();
+    const data=j.data||{};
+    const partnerRole=myRole==='him'?'her':'him';
+    const partnerLoc=data[partnerRole];
+    const banner=document.getElementById('partner-loc-banner');
+    if(partnerLoc){
+      banner.style.display='flex';
+      const mins=Math.max(0,Math.round((partnerLoc.expiresAt-Date.now())/60000));
+      document.getElementById('partner-loc-sub').textContent=`Updated just now · stops in ${mins} min`;
+      window._partnerLocCoords={lat:partnerLoc.lat,lng:partnerLoc.lng};
+    }else{
+      banner.style.display='none';
+    }
+  }catch(e){}
+}
+function viewPartnerLocation(){
+  if(window._partnerLocCoords){
+    openMapLink(window._partnerLocCoords.lat,window._partnerLocCoords.lng);
+  }
+}
+
 
 // ═══════════════════════════════════════════════
 //  ANNIVERSARY COUNTDOWN
