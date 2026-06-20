@@ -69,6 +69,12 @@ html,body{height:100%;overflow:hidden;font-family:'Nunito',sans-serif;background
 .stxt{font-size:11px;font-weight:700;color:rgba(255,255,255,.85)}
 .mep{background:rgba(255,255,255,.2);color:#fff;font-size:11px;font-weight:700;
   padding:5px 10px;border-radius:18px;cursor:pointer;border:1px solid rgba(255,255,255,.25)}
+.refresh-btn{background:rgba(255,255,255,.2);color:#fff;font-size:16px;font-weight:700;
+  width:28px;height:28px;border-radius:50%;cursor:pointer;border:1px solid rgba(255,255,255,.25);
+  display:flex;align-items:center;justify-content:center;transition:transform .4s}
+.refresh-btn:active{transform:rotate(180deg)}
+.refresh-btn.spinning{animation:spinRefresh .6s linear infinite}
+@keyframes spinRefresh{to{transform:rotate(360deg)}}
 
 .nb{background:linear-gradient(90deg,#e8f4fd,#f0f7ff);padding:8px 14px;display:flex;
   align-items:center;gap:8px;font-size:11px;font-weight:700;color:var(--blue2);
@@ -571,6 +577,7 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
       <h1>Our Love Hub</h1>
     </div>
     <div class="tr">
+      <button class="refresh-btn" id="refresh-btn" onclick="hardRefresh()" title="Refresh">⟳</button>
       <div id="dot"></div>
       <div class="stxt" id="stxt">Loading...</div>
       <div class="mep" id="mep" onclick="doLogout()">👤 Me</div>
@@ -1120,6 +1127,18 @@ function hideSplash(){
 }
 
 function doLogout(){if(!confirm('Log out?'))return;clearInterval(pollTimer);clearInterval(presenceTimer);clearInterval(presencePollTimer);clearInterval(presenceTimer2);localStorage.clear();location.reload();}
+
+function hardRefresh(){
+  const btn=document.getElementById('refresh-btn');
+  if(btn)btn.classList.add('spinning');
+  toast('🔄 Refreshing to the latest version...');
+  // cache-busting reload: append a fresh timestamp param and force-reload
+  // bypassing any cached copy of this page.
+  const url=new URL(window.location.href);
+  url.searchParams.set('_r', Date.now());
+  setTimeout(()=>{ window.location.href=url.toString(); },400);
+}
+
 
 
 async function launch(){
