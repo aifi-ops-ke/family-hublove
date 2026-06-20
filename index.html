@@ -78,12 +78,17 @@ html,body{height:100%;overflow:hidden;font-family:'Nunito',sans-serif;background
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
 
 .nav{display:flex;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;
-  overflow-x:auto;scrollbar-width:none;box-shadow:0 1px 0 var(--greyb)}
+  overflow-x:auto;scrollbar-width:none;box-shadow:0 1px 0 var(--greyb);position:relative}
 .nav::-webkit-scrollbar{display:none}
-.nt{flex:1;min-width:58px;padding:10px 4px;text-align:center;font-size:10px;font-weight:700;
+.nt{flex:0 0 auto;min-width:50px;padding:9px 7px;text-align:center;font-size:9px;font-weight:700;
   color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
-.nt i{display:block;font-size:17px;margin-bottom:2px;font-style:normal}
+.nt i{display:block;font-size:16px;margin-bottom:2px;font-style:normal}
 .nt.on{color:var(--blue);border-bottom-color:var(--blue)}
+.nav-scroll-hint{position:absolute;right:0;top:0;bottom:0;width:22px;
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.95));
+  pointer-events:none;display:flex;align-items:center;justify-content:flex-end;
+  font-size:10px;color:var(--blue3);animation:hintPulse 1.8s ease-in-out infinite}
+@keyframes hintPulse{0%,100%{opacity:.5}50%{opacity:1}}
 
 .screens{flex:1;overflow:hidden;position:relative}
 .scr{position:absolute;inset:0;overflow-y:auto;padding:14px;display:none;-webkit-overflow-scrolling:touch}
@@ -577,7 +582,7 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
     <div class="pp" id="pp-her"><div class="pp-avatar" id="pp-av-her">👩</div><div><div id="pp-name-her">Her</div><div class="pp-status" id="pp-status-her">offline</div></div></div>
   </div>
   <div class="nb" id="nb"><div class="pulse"></div><span id="nmsg">Partner updated!</span></div>
-  <div class="nav">
+  <div class="nav" id="main-nav">
     <div class="nt on" onclick="go('home')"><i>🏠</i>Home</div>
     <div class="nt" onclick="go('chat')"><i>💬</i>Chat</div>
     <div class="nt" onclick="go('calendar')"><i>📅</i>Calendar</div>
@@ -586,6 +591,7 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
     <div class="nt" onclick="go('story')"><i>💞</i>Story</div>
     <div class="nt" onclick="go('games')"><i>🎮</i>Games</div>
     <div class="nt" onclick="go('wishlist')"><i>⭐</i>Wishlist</div>
+    <div class="nav-scroll-hint" id="nav-scroll-hint">›</div>
   </div>
   <div class="screens">
     <div id="s-home" class="scr on">
@@ -617,6 +623,12 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
         </div>
       </div>
       <button class="mood-set-btn" onclick="openMoodPicker()">😊 Set my mood today</button>
+
+      <div class="notes-banner" id="chat-banner" onclick="go('chat')" style="background:linear-gradient(135deg,#e8f4fd,#d4ecff);border-color:#b8ddf8">
+        <span class="notes-icon">💬</span>
+        <div class="notes-text"><h4 style="color:var(--blue2)">Our Private Chat</h4><p id="chat-preview">Tap to say hello 💕</p></div>
+        <span class="notes-arrow" style="color:var(--blue2)">→</span>
+      </div>
 
       <div class="notes-banner" id="notes-banner" onclick="go('notes')">
         <span class="notes-icon">💌</span>
@@ -1118,6 +1130,7 @@ async function launch(){
   document.getElementById('today-lbl').textContent=new Date().toLocaleDateString('en-KE',{weekday:'long',day:'numeric',month:'long'});
   setDot('connecting');
   requestNotifPermission();
+  setupNavScrollHint();
   await loadAll(true);
   startPoll();
   startPresence();
@@ -1126,6 +1139,19 @@ async function launch(){
   pollPartnerLocation();
   setInterval(pollPartnerLocation,8000);
 }
+
+function setupNavScrollHint(){
+  const nav=document.getElementById('main-nav');
+  const hint=document.getElementById('nav-scroll-hint');
+  if(!nav||!hint)return;
+  function checkScroll(){
+    const atEnd=nav.scrollLeft+nav.clientWidth >= nav.scrollWidth-4;
+    hint.style.display=atEnd?'none':'flex';
+  }
+  nav.addEventListener('scroll',checkScroll);
+  setTimeout(checkScroll,300);
+}
+
 
 async function loadAll(initial=false){
   try{
@@ -1327,7 +1353,12 @@ function go(t){
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.nt').forEach(x=>x.classList.remove('on'));
   document.getElementById('s-'+t).classList.add('on');
-  ['home','chat','calendar','plan','diary','story','games','wishlist'].forEach((x,i)=>{if(x===t)document.querySelectorAll('.nt')[i].classList.add('on');});
+  const order=['home','chat','calendar','plan','diary','story','games','wishlist'];
+  order.forEach((x,i)=>{if(x===t){
+    const tabEl=document.querySelectorAll('.nt')[i];
+    tabEl.classList.add('on');
+    tabEl.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  }});
   renderCur();
 }
 function renderCur(){
@@ -1345,6 +1376,7 @@ function renderHome(){
   renderAnniv();
   renderGratitude();
   renderNumbers();
+  renderChatPreview();
   const td=ds(new Date());
   const te=hub.events.filter(e=>e.date===td);
   document.getElementById('today-evts').innerHTML=te.length?te.map(evH).join(''):`<div class="empty"><i>🌤️</i><p>Nothing today — enjoy the free time!</p></div>`;
@@ -3044,6 +3076,19 @@ function openNote(id){
 // ═══════════════════════════════════════════════
 //  CHAT
 // ═══════════════════════════════════════════════
+function renderChatPreview(){
+  const el=document.getElementById('chat-preview');
+  if(!el)return;
+  const messages=hub.chat||[];
+  if(!messages.length){
+    el.textContent='Tap to say hello 💕';
+    return;
+  }
+  const last=messages[messages.length-1];
+  const who=last.from===myRole?'You':last.fromName;
+  const preview=last.type==='location'?'📍 Shared a location':last.text;
+  el.textContent=`${who}: ${preview.length>40?preview.slice(0,40)+'…':preview}`;
+}
 function renderChat(){
   const messages=hub.chat||[];
   const container=document.getElementById('chat-messages');
