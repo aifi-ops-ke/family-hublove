@@ -931,6 +931,7 @@ async function launch(){
   document.getElementById('mep').textContent=`${myRole==='him'?'👨':'👩'} ${myName}`;
   document.getElementById('today-lbl').textContent=new Date().toLocaleDateString('en-KE',{weekday:'long',day:'numeric',month:'long'});
   setDot('connecting');
+  requestNotifPermission();
   await loadAll(true);
   startPoll();
   startPresence();
@@ -941,14 +942,81 @@ async function launch(){
 async function loadAll(initial=false){
   try{
     const j=await fetchFullHub(hubCode);
+    if(!initial){
+      detectAndNotifyChanges(j);
+    }
     const newHash=JSON.stringify(j);
-    if(!initial&&lastHash&&newHash!==lastHash){notify('💕 Partner just updated the hub!');}
     hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];hub.story=j.story||[];hub.bucket=j.bucket||[];hub.notes=j.notes||[];hub.moods=j.moods||[];hub.memories=j.memories||[];hub.settings=j.settings||{};
     if(initial){await seedAll();}
     lastHash=newHash;setDot('live');appReady=true;renderCur();
     if(curTab==='home'){renderMoods();renderNotes();renderAnniv();}
   }catch(e){setDot('off');if(!appReady)toast('⚠️ Connection issue — retrying...');}
 }
+
+function detectAndNotifyChanges(incoming){
+  const checks=[
+    {key:'events', label:'added or updated an event', icon:'📅'},
+    {key:'goals', label:'updated your shared goals', icon:'🎯'},
+    {key:'diary', label:'wrote a new diary memory', icon:'📖'},
+    {key:'wishes', label:'updated the wishlist', icon:'⭐'},
+    {key:'story', label:'added a new chapter to your story', icon:'💞'},
+    {key:'bucket', label:'updated the bucket list', icon:'🗺️'},
+    {key:'memories', label:'pinned a new photo memory', icon:'📸'},
+  ];
+  let changed=[];
+  for(const c of checks){
+    const before=JSON.stringify(hub[c.key]||[]);
+    const after=JSON.stringify(incoming[c.key]||[]);
+    if(before!==after && before!=='[]'){
+      changed.push(c);
+    }
+  }
+  // notes deserve special handling - only notify if a note FROM partner appeared
+  const beforeNotes=hub.notes||[];
+  const afterNotes=incoming.notes||[];
+  const newNoteFromPartner=afterNotes.some(n=>n.from!==myRole && !beforeNotes.some(b=>b.id===n.id));
+  if(newNoteFromPartner){
+    changed.push({key:'notes', label:'left you a secret love note', icon:'💌'});
+  }
+  // mood changes from partner
+  const beforeMoods=hub.moods||[];
+  const afterMoods=incoming.moods||[];
+  const partnerRole=myRole==='him'?'her':'him';
+  const today=ds(new Date());
+  const partnerMoodBefore=beforeMoods.find(m=>m.role===partnerRole&&m.date===today);
+  const partnerMoodAfter=afterMoods.find(m=>m.role===partnerRole&&m.date===today);
+  if(partnerMoodAfter && (!partnerMoodBefore || partnerMoodBefore.emoji!==partnerMoodAfter.emoji)){
+    changed.push({key:'moods', label:`set their mood to ${partnerMoodAfter.emoji}`, icon:'😊'});
+  }
+  if(changed.length){
+    const first=changed[0];
+    const msg=changed.length===1
+      ? `${first.icon} Your partner ${first.label}`
+      : `💕 Your partner made ${changed.length} updates to the hub`;
+    notify(msg);
+    sendBrowserNotification(msg);
+  }
+}
+
+let notifPermissionAsked=false;
+function requestNotifPermission(){
+  if(notifPermissionAsked)return;
+  notifPermissionAsked=true;
+  if('Notification' in window && Notification.permission==='default'){
+    Notification.requestPermission();
+  }
+}
+function sendBrowserNotification(msg){
+  if(!('Notification' in window))return;
+  if(Notification.permission==='granted'){
+    try{
+      const n=new Notification('💕 Our Love Hub',{body:msg,icon:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ctext y=".9em" font-size="90"%3E%F0%9F%92%95%3C/text%3E%3C/svg%3E'});
+      n.onclick=()=>{window.focus();n.close();};
+      setTimeout(()=>n.close(),8000);
+    }catch(e){}
+  }
+}
+
 
 
 
@@ -960,7 +1028,15 @@ async function push(col){
   }catch(e){console.warn('push failed',e);}
 }
 
-function startPoll(){pollTimer=setInterval(()=>loadAll(false),4000);}
+function startPoll(){
+  pollTimer=setInterval(()=>loadAll(false),4000);
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='visible'&&appReady){
+      loadAll(false);
+      pingPresence();
+    }
+  });
+}
 
 // ── PRESENCE: heartbeat ping + poll who's online ──
 async function pingPresence(){
