@@ -58,22 +58,24 @@ async function writeStore(content, sha) {
   return res.json();
 }
 
-// Simple retry wrapper for write conflicts (sha mismatch when two requests
-// land close together) — re-reads latest sha and retries once.
-async function withHub(code, mutator) {
-  let { content: store, sha } = await readStore();
-  if (!store[code]) store[code] = defaultHub();
-  const hub = store[code];
-  const result = mutator(hub);
-  try {
-    await writeStore(store, sha);
-  } catch (e) {
-    // conflict: re-read fresh sha and retry once
-    const fresh = await readStore();
-    fresh.content[code] = hub;
-    await writeStore(fresh.content, fresh.sha);
+// Retry wrapper for write conflicts (sha mismatch when two requests land
+// close together) — re-reads latest content and RE-APPLIES the mutator,
+// so a losing write never clobbers the other partner's concurrent update.
+async function withHub(code, mutator, attempts = 3) {
+  for (let i = 0; i < attempts; i++) {
+    const { content: store, sha } = await readStore();
+    if (!store[code]) store[code] = defaultHub();
+    const hub = store[code];
+    const result = mutator(hub);
+    try {
+      await writeStore(store, sha);
+      return result !== undefined ? result : hub;
+    } catch (e) {
+      if (i === attempts - 1) throw e;
+      // conflict: loop back, re-read fresh content, re-apply mutator
+      await new Promise(r => setTimeout(r, 150 + Math.random() * 200));
+    }
   }
-  return result !== undefined ? result : hub;
 }
 
 function todayStr() {
