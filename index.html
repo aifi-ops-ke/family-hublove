@@ -1153,10 +1153,15 @@ async function launch(){
   startPoll();
   startPresence();
   pingStreak();
-  presenceTimer2=setInterval(pingStreak,30000);
+  presenceTimer2=setInterval(pingStreak,60000);
   pollPartnerLocation();
-  setInterval(pollPartnerLocation,8000);
+  setInterval(()=>{
+    // only bother polling location while it's actually visible on screen,
+    // to avoid an extra network round-trip every few seconds for nothing
+    if(curTab==='home'||curTab==='chat')pollPartnerLocation();
+  },15000);
 }
+
 
 function setupNavScrollHint(){
   const nav=document.getElementById('main-nav');
@@ -1274,7 +1279,7 @@ async function push(col){
 }
 
 function startPoll(){
-  pollTimer=setInterval(()=>loadAll(false),4000);
+  pollTimer=setInterval(()=>loadAll(false),9000);
   document.addEventListener('visibilitychange',()=>{
     if(document.visibilityState==='visible'&&appReady){
       loadAll(false);
@@ -1296,8 +1301,8 @@ async function pollPresence(){
 function startPresence(){
   pingPresence();
   pollPresence();
-  presenceTimer=setInterval(pingPresence,5000);
-  presencePollTimer=setInterval(pollPresence,5000);
+  presenceTimer=setInterval(pingPresence,15000);
+  presencePollTimer=setInterval(pollPresence,15000);
 }
 function renderPresence(){
   ['him','her'].forEach(r=>{
