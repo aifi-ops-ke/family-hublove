@@ -558,14 +558,13 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
 <div class="box">
   <div class="setup-icon">💕</div>
   <h1>Our Love Hub</h1>
-  <div class="sub">Shared planning — syncs live on both phones ✨</div>
+  <div class="sub">Just for the two of you ✨</div>
   <div class="role-row">
     <button class="rb on" id="r-him" onclick="pickR('him')"><span>👨</span>Him</button>
     <button class="rb"    id="r-her" onclick="pickR('her')"><span>👩</span>Her</button>
   </div>
   <input class="fi" id="s-name" placeholder="Your name (e.g. Kevin)" />
-  <input class="fi" id="s-code" placeholder="Hub code (e.g. kevin-amina)" />
-  <div class="hint">💡 Both phones use the <strong>same hub code</strong> to share everything. Pick anything — only you two know it!</div>
+  <div class="hint">💡 This hub is locked to just the two of you. Pick your role and enter your name to continue.</div>
   <button class="gb" id="go-btn" onclick="joinHub()">💕 Enter Our Hub</button>
 </div>
 </div>
@@ -1105,12 +1104,12 @@ const MO=["January","February","March","April","May","June","July","August","Sep
 let role='him';
 function pickR(r){role=r;document.getElementById('r-him').classList.toggle('on',r==='him');document.getElementById('r-her').classList.toggle('on',r==='her');}
 
+const FIXED_HUB_CODE='hamadajp2026'; // locked — only this hub exists, no one else can create or join a different one
+
 async function joinHub(){
   const name=document.getElementById('s-name').value.trim();
-  const code=document.getElementById('s-code').value.trim().toLowerCase().replace(/[^a-z0-9]/g,'');
   if(!name){toast('⚠️ Enter your name');return;}
-  if(!code){toast('⚠️ Enter a hub code');return;}
-  myName=name;hubCode=code;myRole=role;
+  myName=name;hubCode=FIXED_HUB_CODE;myRole=role;
   const btn=document.getElementById('go-btn');btn.disabled=true;btn.textContent='Opening hub...';
   localStorage.setItem('fh_n',myName);localStorage.setItem('fh_c',hubCode);localStorage.setItem('fh_r',myRole);
   launch();
