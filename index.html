@@ -1188,8 +1188,22 @@ async function loadAll(initial=false){
     lastHash=newHash;setDot('live');appReady=true;renderCur();
     if(curTab==='home'){renderMoods();renderNotes();renderAnniv();renderGratitude();renderNumbers();}
     if(curTab==='chat'){renderChat();}
-  }catch(e){setDot('off');if(!appReady)toast('⚠️ Connection issue — retrying...');}
+  }catch(e){
+    setDot('off');
+    if(!appReady){
+      toast('⚠️ Connection issue — retrying...');
+      showLoadError();
+    }
+  }
 }
+function showLoadError(){
+  // Replace any still-frozen "Loading..." placeholders with an honest
+  // message and a way to retry, instead of leaving them stuck forever.
+  document.querySelectorAll('.ld').forEach(el=>{
+    el.outerHTML=`<div class="empty"><i>⚠️</i><p>Couldn't connect — <a href="javascript:void(0)" onclick="hardRefresh()" style="color:var(--blue);font-weight:800">tap to retry</a></p></div>`;
+  });
+}
+
 
 
 function detectAndNotifyChanges(incoming){
