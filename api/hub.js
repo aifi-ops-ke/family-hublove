@@ -88,8 +88,6 @@ function yesterdayStr() {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 
-const LOCKED_HUB_CODE = 'hamadajp2026'; // only this exact hub code is ever served — locked for privacy
-
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -98,8 +96,13 @@ export default async function handler(req, res) {
 
   const { code, collection } = req.query;
   if (!code) return res.status(400).json({ error: 'Hub code required' });
-  if (code !== LOCKED_HUB_CODE) {
-    return res.status(403).json({ error: 'This hub is private and locked to its owners.' });
+  // Basic sanity check on the code itself — letters/numbers only, reasonable
+  // length — to avoid abuse, while allowing any couple to pick their own
+  // private code. Each code maps to its own fully separate data slice
+  // (see withHub/readStore below), so no two hub codes can ever see or
+  // affect each other's data.
+  if (!/^[a-z0-9]{4,40}$/i.test(code)) {
+    return res.status(400).json({ error: 'Invalid hub code format.' });
   }
 
   const allowed = ['events', 'goals', 'diary', 'wishes', 'story', 'bucket', 'notes', 'moods', 'memories', 'chat', 'gratitude'];

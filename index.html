@@ -558,14 +558,15 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
 <div class="box">
   <div class="setup-icon">💕</div>
   <h1>OurNest</h1>
-  <div class="sub">Just for the two of you ✨</div>
+  <div class="sub">Your own private space, just for two ✨</div>
   <div class="role-row">
     <button class="rb on" id="r-him" onclick="pickR('him')"><span>👨</span>Him</button>
     <button class="rb"    id="r-her" onclick="pickR('her')"><span>👩</span>Her</button>
   </div>
   <input class="fi" id="s-name" placeholder="Your name (e.g. Kevin)" />
-  <div class="hint">💡 This hub is locked to just the two of you. Pick your role and enter your name to continue.</div>
-  <button class="gb" id="go-btn" onclick="joinHub()">💕 Enter Our Hub</button>
+  <input class="fi" id="s-code" placeholder="Your private code (e.g. kevin-amina)" />
+  <div class="hint">💡 Both of you use the <strong>same private code</strong> to share your space. Pick anything unique — no one else can see your data, even with a similar code.</div>
+  <button class="gb" id="go-btn" onclick="joinHub()">💕 Enter Our Nest</button>
 </div>
 </div>
 
@@ -1104,13 +1105,13 @@ const MO=["January","February","March","April","May","June","July","August","Sep
 let role='him';
 function pickR(r){role=r;document.getElementById('r-him').classList.toggle('on',r==='him');document.getElementById('r-her').classList.toggle('on',r==='her');}
 
-const FIXED_HUB_CODE='hamadajp2026'; // locked — only this hub exists, no one else can create or join a different one
-
 async function joinHub(){
   const name=document.getElementById('s-name').value.trim();
+  const code=document.getElementById('s-code').value.trim().toLowerCase().replace(/[^a-z0-9]/g,'');
   if(!name){toast('⚠️ Enter your name');return;}
-  myName=name;hubCode=FIXED_HUB_CODE;myRole=role;
-  const btn=document.getElementById('go-btn');btn.disabled=true;btn.textContent='Opening hub...';
+  if(!code||code.length<4){toast('⚠️ Enter a private code (at least 4 characters)');return;}
+  myName=name;hubCode=code;myRole=role;
+  const btn=document.getElementById('go-btn');btn.disabled=true;btn.textContent='Opening your nest...';
   localStorage.setItem('fh_n',myName);localStorage.setItem('fh_c',hubCode);localStorage.setItem('fh_r',myRole);
   launch();
 }
