@@ -518,6 +518,43 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
   font-size:12px;color:#6b5418;line-height:1.5;border-left:3px solid #e8b94a}
 .gratitude-entry .g-who{font-size:10px;font-weight:800;color:#c98a0a;margin-bottom:2px}
 
+/* ── RANDOM PICS ── */
+.pics-hero{background:linear-gradient(135deg,#5c4aa5,#8a6fd4,#b89ae8);border-radius:20px;
+  padding:22px 18px;color:#fff;margin-bottom:16px;text-align:center;position:relative;overflow:hidden}
+.pics-hero::before{content:'📸';position:absolute;top:-10px;left:-6px;font-size:56px;opacity:.15;transform:rotate(-12deg)}
+.pics-hero::after{content:'✨';position:absolute;bottom:-10px;right:-4px;font-size:50px;opacity:.18;transform:rotate(10deg)}
+.pics-hero h2{font-family:'Lora',serif;font-size:19px;font-weight:600;margin-bottom:6px}
+.pics-hero p{font-size:12px;opacity:.88;line-height:1.5}
+.pics-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:8px}
+.pic-tile{position:relative;border-radius:12px;overflow:hidden;box-shadow:var(--sh);aspect-ratio:1;
+  background:var(--greyl)}
+.pic-tile img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
+.pic-tile .pic-by{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,rgba(0,0,0,.55),transparent);
+  color:#fff;font-size:8px;font-weight:700;padding:10px 6px 4px;text-align:left}
+.pic-viewer{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:300;
+  align-items:center;justify-content:center;flex-direction:column}
+.pic-viewer.on{display:flex}
+.pic-viewer img{max-width:92vw;max-height:78vh;border-radius:8px}
+.pic-viewer-close{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.15);border:none;
+  color:#fff;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer}
+.pic-viewer-meta{color:#fff;font-size:12px;margin-top:14px;opacity:.85;text-align:center}
+
+/* ── VOICE NOTES IN CHAT ── */
+.chat-voice{display:flex;align-items:center;gap:8px;min-width:160px}
+.chat-voice-play{background:rgba(255,255,255,.25);border:none;border-radius:50%;width:30px;height:30px;
+  font-size:13px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:inherit}
+.chat-bubble.them .chat-voice-play{background:var(--bluel);color:var(--blue2)}
+.chat-voice-wave{flex:1;height:20px;display:flex;align-items:center;gap:2px}
+.chat-voice-wave span{width:3px;background:currentColor;border-radius:2px;opacity:.6}
+.chat-voice-dur{font-size:10px;opacity:.7;flex-shrink:0}
+#voice-btn.recording{background:var(--rose);animation:recPulse 1s infinite}
+@keyframes recPulse{0%,100%{box-shadow:0 0 0 0 rgba(232,105,122,.5)}50%{box-shadow:0 0 0 8px rgba(232,105,122,0)}}
+.voice-recording-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff0f0;
+  border-top:1px solid #ffd0d0;font-size:12px;font-weight:700;color:#c4374a}
+.voice-recording-dot{width:8px;height:8px;border-radius:50%;background:#e8697a;animation:recPulse 1s infinite}
+.voice-cancel-btn{margin-left:auto;background:#fff;border:1px solid #ffd0d0;border-radius:10px;
+  padding:4px 10px;font-size:10px;font-weight:800;color:#c4374a;cursor:pointer}
+
 /* ── NUMBERS GRID ── */
 .numbers-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:13px}
 .numbers-grid .sc{padding:12px 8px}
@@ -592,6 +629,7 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
   <div class="nav" id="main-nav">
     <div class="nt on" onclick="go('home')"><i>🏠</i>Home</div>
     <div class="nt" onclick="go('chat')"><i>💬</i>Chat</div>
+    <div class="nt" onclick="go('pics')"><i>📸</i>Pics</div>
     <div class="nt" onclick="go('calendar')"><i>📅</i>Calendar</div>
     <div class="nt" onclick="go('plan')"><i>🎯</i>Plan</div>
     <div class="nt" onclick="go('diary')"><i>📖</i>Diary</div>
@@ -677,9 +715,21 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
       </div>
       <div class="chat-input-bar">
         <button class="chat-loc-btn" onclick="openLocationModal()" title="Share location">📍</button>
+        <button class="chat-loc-btn" id="voice-btn" onclick="toggleVoiceRecording()" title="Voice note">🎤</button>
         <input class="chat-input" id="chat-input" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendChat()"/>
         <button class="chat-send-btn" onclick="sendChat()">➤</button>
       </div>
+    </div>
+    <div id="s-pics" class="scr">
+      <div class="pics-hero">
+        <h2>📸 Random Pics</h2>
+        <p>Silly selfies, random moments, no captions needed — just drop them here</p>
+      </div>
+      <div class="card">
+        <input type="file" accept="image/*" id="pic-file" multiple style="margin-bottom:8px;font-size:12px" onchange="uploadPics()"/>
+        <div id="pic-upload-status" style="font-size:11px;color:var(--muted)"></div>
+      </div>
+      <div class="pics-grid" id="pics-grid"><div class="ld"><div class="sp"></div>Loading...</div></div>
     </div>
     <div id="s-calendar" class="scr">
       <div class="mnav"><button class="mb" onclick="chMo(-1)">←</button><div style="text-align:center"><h2 id="cal-title"></h2><div style="font-size:10px;color:var(--muted);font-weight:700" id="cal-cnt"></div></div><button class="mb" onclick="chMo(1)">→</button></div>
@@ -1032,6 +1082,12 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
   </div>
 </div>
 
+<div class="pic-viewer" id="pic-viewer">
+  <button class="pic-viewer-close" onclick="closePicViewer()">✕</button>
+  <img id="pic-viewer-img" src="" alt="photo"/>
+  <div class="pic-viewer-meta" id="pic-viewer-meta"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1093,7 +1149,7 @@ async function saveSettingsStorage(code, patch){
 
 let myName='',hubCode='',myRole='him';
 let curTab='home',curMo=new Date().getMonth(),curYr=new Date().getFullYear(),selDay=null;
-let hub={events:[],goals:[],diary:[],wishes:[],story:[],bucket:[],notes:[],moods:[],memories:[],settings:{},chat:[],location:{},gratitude:[]};
+let hub={events:[],goals:[],diary:[],wishes:[],story:[],bucket:[],notes:[],moods:[],memories:[],settings:{},chat:[],location:{},gratitude:[],pics:[]};
 let pollTimer=null,presenceTimer=null,presencePollTimer=null,presenceTimer2=null,lastHash='',appReady=false;
 let presenceState={};
 let locationWatchId=null,locationShareTimer=null,locationExpiresAt=null;
@@ -1184,11 +1240,12 @@ async function loadAll(initial=false){
       detectAndNotifyChanges(j);
     }
     const newHash=JSON.stringify(j);
-    hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];hub.story=j.story||[];hub.bucket=j.bucket||[];hub.notes=j.notes||[];hub.moods=j.moods||[];hub.memories=j.memories||[];hub.settings=j.settings||{};hub.chat=j.chat||[];hub.gratitude=j.gratitude||[];
+    hub.events=j.events||[];hub.goals=j.goals||[];hub.diary=j.diary||[];hub.wishes=j.wishes||[];hub.story=j.story||[];hub.bucket=j.bucket||[];hub.notes=j.notes||[];hub.moods=j.moods||[];hub.memories=j.memories||[];hub.settings=j.settings||{};hub.chat=j.chat||[];hub.gratitude=j.gratitude||[];hub.pics=j.pics||[];
     if(initial){await seedAll();}
     lastHash=newHash;setDot('live');appReady=true;renderCur();
     if(curTab==='home'){renderMoods();renderNotes();renderAnniv();renderGratitude();renderNumbers();}
     if(curTab==='chat'){renderChat();}
+    if(curTab==='pics'){renderPics();}
   }catch(e){
     setDot('off');
     if(!appReady){
@@ -1248,7 +1305,7 @@ function detectAndNotifyChanges(incoming){
   const newMsgsFromPartner=afterChat.filter(m=>m.from!==myRole && !beforeChat.some(b=>b.id===m.id));
   if(newMsgsFromPartner.length){
     const last=newMsgsFromPartner[newMsgsFromPartner.length-1];
-    const preview=last.type==='location' ? `${last.fromName} shared their location 📍` : `${last.fromName}: ${last.text}`;
+    const preview=last.type==='location' ? `${last.fromName} shared their location 📍` : last.type==='voice' ? `${last.fromName} sent a voice note 🎤` : `${last.fromName}: ${last.text}`;
     notify(`💬 ${preview}`);
     sendBrowserNotification(preview);
     if(curTab==='chat')renderChat();
@@ -1391,7 +1448,7 @@ function go(t){
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.nt').forEach(x=>x.classList.remove('on'));
   document.getElementById('s-'+t).classList.add('on');
-  const order=['home','chat','calendar','plan','diary','story','games','wishlist'];
+  const order=['home','chat','pics','calendar','plan','diary','story','games','wishlist'];
   order.forEach((x,i)=>{if(x===t){
     const tabEl=document.querySelectorAll('.nt')[i];
     tabEl.classList.add('on');
@@ -1405,6 +1462,7 @@ function renderCur(){
   if(curTab==='story')renderStory();if(curTab==='games')renderGameMenu();
   if(curTab==='notes')renderNotes();
   if(curTab==='chat')renderChat();
+  if(curTab==='pics')renderPics();
   if(curTab==='wishlist')renderWish();
 }
 
@@ -3124,7 +3182,7 @@ function renderChatPreview(){
   }
   const last=messages[messages.length-1];
   const who=last.from===myRole?'You':last.fromName;
-  const preview=last.type==='location'?'📍 Shared a location':last.text;
+  const preview=last.type==='location'?'📍 Shared a location':last.type==='voice'?'🎤 Voice note':last.text;
   el.textContent=`${who}: ${preview.length>40?preview.slice(0,40)+'…':preview}`;
 }
 function renderChat(){
@@ -3148,6 +3206,18 @@ function renderChat(){
       html+=`<div class="chat-bubble location ${mine?'me':'them'}" onclick="openMapLink(${m.lat},${m.lng})">
         <div>📍 ${mine?'You':m.fromName} shared a location</div>
         <div style="font-size:11px;opacity:.8">Tap to open in Maps</div>
+        <span class="chat-time">${time}</span>
+      </div>`;
+    }else if(m.type==='voice'){
+      const mins=Math.floor(m.duration/60),secs=m.duration%60;
+      const durStr=`${mins}:${String(secs).padStart(2,'0')}`;
+      const bars=Array.from({length:14},()=>Math.round(6+Math.random()*14)).map(h=>`<span style="height:${h}px"></span>`).join('');
+      html+=`<div class="chat-bubble ${mine?'me':'them'}">
+        <div class="chat-voice">
+          <button class="chat-voice-play" onclick="playVoiceNote(${m.id},this)">▶️</button>
+          <div class="chat-voice-wave">${bars}</div>
+          <span class="chat-voice-dur">${durStr}</span>
+        </div>
         <span class="chat-time">${time}</span>
       </div>`;
     }else{
@@ -3177,6 +3247,145 @@ async function sendChat(){
 function openMapLink(lat,lng){
   window.open(`https://www.google.com/maps?q=${lat},${lng}`,'_blank');
 }
+
+// ═══════════════════════════════════════════════
+//  RANDOM PICS — casual gallery, no captions needed
+// ═══════════════════════════════════════════════
+function renderPics(){
+  const pics=[...(hub.pics||[])].sort((a,b)=>b.id-a.id);
+  document.getElementById('pics-grid').innerHTML=pics.length
+    ?pics.map(p=>`<div class="pic-tile"><img src="${p.img}" onclick="openPicViewer(${p.id})" alt="pic"/><div class="pic-by">${p.by} · ${fd(p.date)}</div></div>`).join('')
+    :`<div class="empty" style="grid-column:1/-1"><i>📸</i><p>Drop your first random pic above!</p></div>`;
+}
+function uploadPics(){
+  const files=document.getElementById('pic-file').files;
+  if(!files.length)return;
+  const status=document.getElementById('pic-upload-status');
+  let remaining=files.length;
+  status.textContent=`Uploading ${remaining} photo${remaining>1?'s':''}...`;
+  hub.pics=hub.pics||[];
+  Array.from(files).forEach(file=>{
+    if(file.size>4*1024*1024){
+      remaining--;
+      if(remaining===0)finishPicUpload(status);
+      return;
+    }
+    const reader=new FileReader();
+    reader.onload=e=>{
+      hub.pics.push({id:Date.now()+Math.random(),img:e.target.result,by:myName,date:ds(new Date())});
+      remaining--;
+      if(remaining===0)finishPicUpload(status);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+async function finishPicUpload(status){
+  await push('pics');
+  document.getElementById('pic-file').value='';
+  status.textContent='';
+  toast('📸 Added to Random Pics!');
+  renderPics();
+}
+function openPicViewer(id){
+  const p=(hub.pics||[]).find(x=>x.id===id);
+  if(!p)return;
+  document.getElementById('pic-viewer-img').src=p.img;
+  document.getElementById('pic-viewer-meta').textContent=`${p.by} · ${fd(p.date)}`;
+  document.getElementById('pic-viewer').classList.add('on');
+}
+function closePicViewer(){
+  document.getElementById('pic-viewer').classList.remove('on');
+}
+
+// ═══════════════════════════════════════════════
+//  VOICE NOTES IN CHAT
+// ═══════════════════════════════════════════════
+let mediaRecorder=null,recordedChunks=[],isRecording=false,recordStartTime=null;
+async function toggleVoiceRecording(){
+  if(isRecording){
+    stopVoiceRecording();
+    return;
+  }
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+    toast('⚠️ Voice notes not supported on this device');
+    return;
+  }
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    recordedChunks=[];
+    mediaRecorder=new MediaRecorder(stream);
+    mediaRecorder.ondataavailable=e=>{ if(e.data.size>0)recordedChunks.push(e.data); };
+    mediaRecorder.onstop=()=>{
+      stream.getTracks().forEach(t=>t.stop());
+      handleRecordingStop();
+    };
+    mediaRecorder.start();
+    isRecording=true;
+    recordStartTime=Date.now();
+    document.getElementById('voice-btn').classList.add('recording');
+    showVoiceRecordingBar();
+  }catch(e){
+    toast('⚠️ Microphone access denied');
+  }
+}
+function stopVoiceRecording(){
+  if(mediaRecorder&&isRecording){
+    mediaRecorder.stop();
+    isRecording=false;
+    document.getElementById('voice-btn').classList.remove('recording');
+    hideVoiceRecordingBar();
+  }
+}
+function cancelVoiceRecording(){
+  if(mediaRecorder&&isRecording){
+    recordedChunks=[];
+    mediaRecorder.stop();
+    isRecording=false;
+    document.getElementById('voice-btn').classList.remove('recording');
+    hideVoiceRecordingBar();
+    toast('Voice note cancelled');
+  }
+}
+function showVoiceRecordingBar(){
+  const bar=document.createElement('div');
+  bar.className='voice-recording-bar';
+  bar.id='voice-recording-bar';
+  bar.innerHTML=`<div class="voice-recording-dot"></div><span>Recording voice note...</span><button class="voice-cancel-btn" onclick="cancelVoiceRecording()">Cancel</button>`;
+  document.querySelector('.chat-input-bar').insertAdjacentElement('beforebegin',bar);
+}
+function hideVoiceRecordingBar(){
+  const bar=document.getElementById('voice-recording-bar');
+  if(bar)bar.remove();
+}
+async function handleRecordingStop(){
+  if(recordedChunks.length===0)return;
+  const duration=Math.round((Date.now()-recordStartTime)/1000);
+  if(duration<1){toast('Recording too short');return;}
+  const blob=new Blob(recordedChunks,{type:'audio/webm'});
+  const reader=new FileReader();
+  reader.onload=async()=>{
+    const audioData=reader.result;
+    hub.chat=hub.chat||[];
+    hub.chat.push({id:Date.now(),from:myRole,fromName:myName,ts:Date.now(),type:'voice',audio:audioData,duration});
+    if(hub.chat.length>300)hub.chat=hub.chat.slice(-300);
+    await pushCollection(hubCode,'chat',hub.chat);
+    lastHash='';
+    renderChat();
+    toast('🎤 Voice note sent!');
+  };
+  reader.readAsDataURL(blob);
+}
+function playVoiceNote(id,btn){
+  const m=(hub.chat||[]).find(x=>x.id===id);
+  if(!m||!m.audio)return;
+  if(window._currentAudio){window._currentAudio.pause();window._currentAudio=null;}
+  const audio=new Audio(m.audio);
+  window._currentAudio=audio;
+  btn.textContent='⏸';
+  audio.play();
+  audio.onended=()=>{ btn.textContent='▶️'; };
+}
+
 
 // ═══════════════════════════════════════════════
 //  LOCATION SHARING (opt-in, time-limited, stoppable)

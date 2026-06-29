@@ -12,7 +12,7 @@ function defaultHub() {
     events: [], goals: [], diary: [], wishes: [], story: [], bucket: [],
     notes: [], moods: [], memories: [], settings: {}, presence: {},
     streak: { count: 0, lastDate: null, openedToday: {} },
-    chat: [], location: {}, gratitude: []
+    chat: [], location: {}, gratitude: [], pics: []
   };
 }
 
@@ -105,7 +105,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid hub code format.' });
   }
 
-  const allowed = ['events', 'goals', 'diary', 'wishes', 'story', 'bucket', 'notes', 'moods', 'memories', 'chat', 'gratitude'];
+  const allowed = ['events', 'goals', 'diary', 'wishes', 'story', 'bucket', 'notes', 'moods', 'memories', 'chat', 'gratitude', 'pics'];
 
   try {
     if (collection === 'settings') {
