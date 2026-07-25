@@ -1007,6 +1007,139 @@ textarea.din:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,111,165
         <div class="prompt-card sweet" id="sweetnothing-card"><div class="prompt-tag">Say This To Them</div><div class="prompt-text" id="sweetnothing-text">Tap below for a sweet nothing</div></div>
         <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('sweetnothing')" style="background:linear-gradient(135deg,#c48a3a,#e8c48a)">🍯 Another One</button></div>
       </div>
+
+      <!-- Never Have I Ever -->
+      <div id="game-neverhaveiever" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🙊 Never Have I Ever</h3><p>Couples edition — read it out, confess or pass</p></div></div>
+        <div class="prompt-card" id="neverhaveiever-card"><div class="prompt-tag">Never Have I Ever...</div><div class="prompt-text" id="neverhaveiever-text">Tap below for a statement</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('neverhaveiever')">🙊 Next One</button></div>
+      </div>
+
+      <!-- Would You Still Love Me If... -->
+      <div id="game-wouldyoustill" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🫶 Would You Still Love Me If...</h3><p>Silly, honest hypotheticals</p></div></div>
+        <div class="prompt-card" id="wouldyoustill-card"><div class="prompt-tag">Would You Still Love Me If...</div><div class="prompt-text" id="wouldyoustill-text">Tap below for a question</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('wouldyoustill')">🫶 Next One</button></div>
+      </div>
+
+      <!-- Love Map -->
+      <div id="game-lovemap" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>💗 Love Map</h3><p>How well do you know their inner world?</p></div></div>
+        <div class="prompt-card" id="lovemap-card"><div class="prompt-tag">Love Map</div><div class="prompt-text" id="lovemap-text">Tap below for a question</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('lovemap')">💗 Next Question</button></div>
+      </div>
+
+      <!-- Date Idea Roulette -->
+      <div id="game-dateideas" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🎉 Date Idea Roulette</h3><p>Instant plan for tonight</p></div></div>
+        <div class="prompt-card" id="dateideas-card"><div class="prompt-tag">Tonight's Idea</div><div class="prompt-text" id="dateideas-text">Tap below for a date idea</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('dateideas')">🎉 Another Idea</button></div>
+      </div>
+
+      <!-- Karaoke Roulette -->
+      <div id="game-karaoke" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🎤 Karaoke Roulette</h3><p>Sing it, don't skip it</p></div></div>
+        <div class="prompt-card" id="karaoke-card"><div class="prompt-tag">Your Challenge</div><div class="prompt-text" id="karaoke-text">Tap below for your karaoke dare</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('karaoke')">🎤 Next Challenge</button></div>
+      </div>
+
+      <!-- Couple Goals -->
+      <div id="game-couplegoals" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🎯 Couple Goals</h3><p>Dream up your future together</p></div></div>
+        <div class="prompt-card" id="couplegoals-card"><div class="prompt-tag">Couple Goals</div><div class="prompt-text" id="couplegoals-text">Tap below for a prompt</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('couplegoals')">🎯 Next Prompt</button></div>
+      </div>
+
+      <!-- Make It Right -->
+      <div id="game-makeitright" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🕊️ Make It Right</h3><p>Gentle prompts for after a rough patch</p></div></div>
+        <div class="prompt-card" id="makeitright-card"><div class="prompt-tag">Make It Right</div><div class="prompt-text" id="makeitright-text">Tap below for a prompt</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('makeitright')">🕊️ Next Prompt</button></div>
+      </div>
+
+      <!-- Flirt Lines -->
+      <div id="game-flirtlines" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>😉 Flirt Lines</h3><p>Cheesy lines, say with a straight face</p></div></div>
+        <div class="prompt-card" id="flirtlines-card"><div class="prompt-tag">Say This Line</div><div class="prompt-text" id="flirtlines-text">Tap below for a line</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('flirtlines')">😉 Next Line</button></div>
+      </div>
+
+      <!-- Guess My Answer -->
+      <div id="game-guessmyanswer" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🤝 Guess My Answer</h3><p>Predict what they'll say, then check</p></div></div>
+        <div class="prompt-card" id="guessmyanswer-card"><div class="prompt-tag">Guess My Answer</div><div class="prompt-text" id="guessmyanswer-text">Tap below for a question</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('guessmyanswer')">🤝 Next Question</button></div>
+      </div>
+
+      <!-- Roleplay Scenarios -->
+      <div id="game-roleplay" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🎬 Roleplay Scenarios</h3><p>Improvise a silly scene together</p></div></div>
+        <div class="prompt-card" id="roleplay-card"><div class="prompt-tag">Your Scene</div><div class="prompt-text" id="roleplay-text">Tap below for a scenario</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('roleplay')">🎬 Next Scene</button></div>
+      </div>
+
+      <!-- Future Talk -->
+      <div id="game-futuretalk" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🔭 Future Talk</h3><p>Where do we go from here?</p></div></div>
+        <div class="prompt-card" id="futuretalk-card"><div class="prompt-tag">Future Talk</div><div class="prompt-text" id="futuretalk-text">Tap below for a question</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('futuretalk')">🔭 Next Question</button></div>
+      </div>
+
+      <!-- Icebreaker Refresh -->
+      <div id="game-icebreakers" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>❄️ Icebreaker Refresh</h3><p>Light questions to reconnect</p></div></div>
+        <div class="prompt-card" id="icebreakers-card"><div class="prompt-tag">Icebreaker</div><div class="prompt-text" id="icebreakers-text">Tap below for a question</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('icebreakers')">❄️ Next Question</button></div>
+      </div>
+
+      <!-- 7-Day Love Challenge -->
+      <div id="game-loveweek" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>📅 7-Day Love Challenge</h3><p>One small act, every day this week</p></div></div>
+        <div class="prompt-card sweet" id="loveweek-card"><div class="prompt-tag">Today's Act</div><div class="prompt-text" id="loveweek-text">Tap below for today's challenge</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('loveweek')">📅 Next Day</button></div>
+      </div>
+
+      <!-- Word Association -->
+      <div id="game-wordassoc" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🔤 Word Association</h3><p>Say the first word that comes to mind</p></div></div>
+        <div class="prompt-card" id="wordassoc-card"><div class="prompt-tag">The Word Is...</div><div class="prompt-text" id="wordassoc-text">Tap below for a word</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('wordassoc')">🔤 Next Word</button></div>
+      </div>
+
+      <!-- Song Dedication -->
+      <div id="game-songdedication" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🎶 Song Dedication</h3><p>Find the perfect song for the moment</p></div></div>
+        <div class="prompt-card sweet" id="songdedication-card"><div class="prompt-tag">Dedicate a Song For...</div><div class="prompt-text" id="songdedication-text">Tap below for a prompt</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('songdedication')">🎶 Next Prompt</button></div>
+      </div>
+
+      <!-- Confession Booth -->
+      <div id="game-confessionbooth" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🙏 Confession Booth</h3><p>Safe space, honest answers</p></div></div>
+        <div class="prompt-card" id="confessionbooth-card"><div class="prompt-tag">Confession Booth</div><div class="prompt-text" id="confessionbooth-text">Tap below for a prompt</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('confessionbooth')">🙏 Next Prompt</button></div>
+      </div>
+
+      <!-- Cheers To Us -->
+      <div id="game-cheerstous" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🥂 Cheers To Us</h3><p>A toast prompt for right now</p></div></div>
+        <div class="prompt-card sweet" id="cheerstous-card"><div class="prompt-tag">Raise a Toast To...</div><div class="prompt-text" id="cheerstous-text">Tap below for a toast</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('cheerstous')">🥂 Next Toast</button></div>
+      </div>
+
+      <!-- Secret Admirer Notes -->
+      <div id="game-secretadmirer" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>💘 Secret Admirer Notes</h3><p>Leave them a mystery note</p></div></div>
+        <div class="prompt-card sweet" id="secretadmirer-card"><div class="prompt-tag">Leave This Note</div><div class="prompt-text" id="secretadmirer-text">Tap below for a note idea</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextQ('secretadmirer')">💘 Next Note</button></div>
+      </div>
+
+      <!-- Wildcard Mashup -->
+      <div id="game-wildcard" class="game-screen">
+        <div class="game-header"><button class="game-back" onclick="backToGames()">←</button><div class="game-title-row"><h3>🎴 Wildcard Mashup</h3><p>A surprise pull from every game</p></div></div>
+        <div class="prompt-card" id="wildcard-card"><div class="prompt-tag" id="wildcard-tag">Wildcard</div><div class="prompt-text" id="wildcard-text">Tap below for a surprise</div></div>
+        <div class="game-controls"><button class="game-btn gbtn-primary" onclick="nextWildcard()">🎴 Pull Again</button></div>
+      </div>
     </div>
     <div id="s-wishlist" class="scr">
       <div class="stitle">Our Wishlist ⭐</div>
@@ -1256,7 +1389,21 @@ async function launch(){
   setDot('connecting');
   requestNotifPermission();
   setupNavScrollHint();
+  // STOPGAP: this only stops the spinner from spinning forever on a slow
+  // or still-not-fully-migrated backend — it does NOT fix data actually
+  // loading or saving. That still needs api/hub.js replaced + Redis
+  // connected. Once that's done, this watchdog simply won't fire because
+  // real data will arrive well within 6 seconds.
+  const loadWatchdog=setTimeout(()=>{
+    document.querySelectorAll('.ld').forEach(el=>{
+      el.innerHTML='⚠️ Taking longer than usual — <a href="#" onclick="hardRefresh();return false;" style="color:inherit;text-decoration:underline">tap to retry</a>';
+    });
+    if(document.getElementById('stxt').textContent==='Loading...' || document.getElementById('stxt').textContent==='Connecting...'){
+      setDot('off');
+    }
+  },6000);
   await loadAll(true);
+  clearTimeout(loadWatchdog);
   startPoll();
   startPresence();
   pingStreak();
@@ -1685,6 +1832,25 @@ const GAMES=[
   {id:'trivia',icon:'🏆',name:'Couple Trivia',desc:'Race to the right answer',badge:'fun'},
   {id:'pillowtalk',icon:'🌙',name:'Pillow Talk',desc:'Soft questions before sleep',badge:'sweet'},
   {id:'sweetnothing',icon:'🍯',name:'Sweet Nothings',desc:'A little something to say right now',badge:'sweet'},
+  {id:'neverhaveiever',icon:'🙊',name:'Never Have I Ever',desc:'Couples edition confessions',badge:'fun'},
+  {id:'wouldyoustill',icon:'🫶',name:'Would You Still Love Me If...',desc:'Silly, honest hypotheticals',badge:'deep'},
+  {id:'lovemap',icon:'💗',name:'Love Map',desc:"How well do you know their inner world?",badge:'deep'},
+  {id:'dateideas',icon:'🎉',name:'Date Idea Roulette',desc:'Instant plan for tonight',badge:'fun'},
+  {id:'karaoke',icon:'🎤',name:'Karaoke Roulette',desc:"Sing it, don't skip it",badge:'fun'},
+  {id:'couplegoals',icon:'🎯',name:'Couple Goals',desc:'Dream up your future together',badge:'deep'},
+  {id:'makeitright',icon:'🕊️',name:'Make It Right',desc:'Gentle prompts for after a rough patch',badge:'deep'},
+  {id:'flirtlines',icon:'😉',name:'Flirt Lines',desc:'Cheesy lines, say with a straight face',badge:'fun'},
+  {id:'guessmyanswer',icon:'🤝',name:'Guess My Answer',desc:"Predict what they'll say",badge:'deep'},
+  {id:'roleplay',icon:'🎬',name:'Roleplay Scenarios',desc:'Improvise a silly scene together',badge:'fun'},
+  {id:'futuretalk',icon:'🔭',name:'Future Talk',desc:'Where do we go from here?',badge:'deep'},
+  {id:'icebreakers',icon:'❄️',name:'Icebreaker Refresh',desc:'Light questions to reconnect',badge:'fun'},
+  {id:'loveweek',icon:'📅',name:'7-Day Love Challenge',desc:'One small act, every day this week',badge:'sweet'},
+  {id:'wordassoc',icon:'🔤',name:'Word Association',desc:'Say the first word that comes to mind',badge:'fun'},
+  {id:'songdedication',icon:'🎶',name:'Song Dedication',desc:'Find the perfect song for the moment',badge:'sweet'},
+  {id:'confessionbooth',icon:'🙏',name:'Confession Booth',desc:'Safe space, honest answers',badge:'deep'},
+  {id:'cheerstous',icon:'🥂',name:'Cheers To Us',desc:'A toast prompt for right now',badge:'sweet'},
+  {id:'secretadmirer',icon:'💘',name:'Secret Admirer Notes',desc:'Leave them a mystery note',badge:'sweet'},
+  {id:'wildcard',icon:'🎴',name:'Wildcard Mashup',desc:'A surprise pull from every game',badge:'fun'},
 ];
 
 function renderGameMenu(){
@@ -2251,12 +2417,56 @@ function nextQ(prefix){
   if(prefix==='letter'){bank=LETTER_PROMPTS;textId='letter-text';numId=null;}
   if(prefix==='pillowtalk'){bank=PILLOW_TALK_Q;textId='pillowtalk-text';numId=null;}
   if(prefix==='sweetnothing'){bank=SWEET_NOTHINGS_Q;textId='sweetnothing-text';numId=null;}
+  if(prefix==='neverhaveiever'){bank=NEVER_HAVE_I_EVER_Q;textId='neverhaveiever-text';numId=null;}
+  if(prefix==='wouldyoustill'){bank=WOULD_YOU_STILL_Q;textId='wouldyoustill-text';numId=null;}
+  if(prefix==='lovemap'){bank=LOVE_MAP_Q;textId='lovemap-text';numId=null;}
+  if(prefix==='dateideas'){bank=DATE_IDEAS_Q;textId='dateideas-text';numId=null;}
+  if(prefix==='karaoke'){bank=KARAOKE_Q;textId='karaoke-text';numId=null;}
+  if(prefix==='couplegoals'){bank=COUPLE_GOALS_Q;textId='couplegoals-text';numId=null;}
+  if(prefix==='makeitright'){bank=MAKE_IT_RIGHT_Q;textId='makeitright-text';numId=null;}
+  if(prefix==='flirtlines'){bank=FLIRT_LINES_Q;textId='flirtlines-text';numId=null;}
+  if(prefix==='guessmyanswer'){bank=GUESS_MY_ANSWER_Q;textId='guessmyanswer-text';numId=null;}
+  if(prefix==='roleplay'){bank=ROLEPLAY_Q;textId='roleplay-text';numId=null;}
+  if(prefix==='futuretalk'){bank=FUTURE_TALK_Q;textId='futuretalk-text';numId=null;}
+  if(prefix==='icebreakers'){bank=ICEBREAKERS_Q;textId='icebreakers-text';numId=null;}
+  if(prefix==='loveweek'){bank=LOVE_WEEK_Q;textId='loveweek-text';numId=null;}
+  if(prefix==='wordassoc'){bank=WORD_ASSOC_Q;textId='wordassoc-text';numId=null;}
+  if(prefix==='songdedication'){bank=SONG_DEDICATION_Q;textId='songdedication-text';numId=null;}
+  if(prefix==='confessionbooth'){bank=CONFESSION_BOOTH_Q;textId='confessionbooth-text';numId=null;}
+  if(prefix==='cheerstous'){bank=CHEERS_TO_US_Q;textId='cheerstous-text';numId=null;}
+  if(prefix==='secretadmirer'){bank=SECRET_ADMIRER_Q;textId='secretadmirer-text';numId=null;}
   const next=nextFromDeck(prefix, bank);
   document.getElementById(textId).textContent=next;
   if(numId){ cqI++; document.getElementById(numId).textContent=cqI; }
 }
 
-// 5. TWO TRUTHS AND A LIE
+// WILDCARD MASHUP — pulls a random prompt from across every simple prompt-card deck
+const WILDCARD_SOURCES=[
+  {tag:'Couple Question',bank:COUPLE_Q},
+  {tag:'Would You Rather',bank:WYR_Q},
+  {tag:'Love Letter Prompt',bank:LETTER_PROMPTS},
+  {tag:'Memory Lane',bank:DICE_PROMPTS},
+  {tag:'Compliment',bank:COMP_PROMPTS},
+  {tag:'Daily Challenge',bank:CHALLENGES},
+  {tag:'Finish The Sentence',bank:FINISH_SENTENCES},
+  {tag:'This or That',bank:THIS_OR_THAT},
+  {tag:'Pillow Talk',bank:PILLOW_TALK_Q},
+  {tag:'Sweet Nothing',bank:SWEET_NOTHINGS_Q},
+  {tag:'Never Have I Ever',bank:NEVER_HAVE_I_EVER_Q},
+  {tag:'Would You Still',bank:WOULD_YOU_STILL_Q},
+  {tag:'Love Map',bank:LOVE_MAP_Q},
+  {tag:'Flirt Line',bank:FLIRT_LINES_Q},
+  {tag:'Future Talk',bank:FUTURE_TALK_Q},
+  {tag:'Icebreaker',bank:ICEBREAKERS_Q},
+  {tag:'Confession Booth',bank:CONFESSION_BOOTH_Q},
+  {tag:'Cheers To Us',bank:CHEERS_TO_US_Q},
+];
+function nextWildcard(){
+  const source=WILDCARD_SOURCES[Math.floor(Math.random()*WILDCARD_SOURCES.length)];
+  const pick=source.bank[Math.floor(Math.random()*source.bank.length)];
+  document.getElementById('wildcard-tag').textContent=source.tag;
+  document.getElementById('wildcard-text').textContent=pick;
+}
 function revealTTAL(){
   const a=document.getElementById('ttal-1').value.trim();
   const b=document.getElementById('ttal-2').value.trim();
@@ -3195,6 +3405,413 @@ const SWEET_NOTHINGS_Q=[
   "You're my safest secret and my proudest 'us'.",
   "I love you in the loud ways and in all the quiet ones too.",
   "You're the best thing I didn't know I was looking for.",
+];
+
+// 22. NEVER HAVE I EVER — couples edition
+const NEVER_HAVE_I_EVER_Q=[
+  "Never have I ever pretended to like a gift I secretly hated.",
+  "Never have I ever stalked an ex on social media.",
+  "Never have I ever gone through my partner's phone without asking.",
+  "Never have I ever cried during a movie and denied it.",
+  "Never have I ever forgotten our anniversary or a big date.",
+  "Never have I ever pretended to be asleep to avoid a conversation.",
+  "Never have I ever eaten the last of something and blamed someone else.",
+  "Never have I ever sung in the shower thinking no one could hear.",
+  "Never have I ever googled my partner's name just to see what comes up.",
+  "Never have I ever faked being sick to get out of plans.",
+  "Never have I ever had a crush on a celebrity my partner knows about.",
+  "Never have I ever re-read old texts from before we were official.",
+  "Never have I ever lied about how much something cost.",
+  "Never have I ever practiced an argument in the mirror before having it.",
+  "Never have I ever laughed at the wrong moment during something serious.",
+  "Never have I ever had a dream about my partner that I never mentioned.",
+  "Never have I ever pretended to understand something my partner explained twice.",
+  "Never have I ever hidden a snack from my partner.",
+  "Never have I ever taken longer in the bathroom just to get alone time.",
+  "Never have I ever texted 'on my way' before I'd even left.",
+  "Never have I ever rehearsed how I'd say 'I love you' the first time.",
+  "Never have I ever kept a receipt hidden after an impulse buy.",
+  "Never have I ever pretended not to hear my partner call my name.",
+  "Never have I ever cried happy tears over something small they did.",
+  "Never have I ever compared my relationship to a movie or show.",
+  "Never have I ever planned a whole date around what I wanted to eat.",
+  "Never have I ever kept an old voice note just to hear their voice.",
+  "Never have I ever exaggerated a story to sound more impressive.",
+  "Never have I ever pretended to already know a plan I actually forgot.",
+  "Never have I ever teared up looking at old photos of us.",
+];
+
+// 23. WOULD YOU STILL LOVE ME IF... — silly, honest hypotheticals
+const WOULD_YOU_STILL_Q=[
+  "Would you still love me if I never learned to cook?",
+  "Would you still love me if I snored every single night?",
+  "Would you still love me if I lost all my hair tomorrow?",
+  "Would you still love me if I became famous and slightly insufferable about it?",
+  "Would you still love me if I never remembered where I put my keys?",
+  "Would you still love me if I turned into a homebody who never wants to go out?",
+  "Would you still love me if I got really into a hobby you find boring?",
+  "Would you still love me if I couldn't do a single chore right?",
+  "Would you still love me if I aged terribly and you didn't?",
+  "Would you still love me if I became a morning person and dragged you along?",
+  "Would you still love me if I cried at every commercial?",
+  "Would you still love me if I never beat you at our favorite game?",
+  "Would you still love me if I talked in my sleep every night?",
+  "Would you still love me if I became obsessed with a weird niche hobby?",
+  "Would you still love me if I gained or lost a lot of weight?",
+  "Would you still love me if I was a worse dancer than I already am?",
+  "Would you still love me if I forgot your birthday once, by accident?",
+  "Would you still love me if I became the harshest food critic at every restaurant?",
+  "Would you still love me if I couldn't stop singing off-key around the house?",
+  "Would you still love me if I turned into a total neat freak overnight?",
+  "Would you still love me if I got scared of something totally irrational?",
+  "Would you still love me if I never learned to parallel park?",
+  "Would you still love me if I became addicted to a silly mobile game?",
+  "Would you still love me if I had zero fashion sense left?",
+  "Would you still love me if I got really competitive about board games?",
+  "Would you still love me if I couldn't keep a plant alive, ever?",
+  "Would you still love me if I became the world's slowest texter?",
+  "Would you still love me if I cried during our wedding vows and couldn't finish them?",
+  "Would you still love me if I insisted on the thermostat being at a weird temperature forever?",
+  "Would you still love me on my absolute worst day, no makeup, no filter, just me?",
+];
+
+// 24. LOVE MAP — how well do you know their inner world
+const LOVE_MAP_Q=[
+  "What's something they're quietly proud of right now?",
+  "What's a small worry they've had this month?",
+  "What's their idea of a perfect free afternoon?",
+  "What's one thing that always makes their day better?",
+  "What's a childhood memory that shaped who they are today?",
+  "What's something they'd want to change about their daily routine?",
+  "What's a value they'd never compromise on?",
+  "What's something they're currently learning or curious about?",
+  "What's a fear they don't talk about much?",
+  "What's their favorite way to be comforted when stressed?",
+  "What's a goal they haven't told many people about?",
+  "What's something that instantly puts them in a good mood?",
+  "What's a place that feels like peace to them?",
+  "What's something they need more of in their life right now?",
+  "What's a compliment that would mean the most to them today?",
+  "What's a memory of theirs, before you two met, that you love hearing about?",
+  "What's something they're working through right now, even quietly?",
+  "What's one thing they wish people understood about them?",
+  "What's a small tradition or ritual that matters to them?",
+  "What's something about their week that you could ask more about?",
+];
+
+// 25. DATE IDEA ROULETTE — instant tonight plans
+const DATE_IDEAS_Q=[
+  "Cook a new recipe together and rate it out of 10.",
+  "Have a picnic, even if it's just on your living room floor.",
+  "Visit a bookstore and pick a book for each other.",
+  "Take a scenic drive with no destination in mind.",
+  "Have a backyard or balcony stargazing night.",
+  "Go on a coffee-shop hop and try two new spots.",
+  "Have a themed movie night — pick an era or genre together.",
+  "Take a pottery, art, or dance class together.",
+  "Visit a local market and cook whatever looks good.",
+  "Do a puzzle or board game marathon.",
+  "Go on a sunset walk somewhere you've never explored.",
+  "Have a build-your-own-pizza night.",
+  "Visit a museum or gallery neither of you has been to.",
+  "Have a home spa night for both of you.",
+  "Try karaoke, even just in your living room.",
+  "Go stargazing with a blanket and no phones.",
+  "Visit an arcade or bowling alley for some friendly competition.",
+  "Plan a mini road trip to a nearby town.",
+  "Take a cooking class online together, at home.",
+  "Have a 'remember when' night looking through old photos and videos.",
+];
+
+// 26. KARAOKE ROULETTE — sing it, don't skip it
+const KARAOKE_Q=[
+  "Sing the chorus of your song from your first date.",
+  "Sing 'Happy Birthday' to your partner, even if it's not their birthday.",
+  "Sing any song using only 'la la la'.",
+  "Sing your partner's favorite song, or your best guess at it.",
+  "Sing a lullaby, however off-key.",
+  "Sing the national anthem, dramatically.",
+  "Sing a commercial jingle you still remember.",
+  "Sing your wedding song or a song you'd want at your wedding.",
+  "Sing a love song in the most dramatic voice you can manage.",
+  "Sing the alphabet like it's an opera.",
+  "Sing a song about food.",
+  "Sing your partner a made-up song about their day.",
+  "Sing a duet part, even solo, from a movie musical.",
+  "Sing the chorus of a song from when you two started dating.",
+  "Sing something from a cartoon theme song.",
+  "Sing a slow ballad about your pet, or an imaginary pet.",
+  "Sing your national anthem, but whisper-style.",
+  "Sing a nursery rhyme like it's a power ballad.",
+  "Sing 'I love you' to the tune of any song you like.",
+  "Sing a one-line song about what's for dinner.",
+];
+
+// 27. COUPLE GOALS — dream up your future together
+const COUPLE_GOALS_Q=[
+  "What's one trip you want to take together in the next year?",
+  "What's a habit you'd like to build together?",
+  "What's something you'd like to save up for as a team?",
+  "What's a skill you'd both like to learn together?",
+  "What's a tradition you'd like to start as a couple?",
+  "What does your ideal weekend routine look like, five years from now?",
+  "What's one way you'd like to grow individually that would help 'us' too?",
+  "What's a home or space you dream of having together someday?",
+  "What's a way you want to celebrate your next big milestone?",
+  "What's something you want to get better at doing as a team?",
+  "What's a shared goal you haven't said out loud yet?",
+  "What's a value you want to build your future around, together?",
+  "What's one thing you'd like to do differently as a couple going forward?",
+  "What's a dream that feels a little big to say, but you want anyway?",
+  "What's a way you'd like to support each other's individual goals this year?",
+  "What's something about 'us' you want to be intentional about?",
+  "What's a financial goal you'd like to reach together?",
+  "What's a community or cause you'd like to get involved in together?",
+  "What's a way you want to keep dating each other, even years from now?",
+  "What's one thing you want future-you two to remember about this season?",
+];
+
+// 28. MAKE IT RIGHT — gentle prompts for after a rough patch
+const MAKE_IT_RIGHT_Q=[
+  "What's one thing you wish I understood better in that moment?",
+  "What's something small I could do that would help you feel better right now?",
+  "What's one thing you appreciated about how we handled it, even if it was hard?",
+  "What's something you need from me that you haven't said yet?",
+  "What's one thing we can agree to do differently next time?",
+  "What's something you want me to know you're not upset about anymore?",
+  "What's one way I can show you I heard you?",
+  "What's something we can laugh about now, even if it wasn't funny then?",
+  "What's one thing you're grateful we worked through together?",
+  "What's a boundary that would help us avoid this next time?",
+  "What's something kind you want to say, even if it's hard to start?",
+  "What's one thing you need to let go of to move forward?",
+  "What's a way we can check in with each other better next time?",
+  "What's something you wish you'd said differently, and how would you say it now?",
+  "What's one small gesture that would help us reset right now?",
+  "What's something about 'us' that this moment doesn't change?",
+  "What's a question you're afraid to ask me, but want to?",
+  "What's something you need me to be patient with right now?",
+  "What's one thing that would help you feel safe bringing this up again if it happens?",
+  "What's something you're proud of us for, even in a hard moment?",
+];
+
+// 29. FLIRT LINES — cheesy lines, say with a straight face
+const FLIRT_LINES_Q=[
+  "Are you a magician? Because whenever I look at you, everyone else disappears.",
+  "Do you have a map? I keep getting lost in your eyes.",
+  "If being sexy was a crime, you'd be serving a life sentence.",
+  "Is your name Google? Because you have everything I've been searching for.",
+  "Do you believe in love at first sight, or should I walk by again?",
+  "You must be tired, because you've been running through my mind all day.",
+  "If I could rearrange the alphabet, I'd put U and I together.",
+  "Are you made of copper and tellurium? Because you're Cu-Te.",
+  "Is it hot in here, or is it just you?",
+  "I must be a snowflake, because I've fallen for you.",
+  "You're the reason I check my phone with a smile.",
+  "Are you a parking ticket? Because you've got fine written all over you.",
+  "Do you have a Band-Aid? I just scraped my knee falling for you.",
+  "If kisses were snowflakes, I'd send you a blizzard.",
+  "Are you a campfire? Because you're hot and I want s'more.",
+  "Life without you would be like a broken pencil — pointless.",
+  "You must be a loan, because you've got my interest.",
+  "Are you French? Because Eiffel for you.",
+  "Do you have a sunburn, or are you always this hot?",
+  "Are you a time traveler? Because I can totally see you in my future.",
+];
+
+// 30. GUESS MY ANSWER — predict what they'll say
+const GUESS_MY_ANSWER_Q=[
+  "What's my favorite meal you've ever cooked or ordered together?",
+  "What's the movie I'd say is my all-time favorite?",
+  "What's the thing I complain about most often?",
+  "What's my dream vacation destination?",
+  "What's the household chore I dislike the most?",
+  "What's my go-to comfort snack?",
+  "What's the compliment I like hearing the most?",
+  "What's my most-used emoji in texts?",
+  "What's the thing I'd want to do on a completely free Saturday?",
+  "What's my biggest pet peeve?",
+  "What's the song I'd pick for our first dance, if we could redo it?",
+  "What's the one show I could rewatch endlessly?",
+  "What's my favorite thing about our relationship?",
+  "What's the thing I say I'll do 'later' most often?",
+  "What's my go-to order at our favorite restaurant?",
+  "What's the thing that stresses me out most on a normal week?",
+  "What's my honest opinion of my own cooking?",
+  "What's the one thing I'd want you to never stop doing?",
+  "What's my idea of the perfect gift?",
+  "What's the nickname I secretly like the most, even if I pretend not to?",
+];
+
+// 31. ROLEPLAY SCENARIOS — improvise a silly scene together
+const ROLEPLAY_Q=[
+  "You're strangers meeting for the first time at a coffee shop — improvise the meet-cute.",
+  "You're both spies who accidentally fell in love on a mission.",
+  "You're competing chefs on a cooking show, judging each other's imaginary dish.",
+  "You're old friends reuniting after 20 years — catch each other up.",
+  "You're both detectives solving the case of the missing TV remote.",
+  "You're customer and world's most overly-enthusiastic salesperson.",
+  "You're astronauts on your first space date, describing the view.",
+  "You're two people stuck in an elevator, making the best of it.",
+  "You're a talk show host interviewing your partner about their 'career'.",
+  "You're pirates negotiating who gets the last biscuit.",
+  "You're time travelers meeting your future selves — what do you say?",
+  "You're rival ice cream truck drivers arguing over territory.",
+  "You're contestants on a dating show, pitching why you're the best match.",
+  "You're superheroes arguing about whose power is more useful for chores.",
+  "You're royalty announcing an important (silly) new kingdom decree.",
+  "You're weather forecasters predicting tomorrow's 'mood forecast' for each other.",
+  "You're two tourists lost in a city, asking each other for directions in an accent.",
+  "You're game show hosts presenting the 'grand prize' (something silly nearby).",
+  "You're narrators of a nature documentary about your own living room.",
+  "You're old-timey radio announcers reporting the 'breaking news' of your relationship.",
+];
+
+// 32. FUTURE TALK — where do we go from here
+const FUTURE_TALK_Q=[
+  "What does a perfect ordinary day look like for us in five years?",
+  "What's something you hope stays exactly the same about us?",
+  "What's a change you're hoping for in the next year?",
+  "What's a milestone you're looking forward to?",
+  "Where do you picture us living, if anything were possible?",
+  "What's a routine you'd like us to build together?",
+  "What's something you want to have figured out together by next year?",
+  "What's a version of retirement or slowing down that appeals to you?",
+  "What's something you want us to keep prioritizing no matter what?",
+  "What's a big decision you think we'll face together sometime soon?",
+  "What's something about getting older together that you look forward to?",
+  "What's a way you picture us celebrating our next big anniversary?",
+  "What's a family tradition (yours, mine, or one we'd make) you'd want to keep?",
+  "What's one thing you want to make sure we never stop doing, even years from now?",
+  "What's something you hope we get braver about together?",
+  "What's a conversation about the future we haven't had yet, but should?",
+  "What's one way you picture us supporting each other's careers or passions long-term?",
+  "What's a place you'd like to call home someday?",
+  "What's something you want to be true about 'us' when we're old?",
+  "What's one thing you're quietly excited about for our future?",
+];
+
+// 33. ICEBREAKER REFRESH — light questions to reconnect
+const ICEBREAKERS_Q=[
+  "What's something small that made today better than yesterday?",
+  "What's a food you've never tried but want to?",
+  "What's your current favorite song, no judgment?",
+  "What's something you're weirdly good at?",
+  "What's a show you're currently watching or want to start?",
+  "What's a hobby you dropped that you'd like to pick back up?",
+  "What's your go-to order at a coffee shop these days?",
+  "What's something that made you laugh recently?",
+  "What's a place nearby you haven't explored yet?",
+  "What's a smell that instantly makes you happy?",
+  "What's the last thing you learned that surprised you?",
+  "What's a small goal you have for this week?",
+  "What's your current phone lock screen, and why?",
+  "What's a snack you could eat every day and not get tired of?",
+  "What's something you're looking forward to this month?",
+  "What's a app you've been using way too much lately?",
+  "What's your ideal way to spend a lazy Sunday right now?",
+  "What's something you'd want to learn if time wasn't an issue?",
+  "What's a memory from this week you want to hold onto?",
+  "What's one thing that's been on your mind lately, big or small?",
+];
+
+// 34. 7-DAY LOVE CHALLENGE — one small act each day
+const LOVE_WEEK_Q=[
+  "Day 1: Leave a small note somewhere they'll find it today.",
+  "Day 2: Give them your full attention for 10 minutes, phone away.",
+  "Day 3: Do a chore that's usually theirs, without being asked.",
+  "Day 4: Tell them one specific thing you admire about them.",
+  "Day 5: Plan a small surprise for later today.",
+  "Day 6: Recreate a moment from early in your relationship.",
+  "Day 7: Write down one hope you have for the two of you and share it.",
+  "Bonus: Send them a message in the middle of the day just to say you're thinking of them.",
+  "Bonus: Compliment something they don't get complimented on often.",
+  "Bonus: Ask about their day and really listen, no fixing, no advice.",
+  "Bonus: Recreate your first date meal or activity, even in a small way.",
+  "Bonus: Give them 10 minutes of uninterrupted venting space, no problem-solving.",
+  "Bonus: Do something they've been meaning to do, without them asking twice.",
+  "Bonus: Tell them a memory of them that still makes you smile.",
+];
+
+// 35. WORD ASSOCIATION — say the first word that comes to mind
+const WORD_ASSOC_Q=[
+  "Home","Adventure","Coffee","Forever","Trust","Comfort","Spark","Growth",
+  "Laughter","Patience","Warmth","Journey","Safe","Silly","Steady","Spontaneous",
+  "Quiet","Loud","Sunday","Future","Us","Together","Chaos","Calm",
+];
+
+// 36. SONG DEDICATION — find the perfect song for the moment
+const SONG_DEDICATION_Q=[
+  "Dedicate a song for the day you two met.",
+  "Dedicate a song for a hard day that got easier because of them.",
+  "Dedicate a song for your next road trip together.",
+  "Dedicate a song for a lazy Sunday morning together.",
+  "Dedicate a song that captures how you felt the first time you said 'I love you'.",
+  "Dedicate a song for the version of 'us' five years from now.",
+  "Dedicate a song for a moment you were proud to be theirs.",
+  "Dedicate a song that describes their personality perfectly.",
+  "Dedicate a song for the wedding you've had or the one you dream of.",
+  "Dedicate a song for the most fun you've ever had together.",
+  "Dedicate a song that always makes you think of them, even out of context.",
+  "Dedicate a song for the quiet, ordinary moments you love most.",
+  "Dedicate a song for a comeback after a hard week.",
+  "Dedicate a song that captures your relationship's inside jokes.",
+  "Dedicate a song for the next big adventure you'll take together.",
+];
+
+// 37. CONFESSION BOOTH — safe space, honest answers
+const CONFESSION_BOOTH_Q=[
+  "What's something small you've never told me because it felt silly?",
+  "What's a habit of mine you've learned to love, even if it annoyed you at first?",
+  "What's something you were nervous to tell me early on?",
+  "What's a moment you were quietly hurt but didn't say anything?",
+  "What's something you're proud of that you don't talk about enough?",
+  "What's a fear about us you've never said out loud?",
+  "What's something you wish I asked you about more often?",
+  "What's a compliment you've wanted to hear but haven't asked for?",
+  "What's something you've forgiven me for that we've never really talked about?",
+  "What's a moment you felt closest to me that I might not know about?",
+  "What's something you keep meaning to bring up but haven't yet?",
+  "What's a small insecurity you carry that I could help with?",
+  "What's something you're grateful I never judged you for?",
+  "What's a truth about yourself you're still getting comfortable saying out loud?",
+  "What's something about our relationship you'd want to protect fiercely?",
+];
+
+// 38. CHEERS TO US — a toast prompt for right now
+const CHEERS_TO_US_Q=[
+  "Raise a toast to the version of us five years ago.",
+  "Raise a toast to the hardest week you got through together.",
+  "Raise a toast to the silliest inside joke you share.",
+  "Raise a toast to the next adventure, wherever it takes you.",
+  "Raise a toast to the person who introduced you, or the moment fate did.",
+  "Raise a toast to the version of yourself they've helped you become.",
+  "Raise a toast to the home you've built together, wherever it is.",
+  "Raise a toast to the mistakes that taught you both something.",
+  "Raise a toast to the ordinary Tuesdays that feel extraordinary with them.",
+  "Raise a toast to whoever you become together, ten years from now.",
+  "Raise a toast to the friends and family who believed in you two.",
+  "Raise a toast to the fights you've had and come back stronger from.",
+  "Raise a toast to the small routines that quietly hold your life together.",
+  "Raise a toast to choosing each other, again, today.",
+];
+
+// 39. SECRET ADMIRER NOTES — leave them a mystery note
+const SECRET_ADMIRER_Q=[
+  "Leave a note that just says 'Someone thinks you're wonderful.'",
+  "Leave a note listing three things you love about them, unsigned.",
+  "Leave a note that says 'You looked especially happy today.'",
+  "Leave a note with a memory you love, no explanation needed.",
+  "Leave a note that says 'This is your reminder that you're loved.'",
+  "Leave a note describing their smile, without saying who wrote it.",
+  "Leave a note that says 'I noticed the little thing you did today.'",
+  "Leave a note with a compliment about something they don't hear often.",
+  "Leave a note that just says 'You make ordinary days better.'",
+  "Leave a note describing a future memory you want to make with them.",
+  "Leave a note that says 'Someone is quietly grateful for you today.'",
+  "Leave a note with a line from a song that reminds you of them.",
+  "Leave a note that says 'You are someone's whole heart.'",
+  "Leave a note somewhere unexpected — their bag, a shoe, a mirror.",
 ];
 let trivScore=0,trivNum=1,trivAnswered=false;
 function nextTrivia(){
