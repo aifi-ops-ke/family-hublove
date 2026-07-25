@@ -2,6 +2,7 @@
   "name": "ournest",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "OurNest - real-time shared couple planning app",
   "dependencies": {
     "@upstash/redis": "^1.34.0"
