@@ -1,11 +1,39 @@
-// api/hub.js — persists all hub data inside this very GitHub repo
-// (data/store.json), using the GitHub Contents API as the database.
-// No external service, no dashboard setup, no tokens to copy.
+// api/hub.js — persists hub data in Upstash Redis (already listed in
+// package.json as a dependency).
+//
+// WHY THIS CHANGED FROM THE GITHUB-CONTENTS VERSION:
+// The old version stored every couple's entire data set inside ONE shared
+// JSON file in this repo, and wrote it back via a GitHub commit on every
+// single change — including lightweight things like a 15-second "I'm
+// online" presence ping. That meant:
+//   1. Every read had to download and base64-decode that whole shared file
+//      (slow, and got slower as more couples used the app) — this is what
+//      produced the long/stuck "Loading..." spinner.
+//   2. Every write needed the file's current git SHA. If two writes landed
+//      close together (e.g. your presence ping and a partner's ping, or a
+//      settings save racing a presence ping), one write would get a 409
+//      conflict. There was a retry loop, but if it ran out of attempts —
+//      easy to do with pings firing every 15s from two phones — the write
+//      silently failed. That is almost certainly how the anniversary date
+//      got lost: it looked saved in the app, but the commit never landed,
+//      and the next refresh pulled the old data straight from GitHub.
+//
+// Redis fixes both: reads are a single fast lookup (no growing shared
+// blob, no decoding), and each collection (events, settings, presence,
+// etc.) is its own hash field, so a presence ping and a settings save
+// touch different fields and can never conflict with each other.
+//
+// SETUP REQUIRED: create a free Redis database at https://upstash.com (or
+// use Vercel's "Upstash for Redis" / "KV" storage integration from your
+// Vercel project's Storage tab — it's the same thing), then set these two
+// environment variables in your Vercel project settings:
+//   UPSTASH_REDIS_REST_URL
+//   UPSTASH_REDIS_REST_TOKEN
+// (the Vercel integration sets these for you automatically).
 
-const GITHUB_TOKEN = process.env.GH_STORE_TOKEN;
-const REPO = 'aifi-ops-ke/family-hublove';
-const FILE_PATH = 'data/store.json';
-const API_BASE = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
+import { Redis } from '@upstash/redis';
+
+const redis = Redis.fromEnv();
 
 function defaultHub() {
   return {
@@ -16,67 +44,41 @@ function defaultHub() {
   };
 }
 
-async function ghFetch(url, options = {}) {
-  return fetch(url, {
-    ...options,
-    headers: {
-      'Authorization': `token ${GITHUB_TOKEN}`,
-      'Accept': 'application/vnd.github+json',
-      'User-Agent': 'our-love-hub',
-      ...(options.headers || {})
-    }
-  });
-}
+const FIELDS = Object.keys(defaultHub());
 
-async function readStore() {
-  const res = await ghFetch(API_BASE);
-  if (!res.ok) {
-    if (res.status === 404) return { content: {}, sha: null };
-    throw new Error(`GitHub read failed: ${res.status}`);
-  }
-  const json = await res.json();
-  const decoded = Buffer.from(json.content, 'base64').toString('utf-8');
-  let content;
-  try { content = JSON.parse(decoded); } catch (e) { content = {}; }
-  return { content, sha: json.sha };
-}
+function hkey(code) { return `hub:${code}`; }
 
-async function writeStore(content, sha) {
-  const body = {
-    message: 'Update hub data',
-    content: Buffer.from(JSON.stringify(content)).toString('base64'),
-    sha: sha || undefined
-  };
-  const res = await ghFetch(API_BASE, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
-  });
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`GitHub write failed: ${res.status} ${errText}`);
-  }
-  return res.json();
-}
-
-// Retry wrapper for write conflicts (sha mismatch when two requests land
-// close together) — re-reads latest content and RE-APPLIES the mutator,
-// so a losing write never clobbers the other partner's concurrent update.
-async function withHub(code, mutator, attempts = 3) {
-  for (let i = 0; i < attempts; i++) {
-    const { content: store, sha } = await readStore();
-    if (!store[code]) store[code] = defaultHub();
-    const hub = store[code];
-    const result = mutator(hub);
-    try {
-      await writeStore(store, sha);
-      return result !== undefined ? result : hub;
-    } catch (e) {
-      if (i === attempts - 1) throw e;
-      // conflict: loop back, re-read fresh content, re-apply mutator
-      await new Promise(r => setTimeout(r, 150 + Math.random() * 200));
+async function readHub(code) {
+  const raw = await redis.hgetall(hkey(code));
+  const hub = defaultHub();
+  if (raw) {
+    for (const f of FIELDS) {
+      if (raw[f] !== undefined && raw[f] !== null) {
+        // @upstash/redis auto-parses JSON-looking strings, but guard
+        // against already-parsed values or raw strings either way.
+        hub[f] = typeof raw[f] === 'string' ? safeParse(raw[f], hub[f]) : raw[f];
+      }
     }
   }
+  return hub;
+}
+
+function safeParse(str, fallback) {
+  try { return JSON.parse(str); } catch (e) { return fallback; }
+}
+
+async function writeField(code, field, value) {
+  await redis.hset(hkey(code), { [field]: JSON.stringify(value) });
+}
+
+// Patch a single field that holds an object (settings, presence, location,
+// streak). Only ever touches that one hash field, so it can't be knocked
+// over by a concurrent write to a different collection.
+async function patchField(code, field, mutator) {
+  const current = await readHub(code);
+  const updated = mutator(current[field] || {}, current);
+  await writeField(code, field, updated);
+  return updated;
 }
 
 function todayStr() {
@@ -96,11 +98,6 @@ export default async function handler(req, res) {
 
   const { code, collection } = req.query;
   if (!code) return res.status(400).json({ error: 'Hub code required' });
-  // Basic sanity check on the code itself — letters/numbers only, reasonable
-  // length — to avoid abuse, while allowing any couple to pick their own
-  // private code. Each code maps to its own fully separate data slice
-  // (see withHub/readStore below), so no two hub codes can ever see or
-  // affect each other's data.
   if (!/^[a-z0-9]{4,40}$/i.test(code)) {
     return res.status(400).json({ error: 'Invalid hub code format.' });
   }
@@ -110,15 +107,11 @@ export default async function handler(req, res) {
   try {
     if (collection === 'settings') {
       if (req.method === 'POST') {
-        const updated = await withHub(code, (hub) => {
-          hub.settings = { ...hub.settings, ...(req.body || {}) };
-          return hub.settings;
-        });
+        const updated = await patchField(code, 'settings', (settings) => ({ ...settings, ...(req.body || {}) }));
         return res.status(200).json({ ok: true, settings: updated });
       }
       if (req.method === 'GET') {
-        const { content } = await readStore();
-        const hub = content[code] || defaultHub();
+        const hub = await readHub(code);
         return res.status(200).json({ data: hub.settings || {} });
       }
     }
@@ -127,12 +120,11 @@ export default async function handler(req, res) {
       if (req.method === 'POST') {
         const { name } = req.body || {};
         if (!name) return res.status(400).json({ error: 'name required' });
-        await withHub(code, (hub) => { hub.presence[name] = Date.now(); });
+        await patchField(code, 'presence', (presence) => ({ ...presence, [name]: Date.now() }));
         return res.status(200).json({ ok: true });
       }
       if (req.method === 'GET') {
-        const { content } = await readStore();
-        const hub = content[code] || defaultHub();
+        const hub = await readHub(code);
         const now = Date.now();
         const online = {};
         for (const [name, ts] of Object.entries(hub.presence || {})) {
@@ -146,19 +138,16 @@ export default async function handler(req, res) {
       if (req.method === 'POST') {
         const { name, lat, lng, expiresAt, stop } = req.body || {};
         if (!name) return res.status(400).json({ error: 'name required' });
-        await withHub(code, (hub) => {
-          if (!hub.location) hub.location = {};
-          if (stop) {
-            delete hub.location[name];
-          } else {
-            hub.location[name] = { lat, lng, expiresAt, updatedAt: Date.now() };
-          }
+        await patchField(code, 'location', (location) => {
+          const next = { ...location };
+          if (stop) delete next[name];
+          else next[name] = { lat, lng, expiresAt, updatedAt: Date.now() };
+          return next;
         });
         return res.status(200).json({ ok: true });
       }
       if (req.method === 'GET') {
-        const { content } = await readStore();
-        const hub = content[code] || defaultHub();
+        const hub = await readHub(code);
         const now = Date.now();
         const active = {};
         for (const [name, loc] of Object.entries(hub.location || {})) {
@@ -171,31 +160,29 @@ export default async function handler(req, res) {
     if (collection === 'streak') {
       if (req.method === 'POST') {
         const { name } = req.body || {};
-        const streak = await withHub(code, (hub) => {
+        const streak = await patchField(code, 'streak', (streak) => {
+          const s = { openedToday: {}, count: 0, lastDate: null, ...streak };
           const today = todayStr();
           const yesterday = yesterdayStr();
-          if (!hub.streak.openedToday) hub.streak.openedToday = {};
-          if (hub.streak.lastDate !== today) {
-            if (hub.streak.lastDate === yesterday) hub.streak.count += 1;
-            else hub.streak.count = 1;
-            hub.streak.lastDate = today;
-            hub.streak.openedToday = {};
+          if (s.lastDate !== today) {
+            if (s.lastDate === yesterday) s.count += 1;
+            else s.count = 1;
+            s.lastDate = today;
+            s.openedToday = {};
           }
-          if (name) hub.streak.openedToday[name] = true;
-          return hub.streak;
+          if (name) s.openedToday[name] = true;
+          return s;
         });
         return res.status(200).json({ ok: true, streak });
       }
       if (req.method === 'GET') {
-        const { content } = await readStore();
-        const hub = content[code] || defaultHub();
+        const hub = await readHub(code);
         return res.status(200).json({ data: hub.streak });
       }
     }
 
     if (req.method === 'GET') {
-      const { content } = await readStore();
-      const hub = content[code] || defaultHub();
+      const hub = await readHub(code);
       if (collection) {
         if (!allowed.includes(collection)) return res.status(400).json({ error: 'Bad collection' });
         return res.status(200).json({ data: hub[collection] });
@@ -211,7 +198,9 @@ export default async function handler(req, res) {
       if (!body || !Array.isArray(body.data)) {
         return res.status(400).json({ error: 'body.data must be an array' });
       }
-      await withHub(code, (hub) => { hub[collection] = body.data; });
+      // Each collection is its own hash field — writing 'events' can never
+      // conflict with a concurrent write to 'notes', 'diary', etc.
+      await writeField(code, collection, body.data);
       return res.status(200).json({ ok: true });
     }
 
