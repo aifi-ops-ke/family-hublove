@@ -15,7 +15,7 @@
 | **Tagline** | *"Talent is everywhere. Opportunity isn't. Let's change that together."* |
 | **Goal** | **KES 3,500,000** (about USD 27,000) **[adjust]** |
 | **Duration** | 60 days: **launch Thu 15 Oct 2026, close Sun 13 Dec 2026** (before Christmas spending peaks) |
-| **Who benefits** | Upcoming artists and talented young people who can't afford studio time, plus the studio's capacity to serve them |
+| **Who benefits** | Upcoming artists, choir singers and talented young people who can't afford studio time, plus the studio's capacity to serve them |
 | **Where to give** | M-Changa (M-Pesa), M-Pesa Paybill **[number]**, GoFundMe for the diaspora **[link]** |
 
 ---
@@ -24,23 +24,23 @@
 
 Use this on M-Changa, GoFundMe, your website and in the video script.
 
-> **Every week, someone walks into Neema Pro Studios with a song in their heart and nothing in their pocket.**
+> **Every week, someone walks through our doors with a song in their heart and nothing in their pocket.**
 >
-> They might be a young worshipper from a church choir, a teenager in Nairobi's estates who writes lyrics in an exercise book, or a single mother whose voice lights up her whole village. They have the gift. What they don't have is **KES [X,000]** for a recording session, a music video, or someone to guide their career.
+> It may be a young worshipper from a church choir, a teenager writing songs in an old exercise book, or a single mother whose voice brings hope to her village but who has never recorded a single song.
 >
-> Neema Pro Studios was founded to **discover, nurture and promote talent**, especially gospel talent, and to do it with excellence, integrity and faith. From our home in Roysambu / Kasarani, off Thika Superhighway, Nairobi, we have recorded, filmed and mentored artists and built the **Neema Pro Studios Choir** (*"Kwa Neema Tu"*).
+> They have the talent and the passion. What they lack is opportunity: a recording session, a music video, and someone to tell them, *"Your gift matters. Keep going."*
 >
-> But we can't say yes to everyone who needs us. **That is why we're launching *Sauti ya Neema*.**
+> Neema Pro Studios exists to discover, nurture and promote that talent with excellence, integrity and faith. We are also home to the Neema Pro Studios Choir. Today we can't say yes to everyone who comes to us with a dream. Together, we can.
 >
 > **With your support we will:**
-> 1. **Sponsor 50 upcoming artists**: a full studio package for each one (recording, mixing, mastering, a music video and release support) at no cost to them.
-> 2. **Run a free 12-week Talent Academy** (two intakes) for 80 young people from low-income backgrounds, covering vocals, songwriting, sound engineering, videography and the music business.
-> 3. **Upgrade the studio** with the equipment we need to serve more people, better.
-> 4. **Give back to the needy** through community concerts and outreach that raise food and school-fee support for vulnerable families.
+> 1. **Sponsor 50 upcoming artists and choir singers** with recording, mixing, mastering, a music video and release support, at no cost to them.
+> 2. **Run a free 12-week Talent Academy** (two intakes) for 80 young people from low-income backgrounds.
+> 3. **Upgrade our studio equipment and add more**, so we can record more people at a higher standard.
+> 4. **Give back to the needy** through 3 community concerts that raise food and school-fee support for vulnerable families.
 >
-> **Whatever you give, KES 100 or KES 100,000, it goes straight into someone's future.**
+> **We don't just record music. We give dreams a voice.**
 >
-> *"Kwa Neema tu": only by grace. This is grace in action. Join us.*
+> *Sometimes all a gifted person needs is one opportunity, and someone who believes in them.*
 
 ---
 
@@ -67,7 +67,7 @@ Use this on M-Changa, GoFundMe, your website and in the video script.
 | **Rafiki (Friend)** | 500 – 1,999 | Above, plus an exclusive digital download of a Neema Choir track |
 | **Mfadhili (Sponsor)** | 2,000 – 9,999 | Above, plus your name in the credits of a sponsored artist's music video |
 | **Mlezi (Mentor)** | 10,000 – 24,999 | Above, plus 2 tickets to the charity concert and a signed Neema Pro Studios merch pack |
-| **Nguzo (Pillar)** | 25,000 – 99,999 | **You fully sponsor one artist.** You meet them, get a "Sponsored by [your name]" credit on their single, and get VIP concert seats |
+| **Nguzo (Pillar)** | 25,000 – 99,999 | **You fully sponsor one artist or choir singer.** You meet them, get a "Sponsored by [your name]" credit on their single, and get VIP concert seats |
 | **Mwanzilishi (Founding Partner)** | 100,000+ | Above, plus a studio session for your church, company or family, and your logo on the Academy banner and campaign wall |
 
 Corporate and church partners get a custom package: branding, CSR reporting, and a choir performance at your event.
@@ -100,14 +100,14 @@ Corporate and church partners get a custom package: branding, CSR reporting, and
 ## 7. Ready-to-post content
 
 **WhatsApp broadcast**
-> Hello [Name] 🙏🏾 Neema Pro Studios has launched *Sauti ya Neema*, a campaign to give 50 talented young artists free studio packages and train 80 youth in music and media. Even KES 100 makes a difference.
+> Hello [Name] 🙏🏾 Neema Pro Studios has launched *Sauti ya Neema*, a campaign to give 50 upcoming artists and choir singers free studio packages and train 80 youth in music and media. Even KES 100 makes a difference.
 > 👉 M-Pesa Paybill **[XXXXXX]**, Account **[NEEMA]**
 > 👉 Or give here: **[link]**
 > Please forward this to 3 people. Kwa Neema tu! 🎶
 
 **Instagram / Facebook caption**
 > Talent is everywhere. Opportunity isn't. 🎤✨
-> This season we're raising **KES 3.5M** to sponsor 50 upcoming artists, train 80 youth for free, and bless needy families through music. 🙌🏾
+> This season we're raising **KES 3.5M** to sponsor 50 upcoming artists and choir singers, train 80 youth for free, and bless needy families through music. 🙌🏾
 > Every shilling counts. Link in bio 🔗 | Paybill [XXXXXX] Acc: NEEMA
 > #SautiYaNeema #NeemaProStudios #KenyanGospel #SupportLocalTalent #Harambee
 
