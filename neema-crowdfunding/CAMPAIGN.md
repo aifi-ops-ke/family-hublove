@@ -13,8 +13,8 @@
 |---|---|
 | **Campaign name** | Sauti ya Neema: A Voice for Every Talent |
 | **Tagline** | *"Talent is everywhere. Opportunity isn't. Let's change that together."* |
-| **Goal** | **KES 1,500,000** (about USD 11,500) **[adjust]** |
-| **Duration** | 45 days **[e.g. 1 Nov – 15 Dec 2026, ending before Christmas giving]** |
+| **Goal** | **KES 3,500,000** (about USD 27,000) **[adjust]** |
+| **Duration** | 60 days recommended for a goal this size **[e.g. 1 Nov – 30 Dec 2026, covering the Christmas giving season]** |
 | **Who benefits** | Upcoming artists and talented young people who can't afford studio time, plus the studio's capacity to serve them |
 | **Where to give** | M-Changa (M-Pesa), M-Pesa Paybill **[number]**, GoFundMe for the diaspora **[link]** |
 
@@ -33,8 +33,8 @@ Use this on M-Changa, GoFundMe, your website and in the video script.
 > But we can't say yes to everyone who needs us. **That is why we're launching *Sauti ya Neema*.**
 >
 > **With your support we will:**
-> 1. **Sponsor 20 upcoming artists**: a full studio package for each one (recording, mixing, mastering, a music video and release support) at no cost to them.
-> 2. **Run a free 12-week Talent Academy** for 40 young people from low-income backgrounds, covering vocals, songwriting, sound engineering, videography and the music business.
+> 1. **Sponsor 50 upcoming artists**: a full studio package for each one (recording, mixing, mastering, a music video and release support) at no cost to them.
+> 2. **Run a free 12-week Talent Academy** (two intakes) for 80 young people from low-income backgrounds, covering vocals, songwriting, sound engineering, videography and the music business.
 > 3. **Upgrade the studio** with the equipment we need to serve more people, better.
 > 4. **Give back to the needy** through community concerts and outreach that raise food and school-fee support for vulnerable families.
 >
@@ -44,18 +44,18 @@ Use this on M-Changa, GoFundMe, your website and in the video script.
 
 ---
 
-## 3. Where the money goes (KES 1,500,000) **[adjust to real quotes]**
+## 3. Where the money goes (KES 3,500,000) **[adjust to real quotes]**
 
 | Item | Amount (KES) | % |
 |---|---:|---:|
-| **Artist Sponsorship Fund**: 20 full packages at ~KES 25,000 each | 500,000 | 33% |
-| **Talent Academy**: trainers, materials, meals and transport for 40 students | 300,000 | 20% |
-| **Studio equipment**: mics, audio interface, monitors, camera lens, lighting | 350,000 | 23% |
-| **Community outreach**: 2 charity concerts, food hampers, school-fee support | 200,000 | 14% |
-| **Campaign costs**: platform fees (~4–5%), marketing, video production | 150,000 | 10% |
-| **Total** | **1,500,000** | 100% |
+| **Artist Sponsorship Fund**: 50 full packages at ~KES 25,000 each | 1,250,000 | 36% |
+| **Studio equipment**: mics, audio interface, monitors, cameras, lenses, lighting, acoustic treatment | 800,000 | 23% |
+| **Talent Academy**: 2 intakes, trainers, materials, meals and transport for 80 students | 600,000 | 17% |
+| **Community outreach**: 3 charity concerts, food hampers, school-fee support | 500,000 | 14% |
+| **Campaign costs**: platform fees (~4–5%), marketing, video production | 350,000 | 10% |
+| **Total** | **3,500,000** | 100% |
 
-**Stretch goal at KES 2,000,000:** a mobile recording kit so the studio can record talent in rural areas and schools.
+**Stretch goal at KES 4,000,000:** a mobile recording kit so the studio can record talent in rural areas and schools.
 
 ---
 
@@ -84,30 +84,30 @@ Corporate and church partners get a custom package: branding, CSR reporting, and
 
 ---
 
-## 6. 45-day launch plan
+## 6. 60-day launch plan
 
 | Phase | Days | What to do |
 |---|---|---|
-| **Pre-launch** | -14 to 0 | Shoot a 2-minute video (founder + 2 artists + choir). Line up 10–15 "first donors" to give on day 1 so the bar isn't at zero. Brief pastors, choir members and past clients. |
-| **Launch week** | 1–7 | Launch video on YouTube, TikTok, IG and FB. WhatsApp broadcast to every contact. Aim for 25% of the goal in week 1. |
-| **Stories** | 8–30 | Share one artist story every 2–3 days: "Meet Wanjiru. KES 25,000 records her first single." Post live studio sessions on TikTok. Share progress updates at 25%, 50% and 75%. |
-| **Church & corporate push** | 15–35 | Visit churches (Sunday announcement + choir performance + collection). Pitch 10 local businesses for Nguzo/Mwanzilishi tiers. |
-| **Final push** | 36–45 | Countdown posts. A "Harambee Night" live-streamed concert with live M-Pesa giving shown on screen. |
-| **After** | 46+ | Thank every donor. Post the first sponsored song within 60 days. Publish a full money report. |
+| **Pre-launch** | -14 to 0 | Shoot a 2-minute video (founder + 2 artists + choir). Line up 20–30 "first donors" to give on day 1 so the bar isn't at zero. Brief pastors, choir members and past clients. |
+| **Launch week** | 1–7 | Launch video on YouTube, TikTok, IG and FB. WhatsApp broadcast to every contact. Aim for 25% of the goal (about KES 875,000) in week 1. |
+| **Stories** | 8–45 | Share one artist story every 2–3 days: "Meet Wanjiru. KES 25,000 records her first single." Post live studio sessions on TikTok. Share progress updates at 25%, 50% and 75%. |
+| **Church & corporate push** | 15–50 | Visit churches (Sunday announcement + choir performance + collection). Pitch 20–30 businesses, SACCOs and churches for Nguzo/Mwanzilishi tiers. **Aim to raise about KES 1.5M of the 3.5M from partners**; a goal this size can't come from small gifts alone. |
+| **Final push** | 51–60 | Countdown posts. A "Harambee Night" live-streamed concert with live M-Pesa giving shown on screen. |
+| **After** | 61+ | Thank every donor. Post the first sponsored song within 60 days. Publish a full money report. |
 
 ---
 
 ## 7. Ready-to-post content
 
 **WhatsApp broadcast**
-> Hello [Name] 🙏🏾 Neema Pro Studios has launched *Sauti ya Neema*, a campaign to give 20 talented young artists free studio packages and train 40 youth in music and media. Even KES 100 makes a difference.
+> Hello [Name] 🙏🏾 Neema Pro Studios has launched *Sauti ya Neema*, a campaign to give 50 talented young artists free studio packages and train 80 youth in music and media. Even KES 100 makes a difference.
 > 👉 M-Pesa Paybill **[XXXXXX]**, Account **[NEEMA]**
 > 👉 Or give here: **[link]**
 > Please forward this to 3 people. Kwa Neema tu! 🎶
 
 **Instagram / Facebook caption**
 > Talent is everywhere. Opportunity isn't. 🎤✨
-> This season we're raising **KES 1.5M** to sponsor 20 upcoming artists, train 40 youth for free, and bless needy families through music. 🙌🏾
+> This season we're raising **KES 3.5M** to sponsor 50 upcoming artists, train 80 youth for free, and bless needy families through music. 🙌🏾
 > Every shilling counts. Link in bio 🔗 | Paybill [XXXXXX] Acc: NEEMA
 > #SautiYaNeema #NeemaProStudios #KenyanGospel #SupportLocalTalent #Harambee
 
@@ -122,7 +122,7 @@ Corporate and church partners get a custom package: branding, CSR reporting, and
 >
 > Dear [Pastor/Manager Name],
 >
-> Neema Pro Studios is a Nairobi-based gospel music production studio committed to discovering and nurturing talent. We are raising KES 1,500,000 to sponsor 20 upcoming artists, run a free Talent Academy for 40 young people, and support vulnerable families through outreach concerts.
+> Neema Pro Studios is a Nairobi-based gospel music production studio committed to discovering and nurturing talent. We are raising KES 3,500,000 to sponsor 50 upcoming artists, run a free Talent Academy for 80 young people, and support vulnerable families through outreach concerts.
 >
 > We would be honoured to have [Organisation] as a **Founding Partner**. In return we offer brand recognition on campaign materials, a live choir performance at your event, and a full impact report for your records.
 >
@@ -151,7 +151,7 @@ Collect these through a Google Form:
 - [ ] Confirm the goal and budget with real equipment quotes
 - [ ] Set up M-Changa and a dedicated Paybill
 - [ ] Record the 2-minute campaign video
-- [ ] Line up 10–15 day-one donors
+- [ ] Line up 20–30 day-one donors
 - [ ] Create the artist application form
 - [ ] Fill every [placeholder] in this kit and in `index.html`
 - [ ] Get consent (written for minors, from a guardian) before featuring any person's story

@@ -96,9 +96,9 @@ footer{padding:32px 0;color:var(--muted);font-size:.9rem;border-top:1px solid va
     <div class="eyebrow">Raised so far</div>
     <div class="bar"><span id="fill" style="width:0%"></span></div>
     <div class="stats">
-      <div><b id="raised">KES 0</b><small>of KES 1,500,000 goal</small></div>
+      <div><b id="raised">KES 0</b><small>of KES 3,500,000 goal</small></div>
       <div><b id="donors">0</b><small>supporters</small></div>
-      <div><b id="days">45</b><small>days to go</small></div>
+      <div><b id="days">60</b><small>days to go</small></div>
     </div>
   </div>
 </div>
@@ -118,10 +118,10 @@ footer{padding:32px 0;color:var(--muted);font-size:.9rem;border-top:1px solid va
     <div class="eyebrow">What your gift makes possible</div>
     <h2>Four promises</h2>
     <div class="grid">
-      <div class="card"><div class="n">20</div><h3>Artists sponsored</h3><p>A full package for each: recording, mixing, mastering, a music video and release support, at no cost to them.</p></div>
-      <div class="card"><div class="n">40</div><h3>Youth trained free</h3><p>A 12-week Talent Academy covering vocals, songwriting, sound engineering, videography and the music business.</p></div>
+      <div class="card"><div class="n">50</div><h3>Artists sponsored</h3><p>A full package for each: recording, mixing, mastering, a music video and release support, at no cost to them.</p></div>
+      <div class="card"><div class="n">80</div><h3>Youth trained free</h3><p>Two intakes of a 12-week Talent Academy covering vocals, songwriting, sound engineering, videography and the music business.</p></div>
       <div class="card"><div class="n">1</div><h3>Stronger studio</h3><p>New microphones, monitors, lighting and camera gear, so we can serve more people and do it better.</p></div>
-      <div class="card"><div class="n">2</div><h3>Charity concerts</h3><p>Community outreach that raises food and school-fee support for vulnerable families.</p></div>
+      <div class="card"><div class="n">3</div><h3>Charity concerts</h3><p>Community outreach that raises food and school-fee support for vulnerable families.</p></div>
     </div>
   </div>
 </section>
@@ -132,11 +132,11 @@ footer{padding:32px 0;color:var(--muted);font-size:.9rem;border-top:1px solid va
     <h2>Where every shilling goes</h2>
     <p class="lead">We will publish a report with receipts every month during and after the campaign.</p>
     <div class="budget">
-      <div class="row"><span>Artist Sponsorship Fund</span><span>KES 500,000</span><div class="track"><i style="width:33%"></i></div></div>
-      <div class="row"><span>Studio equipment</span><span>KES 350,000</span><div class="track"><i style="width:23%"></i></div></div>
-      <div class="row"><span>Talent Academy</span><span>KES 300,000</span><div class="track"><i style="width:20%"></i></div></div>
-      <div class="row"><span>Community outreach</span><span>KES 200,000</span><div class="track"><i style="width:14%"></i></div></div>
-      <div class="row"><span>Campaign &amp; platform costs</span><span>KES 150,000</span><div class="track"><i style="width:10%"></i></div></div>
+      <div class="row"><span>Artist Sponsorship Fund</span><span>KES 1,250,000</span><div class="track"><i style="width:36%"></i></div></div>
+      <div class="row"><span>Studio equipment</span><span>KES 800,000</span><div class="track"><i style="width:23%"></i></div></div>
+      <div class="row"><span>Talent Academy</span><span>KES 600,000</span><div class="track"><i style="width:17%"></i></div></div>
+      <div class="row"><span>Community outreach</span><span>KES 500,000</span><div class="track"><i style="width:14%"></i></div></div>
+      <div class="row"><span>Campaign &amp; platform costs</span><span>KES 350,000</span><div class="track"><i style="width:10%"></i></div></div>
     </div>
   </div>
 </section>
@@ -175,7 +175,7 @@ footer{padding:32px 0;color:var(--muted);font-size:.9rem;border-top:1px solid va
 
 <script>
 // Update these two numbers as donations come in.
-const RAISED = 0, DONORS = 0, GOAL = 1500000;
+const RAISED = 0, DONORS = 0, GOAL = 3500000;
 document.getElementById('raised').textContent = 'KES ' + RAISED.toLocaleString('en-KE');
 document.getElementById('donors').textContent = DONORS.toLocaleString('en-KE');
 document.getElementById('fill').style.width = Math.min(100, RAISED / GOAL * 100) + '%';
