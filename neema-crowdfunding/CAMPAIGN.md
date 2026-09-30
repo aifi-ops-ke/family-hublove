@@ -1,0 +1,169 @@
+# "Sauti ya Neema": A Voice for Every Talent
+### Neema Pro Studios crowdfunding campaign kit
+
+> Anything in **[square brackets]** is a placeholder or a figure you need to confirm before you publish.
+> Facts about the studio came from public listings (Instagram, YouTube, TikTok, business directories).
+> Check them against your own records.
+
+---
+
+## 1. Campaign at a glance
+
+| | |
+|---|---|
+| **Campaign name** | Sauti ya Neema: A Voice for Every Talent |
+| **Tagline** | *"Talent is everywhere. Opportunity isn't. Let's change that together."* |
+| **Goal** | **KES 3,500,000** (about USD 27,000) **[adjust]** |
+| **Duration** | 60 days: **launch Thu 15 Oct 2026, close Sun 13 Dec 2026** (before Christmas spending peaks) |
+| **Who benefits** | Upcoming artists, choir singers and talented young people who can't afford studio time, plus the studio's capacity to serve them |
+| **Where to give** | M-Pesa Send Money **+254 794 743 141** · PayPal **sylvesterkakukupaul@gmail.com** · later: M-Changa, Paybill, GoFundMe |
+
+---
+
+## 2. The story (main campaign text)
+
+Use this on M-Changa, GoFundMe, your website and in the video script.
+
+> **Every week, someone walks through our doors with a song in their heart, a dream in their eyes, and sometimes nothing in their pocket.**
+>
+> It may be a young worshipper from a church choir who sings every Sunday and quietly hopes that one day someone will believe in her gift. It may be a teenager filling an old exercise book with lyrics, reading them aloud when no one is listening. It may be a mother whose voice lifts her whole community, yet who has never once heard herself on a recording.
+>
+> **They have the gift. They have the passion. What they don't have is the opportunity.**
+>
+> A professional recording and music video costs more than many families earn in a month. So the songs stay in exercise books, the voices stay in small rooms, and too many gifts go unheard. Not because the talent is small, but because no one has opened the door.
+>
+> Neema Pro Studios exists to open that door. We discover, nurture and promote talent with excellence, integrity and faith. We are also home to the **Neema Pro Studios Choir**, where voices come together to worship, to inspire and to bring people closer to one another.
+>
+> **Beyond the music.** Our mission does not end in the studio. We believe that when we are blessed, we are called to bless others. This campaign also reaches vulnerable children who need school fees and a meal, families going through hard seasons, and elderly neighbours who too often feel forgotten. Through community concerts and outreach, every song we record becomes a way to care for the people around us.
+>
+> Today, we cannot say yes to everyone who needs us. We turn people away not because their gift is small, but because our means are.
+>
+> **With your support, we can say yes to many more.**
+>
+> Your gift can turn handwritten lyrics into a song. It can give a church choir its first recording. It can tell a young artist that their voice matters. It can put food on a family's table and bring comfort to an elderly neighbour who thought no one remembered them.
+>
+> *Every shilling you give becomes a voice heard, a dream kept alive, and a life touched.*
+>
+> **With your support we will:**
+> 1. **Sponsor 50 upcoming artists and choir singers** with recording, mixing, mastering, a music video and release support, at no cost to them.
+> 2. **Run a free 12-week Talent Academy** (two intakes) for 80 young people from low-income backgrounds.
+> 3. **Upgrade our studio equipment and add more**, so we can record more people at a higher standard.
+> 4. **Reach vulnerable children, families and the elderly** through 3 community concerts that raise food, school fees and care.
+>
+> **Neema Pro Studios: giving talent a voice, serving our community, and using every gift for God's glory. Kwa Neema tu.**
+
+---
+
+## 3. Where the money goes (KES 3,500,000) **[adjust to real quotes]**
+
+| Item | Amount (KES) | % |
+|---|---:|---:|
+| **Artist Sponsorship Fund**: 50 full packages at ~KES 25,000 each | 1,250,000 | 36% |
+| **Studio equipment**: mics, audio interface, monitors, cameras, lenses, lighting, acoustic treatment | 800,000 | 23% |
+| **Talent Academy**: 2 intakes, trainers, materials, meals and transport for 80 students | 600,000 | 17% |
+| **Community outreach**: 3 charity concerts; food, school fees and care for vulnerable children, families and the elderly | 500,000 | 14% |
+| **Campaign costs**: platform fees (~4–5%), marketing, video production | 350,000 | 10% |
+| **Total** | **3,500,000** | 100% |
+
+**Stretch goal at KES 4,000,000:** a mobile recording kit so the studio can record talent in rural areas and schools.
+
+---
+
+## 4. Reward tiers
+
+| Tier | Amount (KES) | Donor gets |
+|---|---:|---|
+| **Mbegu (Seed)** | 100 – 499 | A personal thank-you on WhatsApp and a shout-out in the monthly supporters post |
+| **Rafiki (Friend)** | 500 – 1,999 | Above, plus an exclusive digital download of a Neema Choir track |
+| **Mfadhili (Sponsor)** | 2,000 – 9,999 | Above, plus your name in the credits of a sponsored artist's music video |
+| **Mlezi (Mentor)** | 10,000 – 24,999 | Above, plus 2 tickets to the charity concert and a signed Neema Pro Studios merch pack |
+| **Nguzo (Pillar)** | 25,000 – 99,999 | **You fully sponsor one artist or choir singer.** You meet them, get a "Sponsored by [your name]" credit on their single, and get VIP concert seats |
+| **Mwanzilishi (Founding Partner)** | 100,000+ | Above, plus a studio session for your church, company or family, and your logo on the Academy banner and campaign wall |
+
+Corporate and church partners get a custom package: branding, CSR reporting, and a choir performance at your event.
+
+---
+
+## 5. Payment setup checklist
+
+- [ ] **M-Changa** (<https://www.mchanga.africa>): the most trusted crowdfunding platform in Kenya. Gives you an M-Pesa Paybill account number and a shareable link.
+- [ ] **Dedicated M-Pesa Paybill or Till** in the studio's name. Keep campaign money separate from studio operating money.
+- [x] **PayPal** for supporters abroad: sylvesterkakukupaul@gmail.com
+- [ ] **GoFundMe link** (optional) for supporters abroad. Note that GoFundMe needs a beneficiary with a bank account in a supported country.
+- [ ] **Patreon or "Monthly Friends of Neema"** for recurring KES 500 / 1,000 / 2,500 monthly gifts after the campaign ends.
+- [ ] A named **treasurer** and a **monthly public report** (a screenshot of totals plus receipts for big purchases). Transparency drives repeat giving.
+
+---
+
+## 6. 60-day launch plan
+
+| Phase | Dates (2026) | What to do |
+|---|---|---|
+| **Pre-launch** | 1–14 Oct | Shoot a 2-minute video (founder + 2 artists + choir). Line up 20–30 "first donors" to give on day 1 so the bar isn't at zero. Brief pastors, choir members and past clients. |
+| **Launch week** | 15–21 Oct | Launch video on YouTube, TikTok, IG and FB. WhatsApp broadcast to every contact. Aim for 25% of the goal (about KES 875,000) in week 1. |
+| **Stories** | 22 Oct – 28 Nov | Share one artist story every 2–3 days: "Meet Wanjiru. KES 25,000 records her first single." Post live studio sessions on TikTok. Share progress updates at 25%, 50% and 75%. |
+| **Church & corporate push** | 29 Oct – 3 Dec | Visit churches (Sunday announcement + choir performance + collection). Pitch 20–30 businesses, SACCOs and churches for Nguzo/Mwanzilishi tiers. **Aim to raise about KES 1.5M of the 3.5M from partners**; a goal this size can't come from small gifts alone. |
+| **Final push** | 4–13 Dec | Countdown posts. A "Harambee Night" live-streamed concert with live M-Pesa giving shown on screen. |
+| **After** | from 14 Dec | Thank every donor. Post the first sponsored song within 60 days. Publish a full money report. |
+
+---
+
+## 7. Ready-to-post content
+
+**WhatsApp broadcast**
+> Hello [Name] 🙏🏾 Neema Pro Studios has launched *Sauti ya Neema*, a campaign to give 50 upcoming artists and choir singers free studio packages and train 80 youth in music and media. Even KES 100 makes a difference.
+> 👉 M-Pesa (Send Money): **+254 794 743 141**
+> 👉 PayPal: **sylvesterkakukupaul@gmail.com**
+> 👉 Campaign page: https://claude.ai/artifact/TJSbY38mzYFVYsv2qBo5bT
+> Please forward this to 3 people. Kwa Neema tu! 🎶
+
+**Instagram / Facebook caption**
+> Talent is everywhere. Opportunity isn't. 🎤✨
+> This season we're raising **KES 3.5M** to sponsor 50 upcoming artists and choir singers, train 80 youth for free, and bless needy families through music. 🙌🏾
+> Every shilling counts. Link in bio 🔗 | M-Pesa: 0794 743 141 | PayPal: sylvesterkakukupaul@gmail.com
+> #SautiYaNeema #NeemaProStudios #KenyanGospel #SupportLocalTalent #Harambee
+
+**TikTok / Reels hook ideas**
+1. "This girl sings like this… and has never been in a studio. Let's change that." (raw clip, then studio version)
+2. "What KES 25,000 buys an upcoming artist." (quick cuts: mic, mix, video shoot, release)
+3. Choir performs *Kwa Neema Tu*, then text on screen: "Help us raise the next voice."
+4. Progress update: "We're at 43%. Here's who you've already helped."
+
+**Email or letter to churches and companies**
+> Subject: Partnership invitation: Sauti ya Neema talent & community campaign
+>
+> Dear [Pastor/Manager Name],
+>
+> Neema Pro Studios is a Nairobi-based gospel music production studio committed to discovering and nurturing talent. We are raising KES 3,500,000 to sponsor 50 upcoming artists, run a free Talent Academy for 80 young people, and support vulnerable families through outreach concerts.
+>
+> We would be honoured to have [Organisation] as a **Founding Partner**. In return we offer brand recognition on campaign materials, a live choir performance at your event, and a full impact report for your records.
+>
+> May we have 15 minutes to share more? You can reach me on +254 790 909 007 or [email].
+>
+> Blessings,
+> [Your name], Founder, Neema Pro Studios
+
+---
+
+## 8. Artist application (for the people you'll sponsor)
+
+Collect these through a Google Form:
+- Name, age, location, phone
+- Genre (gospel, afro, other)
+- Link to a voice note or video (a phone recording is fine)
+- "Tell us your story and why this opportunity matters" (200 words)
+- Financial need (self-declared, plus a referral from a pastor, teacher or chief)
+
+**Selection panel:** the studio manager, lead sound engineer, video lead and one outside community member. Publish the criteria so the process is visibly fair.
+
+---
+
+## 9. Before you launch
+
+- [ ] Confirm the goal and budget with real equipment quotes
+- [ ] Set up M-Changa and a dedicated Paybill
+- [ ] Record the 2-minute campaign video
+- [ ] Line up 20–30 day-one donors
+- [ ] Create the artist application form
+- [ ] Fill every [placeholder] in this kit and in `index.html`
+- [ ] Get consent (written for minors, from a guardian) before featuring any person's story

@@ -1,0 +1,413 @@
+<title>Sauti ya Neema</title>
+<link id="fonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style id="css">
+/* Layout: a recording-console campaign page. The hero pairs the pitch with a
+   level meter that shows the money raised; everything below is one reading column. */
+:root{
+  --bg:#F2F3EE; --surface:#FFFFFF; --ink:#16201B; --muted:#5A665F; --line:#DADFD6;
+  --teal:#0F6158; --teal-soft:#DCEBE7; --amber:#D9961A; --meter-off:#E3E7DF; --danger:#B2412B;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Figtree", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1412; --surface:#161E1B; --ink:#E7ECE8; --muted:#A1ADA6; --line:#2A3531;
+    --teal:#4FB3A5; --teal-soft:#16302C; --amber:#F0B545; --meter-off:#243029; --danger:#E0775F;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1412; --surface:#161E1B; --ink:#E7ECE8; --muted:#A1ADA6; --line:#2A3531;
+  --teal:#4FB3A5; --teal-soft:#16302C; --amber:#F0B545; --meter-off:#243029; --danger:#E0775F;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:400 1rem/1.6 var(--body)}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.3rem,6.5vw,4.2rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.6rem,3.6vw,2.2rem);font-weight:800}
+h3{font-size:1.1rem;font-weight:600}
+p{margin:0}
+a{color:var(--teal);font-weight:600}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.label{font:700 .72rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.lede{color:var(--muted);max-width:62ch;font-size:1.08rem}
+.pull{font:700 clamp(1.2rem,2.6vw,1.5rem)/1.3 var(--display);color:var(--teal);max-width:36ch;text-wrap:balance}
+#story h3{font-size:1.3rem;margin-top:10px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+section{padding-block:56px;border-top:1px solid var(--line)}
+.stack{display:grid;gap:14px}
+
+/* hero */
+.hero{padding-block:48px 56px;display:grid;gap:32px;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:center}
+.hero .stack{gap:18px}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:10px;border:2px solid var(--ink);background:var(--ink);color:var(--bg);font:700 .95rem var(--body);text-decoration:none;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink)}
+.btn:hover{background:var(--teal);border-color:var(--teal);color:#fff}
+
+/* level meter */
+.console{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;display:grid;gap:16px}
+.meter{display:grid;grid-template-columns:repeat(30,1fr);gap:3px;height:54px}
+.meter i{border-radius:2px;background:var(--meter-off)}
+.meter i.on{background:var(--teal)}
+.meter i.on.hot{background:var(--amber)}
+.scale{display:flex;justify-content:space-between;font:500 .7rem var(--mono);color:var(--muted)}
+.readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.readout b{display:block;font:700 1.25rem var(--mono);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.readout small{color:var(--muted);font-size:.8rem}
+
+/* promises */
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.promise{display:grid;gap:6px;padding-top:14px;border-top:3px solid var(--teal)}
+.promise .big{font:800 2.4rem/1 var(--display);color:var(--teal)}
+.promise p{color:var(--muted);font-size:.95rem}
+
+/* budget */
+.budget{display:grid;gap:14px;max-width:760px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px}
+.row .bar{grid-column:1/-1;height:10px;background:var(--meter-off);border-radius:3px;overflow:hidden}
+.row .bar span{display:block;height:100%;background:var(--teal)}
+.row .amt{font:700 .95rem var(--mono);font-variant-numeric:tabular-nums}
+
+/* tiers */
+.tiers{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.tier{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:6px;align-content:start}
+.tier .price{font:700 1rem var(--mono);color:var(--teal)}
+.tier p{color:var(--muted);font-size:.93rem}
+.tier.key{border:2px solid var(--amber)}
+
+/* give */
+.give{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.pay{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:8px;align-content:start}
+.pay .code{font:700 1.5rem var(--mono);letter-spacing:.06em;overflow-wrap:anywhere}
+.copy{justify-self:start;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 .85rem var(--body);cursor:pointer}
+.copy:hover{border-color:var(--teal)}
+.note{color:var(--muted);font-size:.92rem}
+
+/* updates */
+.updates{display:grid;gap:14px;max-width:760px;list-style:none;padding:0;margin:0}
+.updates li{display:grid;gap:4px;padding-left:16px;border-left:3px solid var(--teal)}
+.updates time{font:500 .78rem var(--mono);color:var(--muted)}
+.empty{color:var(--muted);font-style:italic}
+
+/* owner panel */
+.panel{background:var(--teal-soft);border:1px dashed var(--teal);border-radius:14px;padding:20px;display:grid;gap:14px}
+.fields{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.fields label{display:grid;gap:4px;font-size:.85rem;font-weight:600}
+input,textarea{font:inherit;padding:9px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%}
+.status{font-size:.9rem;min-height:1.4em}
+.status.err{color:var(--danger)}
+
+footer{padding-block:32px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;padding-block:32px 40px}
+  .readout b{font-size:1.05rem}
+}
+@media (prefers-reduced-motion:no-preference){
+  .meter i.on{animation:lit .5s ease-out both}
+  @keyframes lit{from{opacity:.35}to{opacity:1}}
+}
+</style>
+
+<div id="root">
+<div class="wrap">
+
+  <header class="hero">
+    <div class="stack">
+      <span class="label">Neema Pro Studios · Nairobi</span>
+      <h1>Sauti ya Neema. A voice for every talent.</h1>
+      <p class="lede">Talent is everywhere. Opportunity isn't. Help us give upcoming artists, choir singers and young people from struggling families the studio time, training and support they need to be heard.</p>
+      <div class="btns">
+        <a class="btn" href="#give">Give now</a>
+        <a class="btn alt" href="#story">Read our story</a>
+      </div>
+    </div>
+    <div class="console" aria-label="Campaign progress">
+      <span class="label">Input level · amount raised</span>
+      <div class="meter" id="meter" role="img" aria-label="0% of goal raised"></div>
+      <div class="scale" aria-hidden="true"><span>0</span><span>25%</span><span>50%</span><span>75%</span><span>Goal</span></div>
+      <div class="readout">
+        <div><b id="raised">KES 0</b><small>raised of <span id="goal">KES 3,500,000</span></small></div>
+        <div><b id="donors">0</b><small>supporters</small></div>
+        <div><b id="days">60</b><small id="daysLabel">days to go</small></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="story" class="stack">
+    <span class="label">Our story</span>
+    <h2>Every week, someone walks through our doors with a song in their heart, a dream in their eyes, and sometimes nothing in their pocket.</h2>
+    <p class="lede">It may be a young worshipper from a church choir who sings every Sunday and quietly hopes that one day someone will believe in her gift. It may be a teenager filling an old exercise book with lyrics, reading them aloud when no one is listening. It may be a mother whose voice lifts her whole community, yet who has never once heard herself on a recording.</p>
+    <p class="pull">They have the gift. They have the passion. What they don&rsquo;t have is the opportunity.</p>
+    <p class="lede">A professional recording and music video costs more than many families earn in a month. So the songs stay in exercise books, the voices stay in small rooms, and too many gifts go unheard. Not because the talent is small, but because no one has opened the door.</p>
+    <p class="lede">Neema Pro Studios exists to open that door. We discover, nurture and promote talent with excellence, integrity and faith. We are also home to the <strong>Neema Pro Studios Choir</strong>, where voices come together to worship, to inspire and to bring people closer to one another.</p>
+    <h3>Beyond the music</h3>
+    <p class="lede">Our mission does not end in the studio. We believe that when we are blessed, we are called to bless others. This campaign also reaches <strong>vulnerable children</strong> who need school fees and a meal, <strong>families</strong> going through hard seasons, and <strong>elderly neighbours</strong> who too often feel forgotten. Through community concerts and outreach, every song we record becomes a way to care for the people around us.</p>
+    <p class="lede">Today, we cannot say yes to everyone who needs us. We turn people away not because their gift is small, but because our means are.</p>
+    <p class="pull">With your support, we can say yes to many more.</p>
+    <p class="lede">Your gift can turn handwritten lyrics into a song. It can give a church choir its first recording. It can tell a young artist that their voice matters. It can put food on a family&rsquo;s table and bring comfort to an elderly neighbour who thought no one remembered them.</p>
+    <p class="lede"><em>Every shilling you give becomes a voice heard, a dream kept alive, and a life touched.</em></p>
+    <p class="lede"><strong>Neema Pro Studios: giving talent a voice, serving our community, and using every gift for God&rsquo;s glory. Kwa Neema tu.</strong></p>
+  </section>
+
+  <section class="stack">
+    <span class="label">What your gift does</span>
+    <h2>Four commitments</h2>
+    <div class="grid">
+      <div class="promise"><span class="big num">50</span><h3>Artists and choir singers sponsored</h3><p>Soloists, choir members and worship teams each get recording, mixing, mastering, a music video and release support, free of charge.</p></div>
+      <div class="promise"><span class="big num">80</span><h3>Young people trained</h3><p>Two intakes of a free 12-week academy: vocals, songwriting, sound engineering, videography and the music business.</p></div>
+      <div class="promise"><span class="big num">+</span><h3>Better equipment</h3><p>We will upgrade the gear we have and add more, so we can record more people at a higher standard.</p></div>
+      <div class="promise"><span class="big num">3</span><h3>Community outreach</h3><p>Three charity concerts that raise food, school fees and care for vulnerable children, families and the elderly.</p></div>
+    </div>
+  </section>
+
+  <section class="stack">
+    <span class="label">Where the money goes</span>
+    <h2>Every shilling, accounted for</h2>
+    <p class="lede">We will post a progress report with receipts every month during and after the campaign.</p>
+    <div class="budget">
+      <div class="row"><span>Artist and choir singer sponsorship: 50 packages</span><span class="amt">KES 1,250,000</span><div class="bar"><span style="width:36%"></span></div></div>
+      <div class="row"><span>Studio equipment: upgrades and new gear</span><span class="amt">KES 800,000</span><div class="bar"><span style="width:23%"></span></div></div>
+      <div class="row"><span>Talent academy: 80 students</span><span class="amt">KES 600,000</span><div class="bar"><span style="width:17%"></span></div></div>
+      <div class="row"><span>Community outreach: children, families and the elderly</span><span class="amt">KES 500,000</span><div class="bar"><span style="width:14%"></span></div></div>
+      <div class="row"><span>Platform fees, marketing and video</span><span class="amt">KES 350,000</span><div class="bar"><span style="width:10%"></span></div></div>
+    </div>
+  </section>
+
+  <section class="stack">
+    <span class="label">Ways to support</span>
+    <h2>Choose your level</h2>
+    <div class="tiers">
+      <div class="tier"><h3>Mbegu · Seed</h3><span class="price">KES 100+</span><p>A personal thank-you and a mention in our supporters post.</p></div>
+      <div class="tier"><h3>Rafiki · Friend</h3><span class="price">KES 500+</span><p>Also an exclusive digital track from the Neema Choir.</p></div>
+      <div class="tier"><h3>Mfadhili · Sponsor</h3><span class="price">KES 2,000+</span><p>Also your name in the credits of a sponsored artist's music video.</p></div>
+      <div class="tier"><h3>Mlezi · Mentor</h3><span class="price">KES 10,000+</span><p>Also two concert tickets and a signed merchandise pack.</p></div>
+      <div class="tier key"><h3>Nguzo · Pillar</h3><span class="price">KES 25,000+</span><p>You fully sponsor one artist or choir singer. Meet them, get credited on their single, and sit in VIP seats at the concert.</p></div>
+      <div class="tier"><h3>Mwanzilishi · Founding Partner</h3><span class="price">KES 100,000+</span><p>Also a studio session for your church or company, and your logo on the academy banner.</p></div>
+    </div>
+    <p class="note">Want to back a specific artist, EP or album? See our sponsorship packages at <a href="https://neemaprostudios.com/become-sponsor" target="_blank" rel="noopener">neemaprostudios.com/become-sponsor</a>.</p>
+  </section>
+
+  <section id="give" class="stack">
+    <span class="label">Give today</span>
+    <h2>Every shilling counts</h2>
+    <div class="give" id="payments"></div>
+    <div class="pay">
+      <h3>Share with 3 friends</h3>
+      <p class="note">Copy a ready-made WhatsApp message with the giving details.</p>
+      <button class="copy" type="button" id="copyMsg">Copy WhatsApp message</button>
+    </div>
+  </section>
+
+  <section class="stack">
+    <span class="label">Campaign updates</span>
+    <h2>News from the studio</h2>
+    <ul class="updates" id="updates"></ul>
+  </section>
+
+  <section id="admin" class="stack" hidden>
+    <div class="panel">
+      <div class="stack" style="gap:4px">
+        <span class="label">Only you can see this</span>
+        <h2>Update the campaign</h2>
+        <p class="note">Change the numbers or details below, then press Save. Everyone who opens the page sees the new version.</p>
+      </div>
+      <div class="fields">
+        <label>Amount raised (KES)<input id="f-raised" type="number" min="0" step="1" inputmode="numeric"></label>
+        <label>Number of supporters<input id="f-donors" type="number" min="0" step="1" inputmode="numeric"></label>
+        <label>Start date<input id="f-start" type="date"></label>
+        <label>End date<input id="f-end" type="date"></label>
+        <label>M-Pesa Paybill number<input id="f-paybill" type="text" inputmode="numeric" placeholder="e.g. 891300"></label>
+        <label>Paybill account name<input id="f-account" type="text" placeholder="e.g. NEEMA"></label>
+        <label>M-Changa link<input id="f-mchanga" type="url" placeholder="https://www.mchanga.africa/…"></label>
+        <label>M-Pesa number (Send Money)<input id="f-mpesa" type="text" inputmode="tel" placeholder="+254 7XX XXX XXX"></label>
+        <label>M-Pesa registered name<input id="f-mpesaName" type="text" placeholder="Name donors see when sending"></label>
+        <label>PayPal email<input id="f-paypal" type="email" placeholder="you@example.com"></label>
+        <label>GoFundMe link<input id="f-intl" type="url" placeholder="https://gofund.me/…"></label>
+        <label>Phone / WhatsApp<input id="f-phone" type="text"></label>
+        <label>Email<input id="f-email" type="email"></label>
+      </div>
+      <label style="display:grid;gap:4px;font-size:.85rem;font-weight:600">Post an update (optional)
+        <textarea id="f-update" rows="2" placeholder="e.g. We've reached 25%! Thank you, Grace Fellowship, for sponsoring two artists."></textarea>
+      </label>
+      <div class="btns"><button class="btn" type="button" id="save">Save and publish</button></div>
+      <p class="status" id="status" role="status"></p>
+    </div>
+  </section>
+
+</div>
+<footer>
+  <div class="wrap">Neema Pro Studios · Roysambu / Kasarani Annex, off Thika Superhighway, Nairobi · <a href="https://neemaprostudios.com" target="_blank" rel="noopener">neemaprostudios.com</a> · #SautiYaNeema</div>
+</footer>
+</div>
+
+<script id="state" type="application/json">{"goal":3500000,"raised":0,"donors":0,"start":"2026-10-15","end":"2026-12-13","mpesa":"+254 794 743 141","mpesaName":"","paypal":"sylvesterkakukupaul@gmail.com","paybill":"","account":"","mchanga":"","intl":"","phone":"+254 790 909 007","email":"","updates":[]}</script>
+
+<script id="app">
+(function(){
+  const $ = id => document.getElementById(id);
+  const PRISTINE = $('root').innerHTML;          // published markup, captured before rendering
+  const S = JSON.parse($('state').textContent);
+  const kes = n => 'KES ' + Number(n || 0).toLocaleString('en-KE');
+  const day = 86400000;
+  const eat = d => new Date(d + 'T00:00:00+03:00');
+
+  function el(tag, cls, text){ const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  function copyText(text, btn){
+    const done = () => { const t = btn.textContent; btn.textContent = 'Copied'; setTimeout(() => btn.textContent = t, 1600); };
+    const fallback = () => {
+      const ta = el('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) { btn.textContent = 'Select and copy manually'; }
+      ta.remove();
+    };
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  }
+
+  function message(){
+    let m = 'Hello! Neema Pro Studios has launched Sauti ya Neema, a campaign to give 50 upcoming artists and choir singers free studio packages and train 80 young people in music and media. Even KES 100 makes a difference.\n';
+    if (S.mpesa) m += '\nM-Pesa (Send Money): ' + S.mpesa + (S.mpesaName ? ' (' + S.mpesaName + ')' : '');
+    if (S.paybill) m += '\nM-Pesa Paybill: ' + S.paybill + (S.account ? ', Account: ' + S.account : '');
+    if (S.mchanga) m += '\nGive online: ' + S.mchanga;
+    if (S.paypal) m += '\nPayPal: ' + S.paypal;
+    if (S.intl) m += '\nGoFundMe: ' + S.intl;
+    if (!S.mpesa && !S.paybill && !S.mchanga && S.phone) m += '\nTo pledge, WhatsApp ' + S.phone;
+    return m + '\n\nPlease forward this to 3 people. Kwa Neema tu!';
+  }
+
+  function render(){
+    const pct = Math.max(0, Math.min(100, S.raised / S.goal * 100));
+    const meter = $('meter'); meter.textContent = '';
+    const lit = Math.round(pct / 100 * 30);
+    for (let i = 0; i < 30; i++){ const s = el('i'); if (i < lit){ s.className = 'on' + (i >= 24 ? ' hot' : ''); s.style.animationDelay = (i * 25) + 'ms'; } meter.appendChild(s); }
+    meter.setAttribute('aria-label', Math.round(pct) + '% of goal raised');
+    $('raised').textContent = kes(S.raised);
+    $('goal').textContent = kes(S.goal);
+    $('donors').textContent = Number(S.donors || 0).toLocaleString('en-KE');
+
+    const now = new Date(), start = eat(S.start), end = eat(S.end);
+    if (now < start){
+      $('days').textContent = start.toLocaleDateString('en-GB', {day:'numeric', month:'short', timeZone:'Africa/Nairobi'});
+      $('daysLabel').textContent = 'launch day';
+    } else {
+      const left = Math.max(0, Math.ceil((end.getTime() + day - now) / day));
+      $('days').textContent = left;
+      $('daysLabel').textContent = left ? 'days to go' : 'campaign closed';
+    }
+
+    const pay = $('payments'); pay.textContent = '';
+    if (S.mpesa){
+      const b = el('div', 'pay'); b.append(el('span', 'label', 'M-Pesa · Send Money'), el('span', 'code', S.mpesa));
+      if (S.mpesaName) b.append(el('p', null, 'Name: ' + S.mpesaName));
+      b.append(el('p', 'note', 'On M-Pesa choose Send Money and enter this number.'));
+      const c = el('button', 'copy', 'Copy M-Pesa number'); c.type = 'button'; c.onclick = () => copyText(S.mpesa.replace(/\s+/g, ''), c); b.append(c);
+      pay.append(b);
+    }
+    if (S.paybill){
+      const b = el('div', 'pay'); b.append(el('span', 'label', 'M-Pesa Paybill'), el('span', 'code', S.paybill));
+      if (S.account) b.append(el('p', null, 'Account: ' + S.account));
+      const c = el('button', 'copy', 'Copy Paybill number'); c.type = 'button'; c.onclick = () => copyText(S.paybill, c); b.append(c);
+      pay.append(b);
+    }
+    if (S.paypal){
+      const b = el('div', 'pay'); b.append(el('span', 'label', 'PayPal · from anywhere'), el('span', 'code', S.paypal));
+      b.lastChild.style.fontSize = '.9rem'; b.lastChild.style.letterSpacing = '0';
+      b.append(el('p', 'note', 'In PayPal choose Send, enter this email, and pick Friends and Family if offered.'));
+      const row = el('div', 'btns'); const c = el('button', 'copy', 'Copy PayPal email'); c.type = 'button'; c.onclick = () => copyText(S.paypal, c);
+      const a = el('a', 'copy', 'Open PayPal'); a.href = 'https://www.paypal.com/myaccount/transfer/homepage/pay'; a.target = '_blank'; a.rel = 'noopener'; a.style.textDecoration = 'none';
+      row.append(c, a); b.append(row); pay.append(b);
+    }
+    [['mchanga', 'M-Changa', 'Give on M-Changa'], ['intl', 'GoFundMe', 'Give on GoFundMe']].forEach(([k, lab, txt]) => {
+      if (!S[k]) return;
+      const b = el('div', 'pay'); const a = el('a', null, txt); a.href = S[k]; a.target = '_blank'; a.rel = 'noopener';
+      b.append(el('span', 'label', lab), a); pay.append(b);
+    });
+    if (!S.mpesa && !S.paypal && !S.paybill && !S.mchanga && !S.intl){
+      const b = el('div', 'pay');
+      b.append(el('span', 'label', 'Pledge now'), el('h3', null, 'Payment details are being set up'),
+        el('p', 'note', 'Send us a WhatsApp message with your pledge and we will send you the M-Pesa details as soon as they are ready.'));
+      pay.append(b);
+    }
+    const contact = el('div', 'pay');
+    contact.append(el('span', 'label', 'Churches and businesses'), el('p', 'note', 'Ask us about partnership packages.'));
+    if (S.phone){
+      contact.append(el('span', 'code', S.phone));
+      const c = el('button', 'copy', 'Copy number'); c.type = 'button'; c.onclick = () => copyText(S.phone, c); contact.append(c);
+    }
+    if (S.email) contact.append(el('p', null, S.email));
+    pay.append(contact);
+
+    const ul = $('updates'); ul.textContent = '';
+    if (!S.updates.length) ul.append(el('li', 'empty', 'Progress news will appear here once the campaign starts.'));
+    S.updates.slice().reverse().forEach(u => { const li = el('li'); li.append(el('time', null, u.date), el('p', null, u.text)); ul.append(li); });
+  }
+
+  $('copyMsg').onclick = () => copyText(message(), $('copyMsg'));
+  render();
+
+  // Owner-only editing: republishes the page with new state.
+  function fill(){
+    $('f-raised').value = S.raised; $('f-donors').value = S.donors;
+    $('f-start').value = S.start; $('f-end').value = S.end;
+    $('f-paybill').value = S.paybill; $('f-account').value = S.account;
+    $('f-mchanga').value = S.mchanga; $('f-intl').value = S.intl;
+    $('f-phone').value = S.phone; $('f-email').value = S.email;
+    $('f-mpesa').value = S.mpesa || ''; $('f-mpesaName').value = S.mpesaName || ''; $('f-paypal').value = S.paypal || '';
+  }
+  function say(t, err){ const s = $('status'); s.textContent = t; s.className = 'status' + (err ? ' err' : ''); }
+
+  (async () => {
+    if (!window.claude || !window.claude.use) return;
+    const [user, artifact] = await Promise.all([claude.use('user'), claude.use('artifact')]);
+    const canEdit = user ? await user.canEdit() : false;
+    if (!canEdit || !artifact) return;
+    fill(); $('admin').hidden = false;
+
+    $('save').onclick = async () => {
+      const raised = Number($('f-raised').value), donors = Number($('f-donors').value);
+      if (!Number.isFinite(raised) || raised < 0 || !Number.isFinite(donors) || donors < 0){ say('Amount raised and supporters must be numbers of 0 or more.', true); return; }
+      const start = $('f-start').value, end = $('f-end').value;
+      if (!start || !end || end < start){ say('Choose a start date and an end date that comes after it.', true); return; }
+      const pp = $('f-paypal').value.trim(); if (pp && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(pp)){ say('Enter a valid PayPal email address.', true); return; }
+      for (const id of ['f-mchanga', 'f-intl']){ const v = $(id).value.trim(); if (v && !/^https:\/\//.test(v)){ say('Links must start with https://', true); return; } }
+      const next = Object.assign({}, S, {
+        raised: Math.round(raised), donors: Math.round(donors), start, end,
+        paybill: $('f-paybill').value.trim(), account: $('f-account').value.trim(),
+        mchanga: $('f-mchanga').value.trim(), intl: $('f-intl').value.trim(),
+        phone: $('f-phone').value.trim(), email: $('f-email').value.trim(),
+        mpesa: $('f-mpesa').value.trim(), mpesaName: $('f-mpesaName').value.trim(), paypal: $('f-paypal').value.trim(),
+        updates: S.updates.slice()
+      });
+      const note = $('f-update').value.trim();
+      if (note) next.updates.push({date: new Date().toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric', timeZone:'Africa/Nairobi'}), text: note});
+
+      const reset = ':root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif;background:#fafafa}img{max-width:100%}[hidden]{display:none!important}';
+      const json = JSON.stringify(next).replace(/</g, '\\u003c');
+      const html = '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>' + reset + '</style></head><body>'
+        + '<title>Sauti ya Neema</title>'
+        + $('fonts').outerHTML + $('css').outerHTML
+        + '<div id="root">' + PRISTINE + '</div>'
+        + '<script id="state" type="application/json">' + json + '<\/script>'
+        + $('app').outerHTML
+        + '</body></html>';
+
+      $('save').disabled = true; say('Publishing…');
+      try {
+        await artifact.publish(html);
+        say('Published. The page is reloading with your changes.');
+      } catch (e) {
+        $('save').disabled = false;
+        if (e && e.code === 'conflict') say('Someone else just updated the page. It is reloading; enter your changes again.', true);
+        else if (e && (e.code === 'not_writer' || e.code === 'not_granted')) { say('This view is read-only.', true); }
+        else say('Could not publish: ' + ((e && e.message) || 'unknown error') + '. Try again in a minute.', true);
+      }
+    };
+  })();
+})();
+</script>
