@@ -16,7 +16,7 @@
 | **Goal** | **KES 3,500,000** (about USD 27,000) **[adjust]** |
 | **Duration** | 60 days: **launch Thu 15 Oct 2026, close Sun 13 Dec 2026** (before Christmas spending peaks) |
 | **Who benefits** | Upcoming artists, choir singers and talented young people who can't afford studio time, plus the studio's capacity to serve them |
-| **Where to give** | M-Changa (M-Pesa), M-Pesa Paybill **[number]**, GoFundMe for the diaspora **[link]** |
+| **Where to give** | M-Pesa Send Money **+254 794 743 141** · PayPal **sylvesterkakukupaul@gmail.com** · later: M-Changa, Paybill, GoFundMe |
 
 ---
 
@@ -88,7 +88,8 @@ Corporate and church partners get a custom package: branding, CSR reporting, and
 
 - [ ] **M-Changa** (<https://www.mchanga.africa>): the most trusted crowdfunding platform in Kenya. Gives you an M-Pesa Paybill account number and a shareable link.
 - [ ] **Dedicated M-Pesa Paybill or Till** in the studio's name. Keep campaign money separate from studio operating money.
-- [ ] **GoFundMe or PayPal link** for supporters abroad. Note that GoFundMe needs a beneficiary with a bank account in a supported country.
+- [x] **PayPal** for supporters abroad: sylvesterkakukupaul@gmail.com
+- [ ] **GoFundMe link** (optional) for supporters abroad. Note that GoFundMe needs a beneficiary with a bank account in a supported country.
 - [ ] **Patreon or "Monthly Friends of Neema"** for recurring KES 500 / 1,000 / 2,500 monthly gifts after the campaign ends.
 - [ ] A named **treasurer** and a **monthly public report** (a screenshot of totals plus receipts for big purchases). Transparency drives repeat giving.
 
@@ -111,14 +112,15 @@ Corporate and church partners get a custom package: branding, CSR reporting, and
 
 **WhatsApp broadcast**
 > Hello [Name] 🙏🏾 Neema Pro Studios has launched *Sauti ya Neema*, a campaign to give 50 upcoming artists and choir singers free studio packages and train 80 youth in music and media. Even KES 100 makes a difference.
-> 👉 M-Pesa Paybill **[XXXXXX]**, Account **[NEEMA]**
-> 👉 Or give here: **[link]**
+> 👉 M-Pesa (Send Money): **+254 794 743 141**
+> 👉 PayPal: **sylvesterkakukupaul@gmail.com**
+> 👉 Campaign page: https://claude.ai/artifact/TJSbY38mzYFVYsv2qBo5bT
 > Please forward this to 3 people. Kwa Neema tu! 🎶
 
 **Instagram / Facebook caption**
 > Talent is everywhere. Opportunity isn't. 🎤✨
 > This season we're raising **KES 3.5M** to sponsor 50 upcoming artists and choir singers, train 80 youth for free, and bless needy families through music. 🙌🏾
-> Every shilling counts. Link in bio 🔗 | Paybill [XXXXXX] Acc: NEEMA
+> Every shilling counts. Link in bio 🔗 | M-Pesa: 0794 743 141 | PayPal: sylvesterkakukupaul@gmail.com
 > #SautiYaNeema #NeemaProStudios #KenyanGospel #SupportLocalTalent #Harambee
 
 **TikTok / Reels hook ideas**
