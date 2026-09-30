@@ -28,7 +28,7 @@ Use this on M-Changa, GoFundMe, your website and in the video script.
 >
 > They might be a young worshipper from a church choir, a teenager in Nairobi's estates who writes lyrics in an exercise book, or a single mother whose voice lights up her whole village. They have the gift. What they don't have is **KES [X,000]** for a recording session, a music video, or someone to guide their career.
 >
-> Neema Pro Studios was founded to **discover, nurture and promote talent**, especially gospel talent, and to do it with excellence, integrity and faith. From our home at Fika Citi Mall, Sheikh Karume Road, Nairobi, we have recorded, filmed and mentored artists and built the **Neema Pro Studios Choir** (*"Kwa Neema Tu"*).
+> Neema Pro Studios was founded to **discover, nurture and promote talent**, especially gospel talent, and to do it with excellence, integrity and faith. From our home in Roysambu / Kasarani, off Thika Superhighway, Nairobi, we have recorded, filmed and mentored artists and built the **Neema Pro Studios Choir** (*"Kwa Neema Tu"*).
 >
 > But we can't say yes to everyone who needs us. **That is why we're launching *Sauti ya Neema*.**
 >
@@ -126,7 +126,7 @@ Corporate and church partners get a custom package: branding, CSR reporting, and
 >
 > We would be honoured to have [Organisation] as a **Founding Partner**. In return we offer brand recognition on campaign materials, a live choir performance at your event, and a full impact report for your records.
 >
-> May we have 15 minutes to share more? You can reach me at [phone] or [email].
+> May we have 15 minutes to share more? You can reach me on +254 790 909 007 or [email].
 >
 > Blessings,
 > [Your name], Founder, Neema Pro Studios
