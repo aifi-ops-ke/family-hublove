@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sauti ya Neema</title>
 <meta name="description" content="Neema Pro Studios crowdfunding campaign: sponsor upcoming artists, train youth, and support needy families through music.">
+<meta property="og:title" content="Sauti ya Neema: A Voice for Every Talent">
+<meta property="og:description" content="Help Neema Pro Studios sponsor 50 upcoming artists, train 80 youth for free, and support needy families through music. Goal: KES 3,500,000.">
+<meta property="og:type" content="website">
+<!-- Add once hosted: <meta property="og:image" content="https://[your-site]/campaign-cover.jpg"> -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -25,6 +29,7 @@
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
 .wrap{max-width:1040px;margin:0 auto;padding:0 16px}
 h1,h2{font-family:'Playfair Display',serif;line-height:1.15}
+a{color:var(--plum);font-weight:700}
 h2{font-size:clamp(1.6rem,4vw,2.2rem);margin-bottom:.6rem}
 section{padding:56px 0}
 .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;font-weight:800;color:var(--gold2)}
@@ -98,7 +103,7 @@ footer{padding:32px 0;color:var(--muted);font-size:.9rem;border-top:1px solid va
     <div class="stats">
       <div><b id="raised">KES 0</b><small>of KES 3,500,000 goal</small></div>
       <div><b id="donors">0</b><small>supporters</small></div>
-      <div><b id="days">60</b><small>days to go</small></div>
+      <div><b id="days">-</b><small>days to go</small></div>
     </div>
   </div>
 </div>
@@ -174,8 +179,12 @@ footer{padding:32px 0;color:var(--muted);font-size:.9rem;border-top:1px solid va
 </footer>
 
 <script>
-// Update these two numbers as donations come in.
+// Update RAISED and DONORS as donations come in. Set START and END to your campaign dates.
 const RAISED = 0, DONORS = 0, GOAL = 3500000;
+const START = new Date('2026-11-01T00:00:00+03:00'), END = new Date('2026-12-30T23:59:59+03:00');
+const DAY = 86400000, now = new Date();
+const daysLeft = now < START ? Math.ceil((END - START) / DAY) : Math.max(0, Math.ceil((END - now) / DAY));
+document.getElementById('days').textContent = daysLeft;
 document.getElementById('raised').textContent = 'KES ' + RAISED.toLocaleString('en-KE');
 document.getElementById('donors').textContent = DONORS.toLocaleString('en-KE');
 document.getElementById('fill').style.width = Math.min(100, RAISED / GOAL * 100) + '%';
