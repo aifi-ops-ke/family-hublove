@@ -24,23 +24,33 @@
 
 Use this on M-Changa, GoFundMe, your website and in the video script.
 
-> **Every week, someone walks through our doors with a song in their heart and nothing in their pocket.**
+> **Every week, someone walks through our doors with a song in their heart, a dream in their eyes, and sometimes nothing in their pocket.**
 >
-> It may be a young worshipper from a church choir, a teenager writing songs in an old exercise book, or a single mother whose voice brings hope to her village but who has never recorded a single song.
+> It may be a young worshipper from a church choir who sings every Sunday and quietly hopes that one day someone will believe in her gift. It may be a teenager filling an old exercise book with lyrics, reading them aloud when no one is listening. It may be a mother whose voice lifts her whole community, yet who has never once heard herself on a recording.
 >
-> They have the talent and the passion. What they lack is opportunity: a recording session, a music video, and someone to tell them, *"Your gift matters. Keep going."*
+> **They have the gift. They have the passion. What they don't have is the opportunity.**
 >
-> Neema Pro Studios exists to discover, nurture and promote that talent with excellence, integrity and faith. We are also home to the Neema Pro Studios Choir. Today we can't say yes to everyone who comes to us with a dream. Together, we can.
+> A professional recording and music video costs more than many families earn in a month. So the songs stay in exercise books, the voices stay in small rooms, and too many gifts go unheard. Not because the talent is small, but because no one has opened the door.
+>
+> Neema Pro Studios exists to open that door. We discover, nurture and promote talent with excellence, integrity and faith. We are also home to the **Neema Pro Studios Choir**, where voices come together to worship, to inspire and to bring people closer to one another.
+>
+> **Beyond the music.** Our mission does not end in the studio. We believe that when we are blessed, we are called to bless others. This campaign also reaches vulnerable children who need school fees and a meal, families going through hard seasons, and elderly neighbours who too often feel forgotten. Through community concerts and outreach, every song we record becomes a way to care for the people around us.
+>
+> Today, we cannot say yes to everyone who needs us. We turn people away not because their gift is small, but because our means are.
+>
+> **With your support, we can say yes to many more.**
+>
+> Your gift can turn handwritten lyrics into a song. It can give a church choir its first recording. It can tell a young artist that their voice matters. It can put food on a family's table and bring comfort to an elderly neighbour who thought no one remembered them.
+>
+> *Every shilling you give becomes a voice heard, a dream kept alive, and a life touched.*
 >
 > **With your support we will:**
 > 1. **Sponsor 50 upcoming artists and choir singers** with recording, mixing, mastering, a music video and release support, at no cost to them.
 > 2. **Run a free 12-week Talent Academy** (two intakes) for 80 young people from low-income backgrounds.
 > 3. **Upgrade our studio equipment and add more**, so we can record more people at a higher standard.
-> 4. **Give back to the needy** through 3 community concerts that raise food and school-fee support for vulnerable families.
+> 4. **Reach vulnerable children, families and the elderly** through 3 community concerts that raise food, school fees and care.
 >
-> **We don't just record music. We give dreams a voice.**
->
-> *Sometimes all a gifted person needs is one opportunity, and someone who believes in them.*
+> **Neema Pro Studios: giving talent a voice, serving our community, and using every gift for God's glory. Kwa Neema tu.**
 
 ---
 
@@ -51,7 +61,7 @@ Use this on M-Changa, GoFundMe, your website and in the video script.
 | **Artist Sponsorship Fund**: 50 full packages at ~KES 25,000 each | 1,250,000 | 36% |
 | **Studio equipment**: mics, audio interface, monitors, cameras, lenses, lighting, acoustic treatment | 800,000 | 23% |
 | **Talent Academy**: 2 intakes, trainers, materials, meals and transport for 80 students | 600,000 | 17% |
-| **Community outreach**: 3 charity concerts, food hampers, school-fee support | 500,000 | 14% |
+| **Community outreach**: 3 charity concerts; food, school fees and care for vulnerable children, families and the elderly | 500,000 | 14% |
 | **Campaign costs**: platform fees (~4–5%), marketing, video production | 350,000 | 10% |
 | **Total** | **3,500,000** | 100% |
 
