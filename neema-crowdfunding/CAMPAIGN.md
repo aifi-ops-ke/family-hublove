@@ -14,9 +14,9 @@
 | **Campaign name** | Sauti ya Neema: A Voice for Every Talent |
 | **Tagline** | *"Talent is everywhere. Opportunity isn't. Let's change that together."* |
 | **Goal** | **KES 3,500,000** (about USD 27,000) **[adjust]** |
-| **Duration** | 60 days: **launch Thu 15 Oct 2026, close Sun 13 Dec 2026** (before Christmas spending peaks) |
+| **Duration** | 77 days: **launch Thu 15 Oct 2026, close Wed 30 Dec 2026** (covers the Christmas giving season) |
 | **Who benefits** | Upcoming artists, choir singers and talented young people who can't afford studio time, plus the studio's capacity to serve them |
-| **Where to give** | M-Pesa Send Money **+254 794 743 141** · PayPal **sylvesterkakukupaul@gmail.com** · later: M-Changa, Paybill, GoFundMe |
+| **Where to give** | M-Pesa Send Money **+254 790 909 007** · PayPal **sylvesterkakukupaul@gmail.com** · later: M-Changa, Paybill, GoFundMe |
 
 ---
 
@@ -95,16 +95,16 @@ Corporate and church partners get a custom package: branding, CSR reporting, and
 
 ---
 
-## 6. 60-day launch plan
+## 6. Launch plan (15 Oct – 30 Dec)
 
 | Phase | Dates (2026) | What to do |
 |---|---|---|
 | **Pre-launch** | 1–14 Oct | Shoot a 2-minute video (founder + 2 artists + choir). Line up 20–30 "first donors" to give on day 1 so the bar isn't at zero. Brief pastors, choir members and past clients. |
 | **Launch week** | 15–21 Oct | Launch video on YouTube, TikTok, IG and FB. WhatsApp broadcast to every contact. Aim for 25% of the goal (about KES 875,000) in week 1. |
 | **Stories** | 22 Oct – 28 Nov | Share one artist story every 2–3 days: "Meet Wanjiru. KES 25,000 records her first single." Post live studio sessions on TikTok. Share progress updates at 25%, 50% and 75%. |
-| **Church & corporate push** | 29 Oct – 3 Dec | Visit churches (Sunday announcement + choir performance + collection). Pitch 20–30 businesses, SACCOs and churches for Nguzo/Mwanzilishi tiers. **Aim to raise about KES 1.5M of the 3.5M from partners**; a goal this size can't come from small gifts alone. |
-| **Final push** | 4–13 Dec | Countdown posts. A "Harambee Night" live-streamed concert with live M-Pesa giving shown on screen. |
-| **After** | from 14 Dec | Thank every donor. Post the first sponsored song within 60 days. Publish a full money report. |
+| **Church & corporate push** | 29 Oct – 17 Dec | Visit churches (Sunday announcement + choir performance + collection). Pitch 20–30 businesses, SACCOs and churches for Nguzo/Mwanzilishi tiers. **Aim to raise about KES 1.5M of the 3.5M from partners**; a goal this size can't come from small gifts alone. |
+| **Final push** | 18–30 Dec | Countdown posts. A "Harambee Night" live-streamed concert with live M-Pesa giving shown on screen. |
+| **After** | from 31 Dec | Thank every donor. Post the first sponsored song within 60 days. Publish a full money report. |
 
 ---
 
@@ -112,7 +112,7 @@ Corporate and church partners get a custom package: branding, CSR reporting, and
 
 **WhatsApp broadcast**
 > Hello [Name] 🙏🏾 Neema Pro Studios has launched *Sauti ya Neema*, a campaign to give 50 upcoming artists and choir singers free studio packages and train 80 youth in music and media. Even KES 100 makes a difference.
-> 👉 M-Pesa (Send Money): **+254 794 743 141**
+> 👉 M-Pesa (Send Money): **+254 790 909 007**
 > 👉 PayPal: **sylvesterkakukupaul@gmail.com**
 > 👉 Campaign page: https://claude.ai/artifact/TJSbY38mzYFVYsv2qBo5bT
 > Please forward this to 3 people. Kwa Neema tu! 🎶
@@ -120,7 +120,7 @@ Corporate and church partners get a custom package: branding, CSR reporting, and
 **Instagram / Facebook caption**
 > Talent is everywhere. Opportunity isn't. 🎤✨
 > This season we're raising **KES 3.5M** to sponsor 50 upcoming artists and choir singers, train 80 youth for free, and bless needy families through music. 🙌🏾
-> Every shilling counts. Link in bio 🔗 | M-Pesa: 0794 743 141 | PayPal: sylvesterkakukupaul@gmail.com
+> Every shilling counts. Link in bio 🔗 | M-Pesa: 0790 909 007 | PayPal: sylvesterkakukupaul@gmail.com
 > #SautiYaNeema #NeemaProStudios #KenyanGospel #SupportLocalTalent #Harambee
 
 **TikTok / Reels hook ideas**
